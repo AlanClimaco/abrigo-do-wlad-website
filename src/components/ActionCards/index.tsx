@@ -30,7 +30,9 @@ export function ActionCards() {
           compromisso de amor para a vida toda.
         </p>
         <Link to="/adotar" className="btn-text">
-          Conheça Nossos Cães <Lucide.ArrowRight size={20} />
+          <Button size="md" variant="text">
+            Conheça Nossos Cães <Lucide.ArrowRight size={20} />
+          </Button>
         </Link>
       </div>
 
@@ -45,10 +47,16 @@ export function ActionCards() {
           remédios.
         </p>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "10px", width: "100%" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "10px",
+            width: "100%",
+          }}
+        >
           <Button
             onClick={handleCopyPix}
-            variant="pix"
             size="sm"
             className={copied ? styles.copied : ""}
             title="Clique para copiar a chave PIX"
@@ -84,7 +92,9 @@ export function ActionCards() {
           medicamentos dos nossos resgatados.
         </p>
         <Link to="/tampinhas" className="btn-text">
-          Ver Pontos de Coleta <Lucide.ArrowRight size={20} />
+          <Button size="md" variant="text">
+            Ver Pontos de Coleta <Lucide.ArrowRight size={20} />
+          </Button>
         </Link>
       </div>
     </section>

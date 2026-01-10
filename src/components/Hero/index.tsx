@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import styles from "./Hero.module.css";
+import { Button } from "../ui/Button";
 
 export function Hero() {
   const [isVisible] = useState(true);
@@ -26,11 +27,11 @@ export function Hero() {
 
           <div className={styles.btnGroup}>
             <Link to="/adotar" className="btn-primary">
-              Ver Cães para Adoção
+              <Button size="lg">Ver Cães para Adoção</Button>
             </Link>
 
             <a href="#historia" className="btn-secondary">
-              Nossa História
+              <Button size="lg" variant="ghost">Nossa História</Button>
             </a>
           </div>
         </div>

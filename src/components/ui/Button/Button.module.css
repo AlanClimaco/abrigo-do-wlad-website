@@ -21,47 +21,50 @@
 
 /* Variants */
 .primary {
-  background-color: var(--primary);
-  color: var(--white);
+  background-color: var(--btn-primary);
+  color: var(--primary);
 }
 
 .primary:hover {
-  background-color: var(--primary-dark);
+  background-color: var(--btn-primary-hover);
+  color: var(--white)
 }
 
 .secondary {
-  background-color: var(--secondary);
+  background-color: var(--btn-secondary);
   color: var(--white);
 }
 
 .secondary:hover {
-  background-color: var(--secondary-dark);
+  background-color: var(--btn-secondary-hover)
 }
 
 .ghost {
   background-color: transparent;
-  color: var(--primary);
-  border-color: var(--primary);
+  color: var(--white);
+  border-color: var(--white);
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.064);
 }
 
 .ghost:hover {
-  background-color: rgba(255, 107, 53, 0.1);
+  background-color: var(--white);
+  color: var(--text-light)
 }
 
-.pix {
-  background: rgba(255, 107, 53, 0.1);
+.text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   color: var(--primary);
+  font-weight: 700;
+  background-color: transparent;
+  padding: 0 !important;
 }
 
-.pix:hover {
-  background: var(--primary);
-  color: var(--white);
-}
-
-.pix.copied {
-  background: #10b981;
-  color: white;
-  border-color: #10b981;
+.text:hover {
+  gap: 15px;
+  color: var(--primary-dark);
 }
 
 /* Sizes */
@@ -78,6 +81,7 @@
 .lg {
   padding: 1rem 1.8rem;
   font-size: 1.1rem;
+  border-radius: 48px;
 }
 
 .icon {

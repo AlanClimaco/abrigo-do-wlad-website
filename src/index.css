@@ -1,6 +1,6 @@
 /* 1. CONFIGURAÇÕES GERAIS E VARIÁVEIS */
 :root {
-    --primary: #FF6B35;
+    --primary: #ff6b35;
     --primary-dark: #E85D2A;
     --secondary: #004E89;
     --secondary-dark: #022947;
@@ -9,6 +9,12 @@
     --text-main: #1F2937;
     --text-light: #6B7280;
     --white: #FFFFFF;
+
+    /* button */
+    --btn-primary: #ff6b3527;
+    --btn-primary-hover: #E85D2A;
+    --btn-secondary: #004e89;
+    --btn-secondary-hover: #022947;
     
     --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
     --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
@@ -47,56 +53,3 @@ img { max-width: 100%; display: block; }
     transition: all 0.8s ease-out;
 }
 .reveal.active { opacity: 1; transform: translateY(0); }
-
-/* 3. BOTÕES GLOBAIS */
-.btn-primary {
-    background: var(--primary);
-    color: var(--white);
-    padding: 1rem 2.5rem;
-    border-radius: 50px;
-    font-weight: 600;
-    font-size: 1.1rem;
-    box-shadow: 0 10px 25px rgba(255, 107, 53, 0.4);
-    transition: var(--transition);
-    display: inline-block;
-    border: none;
-    cursor: pointer;
-}
-
-.btn-primary:hover {
-    background: var(--primary-dark);
-    transform: translateY(-4px);
-    box-shadow: 0 15px 30px rgba(255, 107, 53, 0.5);
-}
-
-.btn-secondary {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(5px);
-    border: 2px solid var(--white);
-    color: var(--white);
-    padding: 1rem 2.5rem;
-    border-radius: 50px;
-    font-weight: 600;
-    font-size: 1.1rem;
-    transition: var(--transition);
-    display: inline-block;
-    cursor: pointer;
-}
-
-.btn-secondary:hover {
-    background: var(--white);
-    color: var(--secondary);
-}
-
-.btn-text {
-    color: var(--primary);
-    font-weight: 700;
-    display: flex; align-items: center; gap: 8px;
-    margin-top: auto;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1rem;
-}
-
-.btn-text:hover { gap: 15px; color: var(--primary-dark); }

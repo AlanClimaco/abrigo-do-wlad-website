@@ -4,7 +4,7 @@ import style from "./Button.module.css";
 
 type ButtonProps = {
   children: ReactNode;
-  variant?: "primary" | "secondary" | "ghost" | "pix";
+  variant?: "primary" | "secondary" | "ghost" | "text";
   size?: "sm" | "md" | "lg";
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
