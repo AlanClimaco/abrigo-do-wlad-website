@@ -60,7 +60,7 @@ export function Header() {
         </Link>
 
         <Link to="/formulario" className={styles.btnCta}>
-          Quero Adotar
+          Quero Ajudar
         </Link>
       </nav>
     </header>

@@ -42,9 +42,7 @@ export function ActionCards() {
         <h3>Faça uma Doação</h3>
         <p>
           Mantemos o abrigo 100% com doações. Sua ajuda garante ração e
-          remédios. Chave PIX
-          <br />
-          (E-mail):
+          remédios.
         </p>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "10px", width: "100%" }}>
