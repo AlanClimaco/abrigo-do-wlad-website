@@ -1,6 +1,7 @@
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { Home } from './pages/Home';
+import HowToHelp from './pages/HowToHelp';
 import { BrowserRouter, Route, Routes } from 'react-router';
 
 export function AppRoutes() {
@@ -10,6 +11,7 @@ export function AppRoutes() {
 
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/como-ajudar" element={<HowToHelp />}/>
       </Routes>
 
       <Footer />
