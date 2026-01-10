@@ -1,3 +1,12 @@
+/**
+ * TODO: tampinhas + PIX (mais detalhado que na home + qr code) na mesma página em seções diferentes
+ */
+
 export default function HowToHelp() {
-  return <div></div>;
+  return (
+    <>
+      <section id="pix"></section>
+      <section id="tampinhas"></section>
+    </>
+  );
 }
