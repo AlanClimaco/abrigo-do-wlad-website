@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Button } from "../ui/Button";
 import * as Lucide from "lucide-react";
 import styles from "./ActionCards.module.css";
+import { Link } from "react-router";
 
 export function ActionCards() {
   const [copied, setCopied] = useState(false);
@@ -33,7 +34,7 @@ export function ActionCards() {
         </Link>
       </div>
 
-      {/* Card 2: Doações (NOVO) */}
+      {/* Card 2: Doações */}
       <div className={styles.card}>
         <div className={styles.cardIcon}>
           <Lucide.QrCode size={48} strokeWidth={1.5} />
@@ -46,23 +47,32 @@ export function ActionCards() {
           (E-mail):
         </p>
 
-        <button
-          onClick={handleCopyPix}
-          className={`${styles.pixButton} ${copied ? styles.copied : ""}`}
-          title="Clique para copiar a chave PIX"
-        >
-          {copied ? (
-            <>
-              <Lucide.Check size={20} />
-              PIX Copiado!
-            </>
-          ) : (
-            <>
-              <Lucide.Copy size={20} />
-              abrigodowlad@gmail.com
-            </>
-          )}
-        </button>
+        <div style={{ display: "flex", flexDirection: "column", gap: "10px", width: "100%" }}>
+          <Button
+            onClick={handleCopyPix}
+            variant="pix"
+            size="sm"
+            className={copied ? styles.copied : ""}
+            title="Clique para copiar a chave PIX"
+            style={{ width: "100%" }}
+          >
+            {copied ? (
+              <>
+                <Lucide.Check size={20} />
+                PIX Copiado!
+              </>
+            ) : (
+              <>
+                <Lucide.Copy size={20} />
+                abrigodowlad@gmail.com
+              </>
+            )}
+          </Button>
+          <Button size="sm" variant="secondary">
+            <Lucide.QrCode size={20} />
+            <span>Gerar Código QR</span>
+          </Button>
+        </div>
       </div>
 
       {/* Card 3: Tampinhas */}
