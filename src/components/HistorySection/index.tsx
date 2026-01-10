@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import { ArrowRight } from "lucide-react";
 import styles from "./HistorySection.module.css";
 import dogImage from "../../assets/cao.png";
+import { Button } from "../ui/Button";
 
 export function HistorySection() {
   const [isVisible, setIsVisible] = useState(false);
@@ -67,8 +68,10 @@ export function HistorySection() {
 
           <br />
 
-          <Link to="/historia" className="btn-text">
-            Ler história completa <ArrowRight size={20} />
+          <Link to="/historia">
+            <Button variant="text">
+              Ler história completa <ArrowRight size={20} />
+            </Button>
           </Link>
         </div>
       </div>
