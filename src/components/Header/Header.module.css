@@ -1,0 +1,77 @@
+.headerContainer {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(12px);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 1rem 5%; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100px;
+}
+
+/* Classe extra para quando rolar a página */
+.headerScrolled {
+    padding: 0.5rem 5%;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.logo img { 
+    height: 85px; 
+    width: auto;
+    object-fit: contain;
+} 
+
+.navMenu { 
+    display: flex; 
+    gap: 2rem; 
+    align-items: center; 
+}
+
+.navLink {
+    font-weight: 500;
+    color: var(--text-main);
+    position: relative;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.navLink::after {
+    content: '';
+    position: absolute;
+    width: 0; height: 2px;
+    bottom: -4px; left: 0;
+    background: var(--primary);
+    transition: width 0.3s;
+}
+
+.navLink:hover::after, 
+.activeLink::after { 
+    width: 100%; 
+}
+
+.btnCta {
+    background: var(--secondary);
+    color: var(--white);
+    padding: 0.8rem 1.8rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 12px rgba(0, 78, 137, 0.2);
+    transition: all 0.3s;
+}
+
+.btnCta:hover {
+    background: #003B6B;
+    transform: translateY(-2px);
+}
+
+/* Responsividade básica para não quebrar no mobile */
+@media (max-width: 768px) {
+    .headerContainer { flex-direction: column; gap: 1rem; height: auto; padding: 1rem; }
+    .navMenu { flex-wrap: wrap; justify-content: center; gap: 1rem; }
+}

@@ -1,0 +1,84 @@
+.heroVisual {
+    height: 100vh;
+    background: url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: 100px;
+}
+
+.heroOverlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.6) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.heroContent {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    padding: 0 20px;
+    color: var(--white);
+    text-align: center;
+    margin: 0 auto;
+    
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+/* Classe que será ativada pelo React para animar */
+.heroContentActive {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.badge {
+    background: var(--primary);
+    color: var(--white);
+    padding: 0.6rem 1.5rem;
+    border-radius: 50px;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+    box-shadow: var(--shadow-md);
+}
+
+.title {
+    font-size: 3.8rem;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.description {
+    font-size: 1.3rem;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    opacity: 0.95;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btnGroup {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+/* Responsividade do Hero */
+@media (max-width: 768px) {
+    .heroVisual { padding-top: 140px; } 
+    .title { font-size: 2.2rem; }
+    .btnGroup { flex-direction: column; align-items: center; }
+}
