@@ -27,11 +27,13 @@ export function Hero() {
 
           <div className={styles.btnGroup}>
             <Link to="/adotar" className="btn-primary">
-              <Button size="lg">Ver Cães para Adoção</Button>
+              <Button size="lg">Conheça Nossos Cães</Button>
             </Link>
 
             <a href="#historia" className="btn-secondary">
-              <Button size="lg" variant="ghost">Nossa História</Button>
+              <Button size="lg" variant="ghost">
+                Nossa História
+              </Button>
             </a>
           </div>
         </div>

@@ -25,7 +25,7 @@ export function Footer() {
             <Lucide.ChevronRight /> Início
           </Link>
           <Link to="/adotar" className={styles.linkItem}>
-            <Lucide.ChevronRight /> Quero Adotar
+            <Lucide.ChevronRight /> Quero Ajudar
           </Link>
           <Link to="/tampinhas" className={styles.linkItem}>
             <Lucide.ChevronRight /> Projeto Tampinhas
@@ -71,7 +71,7 @@ export function Footer() {
       </div>
 
       <div className={styles.footerBottom}>
-        <p>&copy; 2026 Abrigo do Wlad</p>
+        <p>&copy; {new Date().getFullYear()} Abrigo do Wlad</p>
         <p
           style={{
             display: "inline-flex",

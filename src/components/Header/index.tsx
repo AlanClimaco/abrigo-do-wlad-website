@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router";
 import styles from "./Header.module.css";
 import logo from "../../assets/logo.png";
+import { Button } from "../ui/Button";
+import * as Lucide from "lucide-react";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -59,8 +61,11 @@ export function Header() {
           Tampinhas
         </Link>
 
-        <Link to="/formulario" className={styles.btnCta}>
-          Quero Ajudar
+        <Link to="/formulario">
+          <Button size="md" variant="secondary">
+            <Lucide.HeartHandshake />
+            <span>Quero Ajudar</span>
+          </Button>
         </Link>
       </nav>
     </header>
