@@ -2,8 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 import { ArrowRight } from "lucide-react";
 import styles from "./HistorySection.module.css";
-import dogImage from "../../assets/cao.png";
+import dogImage from "../../assets/simba.jpg";
 import { Button } from "../ui/Button";
+import * as Lucide from "lucide-react"
 
 export function HistorySection() {
   const [isVisible, setIsVisible] = useState(false);
@@ -42,7 +43,11 @@ export function HistorySection() {
             isVisible ? styles.visible : ""
           }`}
         >
-          <img src={dogImage} alt="Cão Idoso do Abrigo" />
+          <img src={dogImage} alt="Simba" />
+          <div className={styles.dogNameContainer}>
+            <Lucide.PawPrint size={15}/>
+            <span>Simba</span>
+          </div>
         </div>
 
         <div

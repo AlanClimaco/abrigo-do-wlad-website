@@ -6,6 +6,7 @@ type ButtonProps = {
   children: ReactNode;
   variant?: "primary" | "secondary" | "ghost" | "text";
   size?: "sm" | "md" | "lg";
+  blur?: boolean;
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
 } & ComponentProps<"button">;
@@ -14,6 +15,7 @@ export function Button({
   children,
   variant = "primary",
   size = "md",
+  blur,
   leftIcon,
   rightIcon,
   className,
@@ -25,7 +27,8 @@ export function Button({
         style.btn,
         style[variant],
         style[size],
-        className,
+        { [style.blur]: blur },
+        className
       )}
       {...props}
     >

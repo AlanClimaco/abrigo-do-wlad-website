@@ -27,7 +27,7 @@ export function Hero() {
 
           <div className={styles.btnGroup}>
             <Link to="/adotar" className="btn-primary">
-              <Button size="lg">Conheça Nossos Cães</Button>
+              <Button blur={true} size="lg">Conheça Nossos Cães</Button>
             </Link>
 
             <a href="#historia" className="btn-secondary">

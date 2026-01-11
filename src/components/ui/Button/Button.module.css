@@ -89,3 +89,7 @@
   align-items: center;
   justify-content: center;
 }
+
+.blur {
+  backdrop-filter: blur(var(--blur));
+}
