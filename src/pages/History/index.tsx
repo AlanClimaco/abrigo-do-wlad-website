@@ -1,3 +1,11 @@
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardIcon,
+  CardTitle,
+} from "../../components/ui/Card";
+import * as Lucide from "lucide-react";
 import HeroSmall from "../../components/HeroSmall";
 import styles from "./History.module.css";
 
@@ -12,7 +20,7 @@ export default function History() {
       />
       <div className="container">
         <div
-          className=""
+          className={styles.historyContainer}
           style={{ gridTemplateColumns: "1.5fr 1fr", alignItems: "start" }}
         >
           <div className={styles.historyText}>
@@ -59,8 +67,39 @@ export default function History() {
               segurança, telas e telhado novo.
             </p>
 
-            <div>card de captacao de recursos</div>
-            <div>imagem do dog</div>
+            <Card variant="quote">
+              <CardHeader>
+                <CardIcon>
+                  <Lucide.Coins size={30} strokeWidth={1.5} />
+                </CardIcon>
+                <CardTitle>Captação de Recursos</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p style={{ textAlign: "justify" }}>
+                  Um dos projetos implantado para arrecadação de recursos para
+                  financiar a obra foi a reciclagem de tampinhas plásticas.
+                  Consiste na coleta de tampas plásticas ou qualquer material
+                  que seja de polipropileno que é vendido para empresas que
+                  transformam esse material e revendem para a indústria de
+                  brinquedos, eletrodomésticos, automobilística e outras.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+          <div className={styles.historyImageContainer}>
+            {/* img temporaria */}
+            <img
+              src="https://img.freepik.com/fotos-gratis/e6mmqmducags9ema81vqg4lssvin112lzmqib9g8jpg_181624-57371.jpg?semt=ais_hybrid&w=740&q=80"
+              alt=""
+            />
+
+            <div className={styles.historyImageDescription}>
+              <h4>12+ Anos de História</h4>
+              <p>
+                Centenas de vidas transformadas pelo amor e dedicação da família
+                Cruz.
+              </p>
+            </div>
           </div>
         </div>
       </div>

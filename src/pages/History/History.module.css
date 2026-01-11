@@ -1,3 +1,10 @@
+.historyContainer {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  align-items: start;
+  gap: 50px;
+}
+
 .historyText {
   text-align: left;
 }
@@ -37,4 +44,40 @@ h3 {
   max-height: 450px;
   object-fit: cover;
   display: block;
+}
+
+.historyImageContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 120px;
+}
+
+.historyImageContainer img {
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  height: 90%;
+  object-fit: cover;
+  display: block;
+}
+
+.historyImageDescription {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 20px;
+  border-radius: var(--radius);
+  margin-top: 20px;
+  text-align: center;
+}
+
+.historyImageDescription h4 {
+  color: var(--primary)
+}
+
+.historyImageDescription p {
+  font-size: 0.9rem;
 }

@@ -45,3 +45,28 @@
 .cardFooter {
   margin-top: 1.5rem;
 }
+
+.quote {
+  border-left: 5px solid var(--secondary);
+  border-top-color: transparent;
+  box-shadow: none;
+}
+
+.quote .cardHeader {
+  flex-direction: row;
+  align-items: center;
+}
+
+.quote .cardTitle {
+  font-size: 1.4rem;
+}
+
+.quote .cardIcon {
+  color: var(--secondary);
+}
+
+.quote:hover {
+  transform: none;
+  box-shadow: none;
+  border-top-color: transparent;
+}

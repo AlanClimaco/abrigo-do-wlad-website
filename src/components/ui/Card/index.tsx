@@ -7,10 +7,21 @@ import type { HTMLAttributes } from "react";
 import styles from "./Card.module.css";
 import { cn } from "../../../lib/utils";
 
-type CardProps = HTMLAttributes<HTMLDivElement>;
+type CardProps = HTMLAttributes<HTMLDivElement> & {
+  variant?: "default" | "quote";
+};
 
-export function Card({ className, ...props }: CardProps) {
-  return <div className={cn(styles.card, className)} {...props} />;
+export function Card({ className, variant = "default", ...props }: CardProps) {
+  return (
+    <div
+      className={cn(
+        styles.card,
+        variant === "quote" && styles.quote,
+        className
+      )}
+      {...props}
+    />
+  );
 }
 
 export function CardHeader({

@@ -108,7 +108,7 @@ export function ActionCards() {
       <Card>
         <CardHeader>
           <CardIcon>
-            <Lucide.Heart size={48} strokeWidth={1.5} />
+            <Lucide.Recycle size={48} strokeWidth={1.5} />
           </CardIcon>
           <CardTitle>Projeto Tampinhas</CardTitle>
         </CardHeader>
