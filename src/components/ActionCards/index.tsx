@@ -26,8 +26,8 @@ export function ActionCards() {
         </div>
         <h3>Adoção Responsável</h3>
         <p>
-          Nossos animais são entregues castrados e vacinados. Adotar é um
-          compromisso de amor para a vida toda.
+          Nossos animais são entregues <strong>castrados e vacinados</strong>.
+          Adotar é um compromisso de amor para a vida toda.
         </p>
         <Link to="/adotar" className="btn-text">
           <Button size="md" variant="text">
@@ -43,8 +43,8 @@ export function ActionCards() {
         </div>
         <h3>Faça uma Doação</h3>
         <p>
-          Mantemos o abrigo 100% com doações. Sua ajuda garante ração e
-          remédios.
+          Mantemos o abrigo <strong>100% com doações</strong>. Sua ajuda garante
+          ração e remédios.
         </p>
 
         <div
@@ -78,6 +78,9 @@ export function ActionCards() {
             <Lucide.QrCode size={20} />
             <span>Gerar Código QR</span>
           </Button>
+          <span style={{ fontSize: "12px", opacity: "0.8" }}>
+            Doação via <strong>PIX</strong>
+          </span>
         </div>
       </div>
 
@@ -88,8 +91,8 @@ export function ActionCards() {
         </div>
         <h3>Projeto Tampinhas</h3>
         <p>
-          Não jogue fora! Suas tampinhas de plástico financiam a ração e os
-          medicamentos dos nossos resgatados.
+          <strong>Não jogue fora!</strong> Suas tampinhas de plástico financiam
+          a ração e os medicamentos dos nossos resgatados.
         </p>
         <Link to="/tampinhas" className="btn-text">
           <Button size="md" variant="text">
