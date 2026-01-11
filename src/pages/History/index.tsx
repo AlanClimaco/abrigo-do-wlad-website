@@ -70,7 +70,7 @@ export default function History() {
               segurança, telas e telhado novo.
             </p>
 
-            <Card variant="quote">
+            <Card color="secondary" variant="quote">
               <CardHeader>
                 <CardIcon>
                   <Lucide.Coins size={30} strokeWidth={1.5} />

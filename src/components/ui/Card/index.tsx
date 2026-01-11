@@ -9,14 +9,25 @@ import { cn } from "../../../lib/utils";
 
 type CardProps = HTMLAttributes<HTMLDivElement> & {
   variant?: "default" | "quote";
+  color?: "primary" | "secondary";
+  size?: "sm" | "md" | "lg";
 };
 
-export function Card({ className, variant = "default", ...props }: CardProps) {
+export function Card({
+  className,
+  variant = "default",
+  color = "primary",
+  size = "md",
+  ...props
+}: CardProps) {
   return (
     <div
       className={cn(
         styles.card,
         variant === "quote" && styles.quote,
+        color === "secondary" && styles.colorSecondary,
+        size === "sm" && styles.sm,
+        size === "lg" && styles.lg,
         className
       )}
       {...props}

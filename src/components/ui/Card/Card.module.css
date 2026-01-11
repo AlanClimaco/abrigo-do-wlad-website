@@ -1,6 +1,10 @@
+/*
+  TODO: identificar o que tá causando o "corte" no border-left da variação 'quote'
+ */
+
 .card {
   background: var(--white);
-  padding: 2.5rem;
+  padding: 2.5rem; /* md default */
   border-radius: var(--radius);
   box-shadow: var(--shadow-md);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -10,10 +14,35 @@
   height: 100%;
 }
 
+/* sizes */
+.sm {
+  padding: 1.5rem;
+}
+
+.sm .cardTitle {
+  font-size: 1rem !important;
+}
+
+.sm .cardContent {
+  font-size: 1rem;
+}
+
+.lg {
+  padding: 3.5rem;
+}
+
+.lg .cardTitle {
+  font-size: 1.75rem;
+}
+
 .card:hover {
   transform: translateY(-10px);
   box-shadow: var(--shadow-lg);
   border-top-color: var(--primary);
+}
+
+.colorSecondary:hover {
+  border-top-color: var(--secondary);
 }
 
 .cardHeader {
@@ -25,6 +54,10 @@
 
 .cardIcon {
   color: var(--primary);
+}
+
+.colorSecondary .cardIcon {
+  color: var(--secondary);
 }
 
 .cardTitle {
@@ -39,6 +72,8 @@
 }
 
 .cardContent p {
+  color: var(--text-main) !important;
+  text-align: left !important;
   margin-bottom: 1rem;
 }
 
@@ -47,9 +82,16 @@
 }
 
 .quote {
-  border-left: 5px solid var(--secondary);
+  border-left: 5px solid var(--primary);
   border-top-color: transparent;
   box-shadow: none;
+  background-color: #ff6b3527;
+  color: var(--primary);
+}
+
+.quote.colorSecondary {
+  border-left-color: var(--secondary);
+  background-color: #004e8926;
 }
 
 .quote .cardHeader {
@@ -59,9 +101,10 @@
 
 .quote .cardTitle {
   font-size: 1.4rem;
+  color: var(--primary);
 }
 
-.quote .cardIcon {
+.quote.colorSecondary .cardTitle {
   color: var(--secondary);
 }
 
