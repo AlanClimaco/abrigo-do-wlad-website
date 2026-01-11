@@ -1,13 +1,16 @@
 import {
   Card,
   CardContent,
+  CardFooter,
   CardHeader,
   CardIcon,
   CardTitle,
 } from "../../components/ui/Card";
 import * as Lucide from "lucide-react";
 import HeroSmall from "../../components/HeroSmall";
+import { Button } from "../../components/ui/Button";
 import styles from "./History.module.css";
+import { Link } from "react-router";
 
 export default function History() {
   return (
@@ -84,6 +87,13 @@ export default function History() {
                   brinquedos, eletrodomésticos, automobilística e outras.
                 </p>
               </CardContent>
+              <CardFooter>
+                <Link to="/tampinhas" className="btn-text">
+                  <Button size="md" variant="text">
+                    Saiba Mais <Lucide.ArrowRight size={20} />
+                  </Button>
+                </Link>
+              </CardFooter>
             </Card>
           </div>
           <div className={styles.historyImageContainer}>
@@ -96,8 +106,8 @@ export default function History() {
             <div className={styles.historyImageDescription}>
               <h4>12+ Anos de História</h4>
               <p>
-                Centenas de vidas transformadas pelo amor e dedicação da família
-                Cruz.
+                Centenas de vidas transformadas pelo amor e dedicação de
+                voluntários.
               </p>
             </div>
           </div>
