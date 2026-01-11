@@ -98,7 +98,7 @@ export function ActionCards() {
               <span>Gerar Código QR</span>
             </Button>
             <span style={{ fontSize: "12px", opacity: "0.8" }}>
-              Doação via <strong>PIX</strong>
+              Doações via <strong>PIX</strong>
             </span>
           </div>
         </CardFooter>
