@@ -1,75 +1,105 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Heart, Recycle, ArrowRight, QrCode, Copy, Check } from 'lucide-react';
-import styles from './ActionCards.module.css';
+import { useState } from "react";
+import { Button } from "../ui/Button";
+import * as Lucide from "lucide-react";
+import styles from "./ActionCards.module.css";
+import { Link } from "react-router";
 
 export function ActionCards() {
-    const [copied, setCopied] = useState(false);
-    const pixKey = "abrigodowlad@gmail.com";
+  const [copied, setCopied] = useState(false);
+  const pixKey = "abrigodowlad@gmail.com";
 
-    const handleCopyPix = () => {
-        navigator.clipboard.writeText(pixKey);
-        setCopied(true);
-        
-        setTimeout(() => {
-            setCopied(false);
-        }, 3000);
-    };
+  const handleCopyPix = () => {
+    navigator.clipboard.writeText(pixKey);
+    setCopied(true);
 
-    return (
-        <section className={`container ${styles.cardsContainer}`}>
-            
-            {/* Card 1: Adoção */}
-            <div className={styles.card}>
-                <div className={styles.cardIcon}>
-                    <Heart size={48} strokeWidth={1.5} />
-                </div>
-                <h3>Adoção Responsável</h3>
-                <p>Nossos animais são entregues castrados e vacinados. Adotar é um compromisso de amor para a vida toda.</p>
-                <Link to="/adotar" className="btn-text">
-                    Conheça Nossos Cães <ArrowRight size={20} />
-                </Link>
-            </div>
+    setTimeout(() => {
+      setCopied(false);
+    }, 3000);
+  };
 
-            {/* Card 2: Doações (NOVO) */}
-            <div className={styles.card}>
-                <div className={styles.cardIcon}>
-                    <QrCode size={48} strokeWidth={1.5} />
-                </div>
-                <h3>Faça uma Doação</h3>
-                <p>Mantemos o abrigo 100% com doações. Sua ajuda garante ração e remédios. Chave PIX<br/>(E-mail):</p>
-                
-                <button 
-                    onClick={handleCopyPix} 
-                    className={`${styles.pixButton} ${copied ? styles.copied : ''}`}
-                    title="Clique para copiar a chave PIX"
-                >
-                    {copied ? (
-                        <>
-                            <Check size={20} />
-                            PIX Copiado!
-                        </>
-                    ) : (
-                        <>
-                            <Copy size={20} />
-                            abrigodowlad@gmail.com
-                        </>
-                    )}
-                </button>
-            </div>
+  return (
+    <section className={`container ${styles.cardsContainer}`}>
+      {/* Card 1: Adoção */}
+      <div className={styles.card}>
+        <div className={styles.cardIcon}>
+          <Lucide.Heart size={48} strokeWidth={1.5} />
+        </div>
+        <h3>Adoção Responsável</h3>
+        <p>
+          Nossos animais são entregues <strong>castrados e vacinados</strong>.
+          Adotar é um compromisso de amor para a vida toda.
+        </p>
+        <Link to="/adotar" className="btn-text">
+          <Button size="md" variant="text">
+            Conheça Nossos Cães <Lucide.ArrowRight size={20} />
+          </Button>
+        </Link>
+      </div>
 
-            {/* Card 3: Tampinhas */}
-            <div className={styles.card}>
-                <div className={styles.cardIcon}>
-                    <Recycle size={48} strokeWidth={1.5} />
-                </div>
-                <h3>Projeto Tampinhas</h3>
-                <p>Não jogue fora! Suas tampinhas de plástico financiam a ração e os medicamentos dos nossos resgatados.</p>
-                <Link to="/tampinhas" className="btn-text">
-                    Ver Pontos de Coleta <ArrowRight size={20} />
-                </Link>
-            </div>
-          
-        </section>
-    );
+      {/* Card 2: Doações */}
+      <div className={styles.card}>
+        <div className={styles.cardIcon}>
+          <Lucide.QrCode size={48} strokeWidth={1.5} />
+        </div>
+        <h3>Faça uma Doação</h3>
+        <p>
+          Mantemos o abrigo <strong>100% com doações</strong>. Sua ajuda garante
+          ração e remédios.
+        </p>
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "10px",
+            width: "100%",
+          }}
+        >
+          <Button
+            onClick={handleCopyPix}
+            size="sm"
+            className={copied ? styles.copied : ""}
+            title="Clique para copiar a chave PIX"
+            style={{ width: "100%" }}
+          >
+            {copied ? (
+              <>
+                <Lucide.Check size={20} />
+                PIX Copiado!
+              </>
+            ) : (
+              <>
+                <Lucide.Copy size={20} />
+                abrigodowlad@gmail.com
+              </>
+            )}
+          </Button>
+          <Button size="sm" variant="secondary">
+            <Lucide.QrCode size={20} />
+            <span>Gerar Código QR</span>
+          </Button>
+          <span style={{ fontSize: "12px", opacity: "0.8" }}>
+            Doação via <strong>PIX</strong>
+          </span>
+        </div>
+      </div>
+
+      {/* Card 3: Tampinhas */}
+      <div className={styles.card}>
+        <div className={styles.cardIcon}>
+          <Lucide.Recycle size={48} strokeWidth={1.5} />
+        </div>
+        <h3>Projeto Tampinhas</h3>
+        <p>
+          <strong>Não jogue fora!</strong> Suas tampinhas de plástico financiam
+          a ração e os medicamentos dos nossos resgatados.
+        </p>
+        <Link to="/tampinhas" className="btn-text">
+          <Button size="md" variant="text">
+            Ver Pontos de Coleta <Lucide.ArrowRight size={20} />
+          </Button>
+        </Link>
+      </div>
+    </section>
+  );
 }
