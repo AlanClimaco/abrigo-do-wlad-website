@@ -1,0 +1,47 @@
+.card {
+  background: var(--white);
+  padding: 2.5rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-top: 5px solid transparent;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-lg);
+  border-top-color: var(--primary);
+}
+
+.cardHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.cardIcon {
+  color: var(--primary);
+}
+
+.cardTitle {
+  font-size: 1.5rem;
+  color: var(--secondary);
+  margin: 0;
+}
+
+.cardContent {
+  flex-grow: 1;
+  color: var(--text-light);
+}
+
+.cardContent p {
+  margin-bottom: 1rem;
+}
+
+.cardFooter {
+  margin-top: 1.5rem;
+}
