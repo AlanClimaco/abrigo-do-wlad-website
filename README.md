@@ -19,16 +19,21 @@ Abaixo está listada a estrutura atual do projeto. Clique no nome do diretório 
 - [src](./src)
   - [components](./src/components)
     - [ActionCards](./src/components/ActionCards) - Cards interativos da Home (Adoção, Doação PIX e Tampinhas).
+    - [DogCard](./src/components/DogCard) - Card de visualização rápida do animal na listagem.
+    - [DogModal](./src/components/DogModal) - Modal detalhado com carrossel de fotos, informações completas e link para Instagram.
     - [Footer](./src/components/Footer) - Rodapé global com links de navegação e redes sociais.
     - [Header](./src/components/Header) - Barra de navegação fixa com comportamento dinâmico ao rolar a página.
     - [Hero](./src/components/Hero) - Banner principal da página inicial com imagem de fundo e chamadas para ação.
+    - [HeroSmall](./src/components/HeroSmall) - Banner reutilizável e menor para o topo das páginas internas.
     - [HistorySection](./src/components/HistorySection) - Seção narrativa com animação de entrada (Scroll Reveal).
+    - [ScrollToTop](./src/components/ScrollToTop) - Componente utilitário que reseta a posição da rolagem ao navegar entre rotas.
   - [pages](./src/pages)
-    - [Home](./src/pages/Home) - Página inicial que orquestra os componentes acima.
+    - [Adopt](./src/pages/Adopt) - Página de Adoção com grid de animais e filtros avançados (Idade, Temperamento e Cores).
+    - [Home](./src/pages/Home) - Página inicial que orquestra os componentes principais.
   - [assets](./src/assets) - Imagens estáticas (Logos, fotos dos animais).
-  - [routes.tsx](./src/routes.tsx) - Configuração das rotas da aplicação.
+  - [routes.tsx](./src/routes.tsx) - Configuração das rotas da aplicação (incluindo redirecionamento de 404).
   - [main.tsx](./src/main.tsx) - Ponto de entrada da aplicação React.
-  - [index.css](./src/index.css) - Variáveis CSS globais, reset e classes utilitárias.
+  - [index.css](./src/index.css) - Variáveis CSS globais, reset, classes utilitárias e comportamento de scroll suave.
 
 ## Instalação e Execução
 
