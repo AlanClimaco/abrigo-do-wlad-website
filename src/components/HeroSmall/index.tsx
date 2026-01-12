@@ -22,8 +22,8 @@ export default function HeroSmall({
       style={{ backgroundImage: `url(${image})` }}
     >
       <div className={styles.heroOverlay} />
-      <div className={`${styles.heroSmallContent} reveal`}>
-        <span className="badge">{badgeText}</span>
+      <div className={`${styles.heroSmallContent}`}>
+        <span className={styles.badge}>{badgeText}</span>
         <h1>{title}</h1>
         <p>{description}</p>
       </div>

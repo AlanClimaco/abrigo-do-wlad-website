@@ -57,24 +57,6 @@
 }
 
 /* Título com detalhe embaixo */
-.sectionTitle {
-  font-size: 2.5rem;
-  color: var(--secondary);
-  margin-bottom: 1.5rem;
-  position: relative;
-  display: inline-block;
-}
-
-.sectionTitle::after {
-  content: "";
-  display: block;
-  width: 60%;
-  height: 4px;
-  background: var(--primary);
-  margin-top: 10px;
-  border-radius: 2px;
-}
-
 .textSide p {
   margin-bottom: 1.5rem;
   font-size: 1.05rem;
