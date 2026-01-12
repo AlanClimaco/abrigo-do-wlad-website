@@ -75,9 +75,18 @@ h3 {
 }
 
 .historyImageDescription h4 {
-  color: var(--primary)
+  color: var(--primary);
 }
 
 .historyImageDescription p {
   font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .historyContainer {
+    display: block;
+  }
+  .historyImageContainer {
+    display: none;
+  }
 }

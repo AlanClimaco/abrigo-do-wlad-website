@@ -69,7 +69,7 @@
 
 .cardContent p {
   color: var(--text-main) !important;
-  text-align: left !important;
+  text-align: left;
   margin-bottom: 1rem;
 }
 
@@ -108,4 +108,22 @@
   transform: none;
   box-shadow: none;
   border-top-color: transparent;
+}
+
+@media (max-width: 768px) {
+  .cardFooter,
+  .cardContent p,
+  .card {
+    text-align: center !important;
+  }
+
+  .cardFooter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .quote .cardHeader {
+    flex-direction: column;
+  }
 }

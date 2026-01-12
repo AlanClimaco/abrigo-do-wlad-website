@@ -48,3 +48,10 @@
   font-size: 0.85rem;
   margin: 0;
 }
+
+@media (max-width: 768px) {
+  .recycleContainer {
+    grid-template-columns: 1fr;
+    align-items: center;
+  }
+}
