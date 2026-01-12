@@ -9,6 +9,8 @@ import Recycle from './pages/Recycle';
 export function AppRoutes() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
+      
       <Header />
 
       <Routes>
