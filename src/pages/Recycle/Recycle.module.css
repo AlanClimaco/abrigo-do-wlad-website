@@ -27,3 +27,24 @@
 .checklistIcon {
   color: green;
 }
+
+.collectionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.collectionContainer h4 {
+  color: var(--primary);
+  margin-top: 15px;
+}
+
+.collectionContainer h5 {
+  color: var(--secondary);
+  font-size: 0.9rem;
+}
+
+.collectionContainer p {
+  font-size: 0.85rem;
+  margin: 0;
+}

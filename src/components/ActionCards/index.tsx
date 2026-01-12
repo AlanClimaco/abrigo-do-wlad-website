@@ -95,7 +95,7 @@ export function ActionCards() {
             </Button>
             <Button size="sm" variant="secondary">
               <Lucide.QrCode size={20} />
-              <span>Gerar Código QR</span>
+              <span>Exibir Código QR</span>
             </Button>
             <span style={{ fontSize: "12px", opacity: "0.8" }}>
               Doações via <strong>PIX</strong>

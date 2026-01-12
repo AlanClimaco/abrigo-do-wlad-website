@@ -1,6 +1,6 @@
 import type { ComponentProps, ReactNode } from "react";
-import { clsx } from "clsx";
 import style from "./Button.module.css";
+import { cn } from "../../../lib/utils";
 
 type ButtonProps = {
   children: ReactNode;
@@ -23,7 +23,7 @@ export function Button({
 }: ButtonProps) {
   return (
     <button
-      className={clsx(
+      className={cn(
         style.btn,
         style[variant],
         style[size],
