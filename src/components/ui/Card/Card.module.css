@@ -92,7 +92,7 @@
 
 .quote .cardHeader {
   flex-direction: row;
-  align-items: center;
+  align-items: top;
 }
 
 .quote .cardTitle {
