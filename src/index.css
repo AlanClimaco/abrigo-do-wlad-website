@@ -1,26 +1,36 @@
 :root {
-  --primary: #ff6b35;
-  --primary-dark: #e85d2a;
-  --secondary: #004e89;
-  --secondary-dark: #022947;
-  --accent: #f7c59f;
-  --bg-body: #fafafa;
+  /* typography */
+  --font-sans: "Poppins", sans-serif;
   --text-main: #1f2937;
   --text-light: #6b7280;
-  --white: #ffffff;
 
-  /* button */
+  /* main colors */
+  --bg-body: #fafafa;
+  --white: #ffffff;
+  --primary: #ff6b35;
+  --secondary: #004e89;
+
+  /* accent colors (used in quote cards, accordions, etc) */
+  --accent-primary: #fbe4dc;
+  --accent-secondary: #d5e1e9;
+
+  /* button colors */
   --btn-primary: #ff6b3546;
   --btn-primary-hover: #e85d2a;
   --btn-secondary: #004e89;
   --btn-secondary-hover: #022947;
   --btn-instagram: #ce579a;
 
+  /* shadow & etc */
   --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+
   --radius: 16px;
+  --radius-sm: 6px;
+
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
   --blur: 6px;
 }
 
@@ -31,7 +41,7 @@
 }
 
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-sans);
   color: var(--text-main);
   background-color: var(--bg-body);
   line-height: 1.6;
