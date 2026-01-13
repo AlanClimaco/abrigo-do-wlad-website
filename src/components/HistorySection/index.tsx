@@ -34,7 +34,7 @@ export function HistorySection() {
   return (
     <section
       id="historia"
-      className={`container ${styles.contentSection}`}
+      className={`${styles.contentSection}`}
       ref={sectionRef}
     >
       <div className={styles.gridContainer}>

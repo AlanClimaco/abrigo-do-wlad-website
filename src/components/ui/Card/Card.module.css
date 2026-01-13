@@ -78,16 +78,14 @@
 }
 
 .quote {
-  /* border-left: 5px solid var(--primary); */
   border-top-color: transparent;
   box-shadow: none;
-  background-color: #ff6b3527;
+  background-color: var(--accent-primary);
   color: var(--primary);
 }
 
 .quote.colorSecondary {
-  /* border-left-color: var(--secondary); */
-  background-color: #004e8926;
+  background-color: var(--accent-secondary);
 }
 
 .quote .cardHeader {

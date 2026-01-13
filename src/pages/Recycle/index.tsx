@@ -150,7 +150,7 @@ export default function Recycle() {
             </CardHeader>
             <CardContent>
               <p>Encontre o local mais próximo de você:</p>
-              <ScrollArea style={{ backgroundColor: "#ff6b3527", height: "300px", padding: "10px" }}>
+              <ScrollArea style={{ height: "300px", padding: "10px" }}>
                 {collectionPoints.map((point) => (
                   <div key={point.zone} className={styles.collectionContainer}>
                     <h4>{point.zone}</h4>
