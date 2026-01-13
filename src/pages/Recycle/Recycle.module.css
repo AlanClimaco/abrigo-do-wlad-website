@@ -1,0 +1,57 @@
+.recycleContainer {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  align-items: start;
+  gap: 50px;
+}
+
+.recycleTextContainer p {
+  color: var(--text-light);
+  text-align: justify;
+}
+
+.checklist {
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 10px;
+}
+
+.checklist li {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.checklistIcon {
+  color: green;
+}
+
+.collectionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.collectionContainer h4 {
+  color: var(--primary);
+  margin-top: 15px;
+}
+
+.collectionContainer h5 {
+  color: var(--secondary);
+  font-size: 0.9rem;
+}
+
+.collectionContainer p {
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .recycleContainer {
+    grid-template-columns: 1fr;
+    align-items: center;
+  }
+}

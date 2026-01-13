@@ -1,0 +1,129 @@
+.card {
+  background: var(--white);
+  padding: 2.5rem; /* md default */
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-top: 5px solid transparent;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* sizes */
+.sm {
+  padding: 1.5rem;
+}
+
+.sm .cardTitle {
+  font-size: 1rem !important;
+}
+
+.sm .cardContent {
+  font-size: 1rem;
+}
+
+.lg {
+  padding: 3.5rem;
+}
+
+.lg .cardTitle {
+  font-size: 1.75rem;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-lg);
+  border-top-color: var(--primary);
+}
+
+.colorSecondary:hover {
+  border-top-color: var(--secondary);
+}
+
+.cardHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.cardIcon {
+  color: var(--primary);
+}
+
+.colorSecondary .cardIcon {
+  color: var(--secondary);
+}
+
+.cardTitle {
+  font-size: 1.5rem;
+  color: var(--secondary);
+  margin: 0;
+}
+
+.cardContent {
+  flex-grow: 1;
+  color: var(--text-light);
+}
+
+.cardContent p {
+  color: var(--text-main) !important;
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.cardFooter {
+  margin-top: 1.5rem;
+}
+
+.quote {
+  /* border-left: 5px solid var(--primary); */
+  border-top-color: transparent;
+  box-shadow: none;
+  background-color: #ff6b3527;
+  color: var(--primary);
+}
+
+.quote.colorSecondary {
+  /* border-left-color: var(--secondary); */
+  background-color: #004e8926;
+}
+
+.quote .cardHeader {
+  flex-direction: row;
+  align-items: top;
+}
+
+.quote .cardTitle {
+  font-size: 1.4rem;
+  color: var(--primary);
+}
+
+.quote.colorSecondary .cardTitle {
+  color: var(--secondary);
+}
+
+.quote:hover {
+  transform: none;
+  box-shadow: none;
+  border-top-color: transparent;
+}
+
+@media (max-width: 768px) {
+  .cardFooter,
+  .cardContent p,
+  .card {
+    text-align: center !important;
+  }
+
+  .cardFooter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .quote .cardHeader {
+    flex-direction: column;
+  }
+}

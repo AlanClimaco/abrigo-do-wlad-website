@@ -12,7 +12,6 @@
 }
 
 .imageWrapper {
-  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -38,52 +37,29 @@
   align-items: center;
   background-color: var(--primary);
   color: var(--white);
-  padding: 0.5rem 1rem;
-  bottom: 20px;
-  left: 20px;
+  padding: 0.3rem 0.5rem;
+  bottom: 1rem;
+  left: 1rem;
   border-radius: var(--radius);
-  z-index: 10;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 .dogNameContainer span {
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 12px;
 }
 
+/* Container do Texto */
 .textSide {
   opacity: 0;
   transform: translateX(50px);
   transition: all 0.8s cubic-bezier(0.5, 0, 0, 1) 0.2s;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
 }
 
-.sectionTitle {
-  font-size: 2.5rem;
-  color: var(--secondary);
-  margin-bottom: 1.5rem;
-  position: relative;
-  display: inline-block;
-}
-
-.sectionTitle::after {
-  content: "";
-  display: block;
-  width: 60%;
-  height: 4px;
-  background: var(--primary);
-  margin-top: 10px;
-  border-radius: 2px;
-}
-
+/* Título com detalhe embaixo */
 .textSide p {
   margin-bottom: 1.5rem;
   font-size: 1.05rem;
   color: var(--text-light);
   text-align: justify;
-  line-height: 1.6;
 }
 
 .visible {
@@ -92,46 +68,13 @@
 }
 
 @media (max-width: 768px) {
-  .contentSection {
-    padding: 3rem 1.5rem;
-    margin-top: 4rem;
-    overflow: visible;
-  }
-
   .gridContainer {
     grid-template-columns: 1fr;
-    gap: 2.5rem;
+    gap: 2rem;
   }
 
-  .imageWrapper {
-    width: 100%;
-    transform: translateY(30px);
-    max-width: 500px;
-    margin: 0 auto;
-  }
-  
-  .imageWrapper img {
-    max-height: 300px;
-  }
-
+  .imageWrapper,
   .textSide {
     transform: translateY(30px);
-    width: 100%;
-    padding-bottom: 20px;
-  }
-
-  .textSide p {
-    text-align: left;
-    font-size: 1rem;
-  }
-
-  .sectionTitle {
-    font-size: 2rem;
-    align-self: center;
-  }
-
-  .textSide a {
-    display: inline-block;
-    margin-top: 0.5rem;
   }
 }

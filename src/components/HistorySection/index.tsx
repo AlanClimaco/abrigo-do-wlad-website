@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 import styles from "./HistorySection.module.css";
 import dogImage from "../../assets/simba.jpg";
 import { Button } from "../ui/Button";
-import * as Lucide from "lucide-react"
+import * as Lucide from "lucide-react";
 
 export function HistorySection() {
   const [isVisible, setIsVisible] = useState(false);
@@ -45,7 +45,7 @@ export function HistorySection() {
         >
           <img src={dogImage} alt="Simba" />
           <div className={styles.dogNameContainer}>
-            <Lucide.PawPrint size={15}/>
+            <Lucide.PawPrint size={15} />
             <span>Simba</span>
           </div>
         </div>
@@ -53,7 +53,7 @@ export function HistorySection() {
         <div
           className={`${styles.textSide} ${isVisible ? styles.visible : ""}`}
         >
-          <h2 className={styles.sectionTitle}>Nossa História</h2>
+          <h2 className="section-title">Nossa História</h2>
 
           <p>
             Há mais de 12 anos, <strong>Wladimir Cruz</strong> decidiu deixar um

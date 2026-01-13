@@ -1,33 +1,32 @@
-import styles from './HeroSmall.module.css';
+import styles from "./HeroSmall.module.css";
 
-interface HeroSmallProps {
-    title: string;
-    description: string;
-    badge?: string;
-    backgroundImage?: string;
-}
+type HeroSmallProps = {
+  image: string;
+  badgeText: string;
+  title: string;
+  description: string;
+};
 
-export function HeroSmall({ 
-    title, 
-    description, 
-    badge = "Abrigo do Wlad",
-    backgroundImage 
+/**
+ * Hero utilizado em páginas fora da Home
+ */
+export default function HeroSmall({
+  image,
+  badgeText,
+  title,
+  description,
 }: HeroSmallProps) {
-    
-    // Se passar uma imagem nova via props, usa ela. Se não, usa a do CSS.
-    const inlineStyle = backgroundImage 
-        ? { backgroundImage: `url('${backgroundImage}')` } 
-        : undefined;
-
-    return (
-        <section className={styles.heroContainer} style={inlineStyle}>
-            <div className={styles.overlay} />
-            
-            <div className={styles.content}>
-                {badge && <span className={styles.badge}>{badge}</span>}
-                <h1 className={styles.title}>{title}</h1>
-                <p className={styles.description}>{description}</p>
-            </div>
-        </section>
-    );
+  return (
+    <section
+      className={styles.heroSmall}
+      style={{ backgroundImage: `url(${image})` }}
+    >
+      <div className={styles.heroOverlay} />
+      <div className={`${styles.heroSmallContent}`}>
+        <span className={styles.badge}>{badgeText}</span>
+        <h1>{title}</h1>
+        <p>{description}</p>
+      </div>
+    </section>
+  );
 }
