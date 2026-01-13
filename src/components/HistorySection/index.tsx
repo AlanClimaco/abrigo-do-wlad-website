@@ -71,13 +71,13 @@ export function HistorySection() {
             precisam de um novo lar.
           </p>
 
-          <br />
-
-          <Link to="/historia">
-            <Button variant="text">
-              Ler história completa <ArrowRight size={20} />
-            </Button>
-          </Link>
+          <div className={styles.buttonWrapper}>
+            <Link to="/historia">
+              <Button variant="text">
+                Ler história completa <ArrowRight size={20} />
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
     </section>

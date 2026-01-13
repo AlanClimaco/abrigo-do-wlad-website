@@ -18,6 +18,7 @@
   opacity: 0;
   transform: translateX(-50px);
   transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+  position: relative;
 }
 
 .imageWrapper img {
@@ -41,20 +42,20 @@
   bottom: 1rem;
   left: 1rem;
   border-radius: var(--radius);
+  z-index: 10;
 }
 
 .dogNameContainer span {
   font-size: 12px;
+  font-weight: 600;
 }
 
-/* Container do Texto */
 .textSide {
   opacity: 0;
   transform: translateX(50px);
   transition: all 0.8s cubic-bezier(0.5, 0, 0, 1) 0.2s;
 }
 
-/* Título com detalhe embaixo */
 .textSide p {
   margin-bottom: 1.5rem;
   font-size: 1.05rem;
@@ -62,19 +63,39 @@
   text-align: justify;
 }
 
+.buttonWrapper {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-start;
+}
+
 .visible {
   opacity: 1;
-  transform: translateX(0);
+  transform: translateX(0) !important;
 }
 
 @media (max-width: 768px) {
+  .contentSection {
+    margin-top: 4rem;
+    padding: 4rem 0;
+  }
+
   .gridContainer {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 2.5rem;
   }
 
   .imageWrapper,
   .textSide {
     transform: translateY(30px);
+  }
+  
+  .textSide {
+    padding-bottom: 1rem; 
+  }
+  
+  .buttonWrapper {
+    width: 100%;
+    justify-content: center;
   }
 }
