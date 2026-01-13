@@ -27,6 +27,9 @@ export function Footer() {
           <Link to="/adotar" className={styles.linkItem}>
             <Lucide.ChevronRight /> Quero Ajudar
           </Link>
+          <Link to="/historia" className={styles.linkItem}>
+            <Lucide.ChevronRight /> Nossa história
+          </Link>
           <Link to="/tampinhas" className={styles.linkItem}>
             <Lucide.ChevronRight /> Projeto Tampinhas
           </Link>

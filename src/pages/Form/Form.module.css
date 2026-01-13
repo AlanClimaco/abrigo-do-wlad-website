@@ -1,0 +1,205 @@
+.longForm {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  max-width: 900px;
+  margin: 0 auto 6rem;
+}
+
+/* Aviso Inicial */
+.introBox {
+  background-color: #fff8f0;
+  border: 1px solid #ffdcb0;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2.5rem;
+}
+
+.warningHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #c0392b;
+  margin-bottom: 1rem;
+}
+
+.warningHeader h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.introBox p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+.introBox strong {
+  color: #c0392b;
+}
+
+.smallText {
+  font-size: 0.85rem !important;
+  color: var(--text-light) !important;
+}
+
+/* Sessões do Formulário */
+.section {
+  border: none;
+  padding: 0;
+  margin: 0 0 3rem 0;
+  border-top: 1px solid #eee;
+  padding-top: 2rem;
+}
+
+.section legend {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+  padding-right: 10px;
+}
+
+.subSection {
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+}
+
+.subSection h4 {
+  margin-top: 0;
+  color: var(--primary-dark);
+}
+
+.helperText {
+  color: var(--text-light);
+  font-style: italic;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+/* Inputs e Labels */
+.field {
+  margin-bottom: 1.5rem;
+}
+
+.field label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-dark);
+  font-size: 0.95rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="tel"],
+select,
+textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: inherit;
+  background-color: #fff;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0, 78, 137, 0.1);
+}
+
+textarea {
+  resize: vertical;
+}
+
+/* Radio Buttons Customizados */
+.radioGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.radioGroup label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.warningBox {
+  background-color: #fff3cd;
+  color: #856404;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  border: 1px solid #ffeeba;
+}
+
+.formFooter {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.formFooter button {
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Sucesso */
+.successContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 4rem 2rem;
+  max-width: 600px;
+  margin: 0 auto 6rem;
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.successIcon {
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .longForm {
+    padding: 1.5rem 1rem;
+  }
+  
+  .row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .section legend {
+    font-size: 1.2rem;
+  }
+}
