@@ -42,12 +42,14 @@
   align-items: center;
   justify-content: space-between;
   font-size: 15px;
-  line-height: 1;
+  line-height: 1.2;
   font-weight: 700;
   border: none;
   color: var(--text-light);
   cursor: pointer;
   transition: var(--transition);
+  text-align: left;
+  gap: 10px;
 }
 
 .item:hover .trigger {

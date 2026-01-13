@@ -2,37 +2,39 @@ import { useEffect, useState } from "react";
 import { useForm, ValidationError } from "@formspree/react";
 import { useSearchParams, Link } from "react-router";
 import { ArrowLeft, CheckCircle, Send, AlertTriangle } from "lucide-react";
+import ReCAPTCHA from "react-google-recaptcha";
 import HeroSmall from "../../components/HeroSmall";
 import { Button } from "../../components/ui/Button";
 import styles from "./Form.module.css";
 
 export default function Form() {
-  const [state, handleSubmit] = useForm("mreegjep");
+  // Usa o ID do arquivo .env
+  const [state, handleSubmit] = useForm(import.meta.env.VITE_FORMSPREE_ID);
+  
   const [searchParams] = useSearchParams();
   const petName = searchParams.get("pet") || "";
   
-  // Estado para controlar a máscara do telefone
   const [phone, setPhone] = useState("");
+
+  // Estado para o Captcha
+  const [captchaToken, setCaptchaToken] = useState("");
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Função para aplicar a máscara de telefone (XX) XXXXX-XXXX
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
-    
-    // Remove tudo que não é número
     value = value.replace(/\D/g, "");
-    
-    // Limita a 11 dígitos
     if (value.length > 11) value = value.slice(0, 11);
-
-    // Aplica a formatação
     value = value.replace(/^(\d{2})(\d)/g, "($1) $2");
     value = value.replace(/(\d)(\d{4})$/, "$1-$2");
-
     setPhone(value);
+  };
+
+  // Função chamada quando o usuário clica no "Não sou um robô"
+  const handleCaptchaChange = (token: string | null) => {
+    setCaptchaToken(token || "");
   };
 
   if (state.succeeded) {
@@ -97,7 +99,7 @@ export default function Form() {
             </p>
             <hr />
             <p className={styles.smallText}>
-              <strong>Requisitos:</strong> Ter acima de 18 anos (alguns protetores exigem 25). Necessário condições financeiras (custo médio R$ 300-400/mês). 
+              <strong>Requisitos:</strong> Ter acima de 18 anos. Necessário condições financeiras (custo médio R$ 300-400/mês). 
               Pode levar meses para adaptar. Animais fazem sujeira e precisam de veterinário. Abandonar é crime!
             </p>
           </div>
@@ -109,14 +111,12 @@ export default function Form() {
             <legend>1. Dados Pessoais</legend>
             
             <div className={styles.field}>
-              {/* Simplificado para singular */}
               <label>1. Nome do adotante *</label>
               <input type="text" name="1_nome_adotante" required placeholder="Seu nome completo" />
             </div>
 
             <div className={styles.row}>
               <div className={styles.field}>
-                {/* Simplificado para singular */}
                 <label>2. Idade *</label>
                 <input type="number" name="2_idade" required placeholder="Sua idade" min="18" />
               </div>
@@ -138,7 +138,6 @@ export default function Form() {
                 <input type="text" name="4_profissao" required />
               </div>
               <div className={styles.field}>
-                {/* Simplificado para singular */}
                 <label>5. Empresa onde trabalha *</label>
                 <input type="text" name="5_empresa" required />
               </div>
@@ -152,7 +151,6 @@ export default function Form() {
             <div className={styles.row}>
               <div className={styles.field}>
                 <label>7. Telefone para contato (WhatsApp) *</label>
-                {/* Input Controlado com Máscara */}
                 <input 
                   type="text" 
                   name="7_telefone" 
@@ -629,13 +627,26 @@ export default function Form() {
               <label>50. Espaço para observações</label>
               <textarea name="50_obs" rows={3}></textarea>
             </div>
+
+            {/* --- ÁREA DO CAPTCHA --- */}
+            <div className={styles.field} style={{ marginTop: "2rem", display: "flex", justifyContent: "center" }}>
+              <ReCAPTCHA
+                sitekey="6LeHu0ksAAAAAMrICH8bmO4MD0r2wdnJ9AZVpWlF" 
+                onChange={handleCaptchaChange}
+              />
+              <input
+                type="hidden"
+                name="g-recaptcha-response"
+                value={captchaToken}
+              />
+            </div>
           </fieldset>
 
           <div className={styles.formFooter}>
             <Button 
               type="submit" 
               size="lg" 
-              disabled={state.submitting}
+              disabled={state.submitting || !captchaToken}
               rightIcon={<Send size={18} />}
             >
               {state.submitting ? "Enviando..." : "Enviar Respostas"}

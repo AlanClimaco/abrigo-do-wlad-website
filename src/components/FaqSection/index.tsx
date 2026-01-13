@@ -9,7 +9,6 @@ export default function FaqSection() {
   return (
     <section id="faq">
       <Accordion
-        defaultValue="item-2"
         type="single"
         collapsible
         style={{ width: "100%" }}
