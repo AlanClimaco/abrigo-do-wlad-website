@@ -56,10 +56,13 @@
   border-style: dotted;
   border-color: var(--btn-instagram);
   color: var(--btn-instagram);
+  border-width: 2px; 
 }
 
 .instagram:hover {
-  border: none;
+  border-style: solid;
+  border-color: var(--btn-instagram);
+  
   background-color: var(--btn-instagram);
   color: var(--white);
 }

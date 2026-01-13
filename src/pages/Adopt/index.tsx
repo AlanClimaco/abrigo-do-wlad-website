@@ -112,6 +112,7 @@ export default function Adopt() {
   return (
     <main>
       <HeroSmall
+        image="https://www.petz.com.br/blog/wp-content/uploads/2025/11/vira-lata1.jpg"
         title="Nossos Doguinhos"
         badge="Amigos Fiéis"
         description="Cada um tem uma história e uma personalidade única. Utilize os filtros abaixo para encontrar quem combina com seu estilo de vida."
