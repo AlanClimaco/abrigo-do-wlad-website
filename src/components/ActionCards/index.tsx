@@ -26,7 +26,7 @@ export function ActionCards() {
   };
 
   return (
-    <section className={`container ${styles.cardsContainer}`}>
+    <section className={`${styles.cardsContainer}`}>
       
       {/* Adoção */}
       <Card>
