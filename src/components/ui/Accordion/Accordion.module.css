@@ -26,7 +26,6 @@
 .item:focus-within {
   position: relative;
   z-index: 1;
-  box-shadow: 0 0 0 2px var(--mauve-12);
 }
 
 .header {
@@ -46,18 +45,20 @@
   line-height: 1;
   font-weight: 700;
   border: none;
-  color: var(--text-main);
+  color: var(--text-light);
   cursor: pointer;
+  transition: var(--transition);
 }
 
-.trigger:hover {
-  background-color: var(--mauve-2);
+.item:hover .trigger {
+  color: var(--text-main);
 }
 
 .content {
   overflow: hidden;
   font-size: 15px;
   color: var(--text-light);
+  margin-top: 10px;
   border-radius: var(--radius-sm);
 }
 .content[data-state="open"] {
