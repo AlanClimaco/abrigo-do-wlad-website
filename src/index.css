@@ -10,10 +10,11 @@
   --white: #ffffff;
 
   /* button */
-  --btn-primary: #ff6b3527;
+  --btn-primary: #ff6b3546;
   --btn-primary-hover: #e85d2a;
   --btn-secondary: #004e89;
   --btn-secondary-hover: #022947;
+  --btn-instagram: #ce579a;
 
   --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);

@@ -88,7 +88,7 @@ export default function Recycle() {
     <>
       <HeroSmall
         image="https://images.unsplash.com/photo-1642631171488-23d631eba638?auto=format&fit=crop&w=1920&q=80"
-        badgeText="Reciclagem Solidária"
+        badge="Reciclagem Solidária"
         title="Sua tampinha vale vidas"
         description="Transformamos plástico em ração e medicamentos. Descubra como um gesto simples pode salvar nossos animais."
       />

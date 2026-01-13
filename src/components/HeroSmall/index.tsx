@@ -1,8 +1,8 @@
 import styles from "./HeroSmall.module.css";
 
 type HeroSmallProps = {
-  image: string;
-  badgeText: string;
+  image?: string;
+  badge: string;
   title: string;
   description: string;
 };
@@ -12,7 +12,7 @@ type HeroSmallProps = {
  */
 export default function HeroSmall({
   image,
-  badgeText,
+  badge,
   title,
   description,
 }: HeroSmallProps) {
@@ -23,7 +23,7 @@ export default function HeroSmall({
     >
       <div className={styles.heroOverlay} />
       <div className={`${styles.heroSmallContent}`}>
-        <span className={styles.badge}>{badgeText}</span>
+        <span className={styles.badge}>{badge}</span>
         <h1>{title}</h1>
         <p>{description}</p>
       </div>
