@@ -39,7 +39,7 @@
   background-color: var(--btn-secondary-hover)
 }
 
-.ghost {
+.outline {
   background-color: transparent;
   color: var(--white);
   border-color: var(--white);
@@ -47,9 +47,21 @@
   background-color: rgba(255, 255, 255, 0.064);
 }
 
-.ghost:hover {
+.outline:hover {
   background-color: var(--white);
   color: var(--text-light)
+}
+
+.instagram {
+  border-style: dotted;
+  border-color: var(--btn-instagram);
+  color: var(--btn-instagram);
+}
+
+.instagram:hover {
+  border: none;
+  background-color: var(--btn-instagram);
+  color: var(--white);
 }
 
 .text {
