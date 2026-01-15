@@ -2,17 +2,22 @@ import { useEffect, useState } from "react";
 import { useForm, ValidationError } from "@formspree/react";
 import { useSearchParams, Link } from "react-router";
 import { ArrowLeft, CheckCircle, Send, AlertTriangle } from "lucide-react";
+import ReCAPTCHA from "react-google-recaptcha";
 import HeroSmall from "../../components/HeroSmall";
 import { Button } from "../../components/ui/Button";
 import styles from "./Form.module.css";
 
 export default function Form() {
+  // Usa o ID do arquivo .env
   const [state, handleSubmit] = useForm(import.meta.env.VITE_FORMSPREE_ID);
   
   const [searchParams] = useSearchParams();
   const petName = searchParams.get("pet") || "";
   
   const [phone, setPhone] = useState("");
+
+  // Estado para o Captcha
+  const [captchaToken, setCaptchaToken] = useState("");
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -25,6 +30,11 @@ export default function Form() {
     value = value.replace(/^(\d{2})(\d)/g, "($1) $2");
     value = value.replace(/(\d)(\d{4})$/, "$1-$2");
     setPhone(value);
+  };
+
+  // Função chamada quando o usuário clica no "Não sou um robô"
+  const handleCaptchaChange = (token: string | null) => {
+    setCaptchaToken(token || "");
   };
 
   if (state.succeeded) {
@@ -618,13 +628,25 @@ export default function Form() {
               <textarea name="50_obs" rows={3}></textarea>
             </div>
 
+            {/* --- ÁREA DO CAPTCHA --- */}
+            <div className={styles.field} style={{ marginTop: "2rem", display: "flex", justifyContent: "center" }}>
+              <ReCAPTCHA
+                sitekey="6LeHu0ksAAAAAMrICH8bmO4MD0r2wdnJ9AZVpWlF" 
+                onChange={handleCaptchaChange}
+              />
+              <input
+                type="hidden"
+                name="g-recaptcha-response"
+                value={captchaToken}
+              />
+            </div>
           </fieldset>
 
           <div className={styles.formFooter}>
             <Button 
               type="submit" 
               size="lg" 
-              disabled={state.submitting}
+              disabled={state.submitting || !captchaToken}
               rightIcon={<Send size={18} />}
             >
               {state.submitting ? "Enviando..." : "Enviar Respostas"}

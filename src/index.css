@@ -98,6 +98,10 @@ img {
   transform: translateY(0);
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 @media (max-width: 768px) {
   .section-title::after {
     display: none;

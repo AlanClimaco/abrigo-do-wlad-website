@@ -81,7 +81,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 2.5rem;
-    padding-bottom: 6rem;
+    padding-bottom: 3rem; /* Reduzi um pouco pois a paginação vem embaixo */
 }
 
 .emptyState {
@@ -93,4 +93,49 @@
     flex-direction: column;
     align-items: center;
     gap: 1rem;
+}
+
+/* --- PAGINAÇÃO (Novo) --- */
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+    padding-bottom: 4rem;
+}
+  
+.pageButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 1px solid #E5E7EB;
+    background-color: var(--white);
+    color: var(--text-main);
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: var(--shadow-sm);
+}
+  
+.pageButton:hover:not(:disabled) {
+    background-color: var(--primary);
+    color: var(--white);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+  
+.pageButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #F3F4F6;
+    box-shadow: none;
+}
+  
+.pageInfo {
+    font-weight: 600;
+    color: var(--text-main);
+    font-size: 1rem;
 }

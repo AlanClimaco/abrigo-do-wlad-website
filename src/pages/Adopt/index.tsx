@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Filter, Frown } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Filter, Frown, ChevronLeft, ChevronRight } from "lucide-react";
 import { DogCard } from "../../components/DogCard";
 import HeroSmall from "../../components/HeroSmall";
 import { DogModal } from "../../components/DogModal";
@@ -7,23 +7,46 @@ import styles from "./Adopt.module.css";
 
 import { DOGS_DATA, CORES_MAP, type DogProps } from "../../data/dogs";
 
+const ITEMS_PER_PAGE = 9;
+
 export default function Adopt() {
   const [filterAge, setFilterAge] = useState("all");
   const [filterBehavior, setFilterBehavior] = useState("all");
   const [filterColor, setFilterColor] = useState("all");
 
+  const [currentPage, setCurrentPage] = useState(1);
   const [selectedDog, setSelectedDog] = useState<DogProps | null>(null);
 
+  // Filtragem
   const filteredDogs = DOGS_DATA.filter((dog) => {
     const matchAge = filterAge === "all" || dog.cateIdade === filterAge;
-    
     const matchBehavior =
       filterBehavior === "all" || dog.tags.includes(filterBehavior);
-      
     const matchColor = filterColor === "all" || dog.cor === filterColor;
 
     return matchAge && matchBehavior && matchColor;
   });
+
+  // Resetar página ao mudar filtros
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filterAge, filterBehavior, filterColor]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentPage]); 
+
+  // Lógica de Paginação
+  const totalItems = filteredDogs.length;
+  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const currentDogs = filteredDogs.slice(startIndex, endIndex);
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+  };
 
   return (
     <main>
@@ -64,7 +87,7 @@ export default function Adopt() {
             <option value="Dócil">Dócil / Amoroso</option>
             <option value="Sociável">Sociável</option>
             <option value="Resiliente">Guerreiro / Resiliente</option>
-        </select>
+          </select>
 
           <select
             className={styles.selectInput}
@@ -82,8 +105,8 @@ export default function Adopt() {
 
         {/* Grid de Resultados */}
         <div className={styles.dogGrid}>
-          {filteredDogs.length > 0 ? (
-            filteredDogs.map((dog) => (
+          {currentDogs.length > 0 ? (
+            currentDogs.map((dog) => (
               <DogCard
                 key={dog.id}
                 data={dog}
@@ -93,15 +116,37 @@ export default function Adopt() {
           ) : (
             <div className={styles.emptyState}>
               <Frown size={48} />
-              <p>
-                Nenhum doguinho encontrado com essas características no momento.
-              </p>
+              <p>Nenhum doguinho encontrado com essas características no momento.</p>
             </div>
           )}
         </div>
+
+        {/* Paginação */}
+        {totalPages > 1 && (
+          <div className={styles.pagination}>
+            <button 
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className={styles.pageButton}
+            >
+              <ChevronLeft size={20} />
+            </button>
+            
+            <span className={styles.pageInfo}>
+              Página {currentPage} de {totalPages}
+            </span>
+
+            <button 
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className={styles.pageButton}
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+        )}
       </div>
 
-      {/* Componente Modal com TRADUÇÃO DA COR */}
       <DogModal
         dog={
           selectedDog
