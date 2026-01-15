@@ -1,5 +1,5 @@
 import { Calendar, CheckCircle } from "lucide-react";
-import type { DogProps } from "../../pages/Adopt";
+import type { DogProps } from "../../data/dogs";
 import styles from "./DogCard.module.css";
 
 interface DogCardProps {

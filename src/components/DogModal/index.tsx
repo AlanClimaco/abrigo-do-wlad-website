@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import * as Lucide from "lucide-react"
 import { Link } from "react-router";
-import type { DogProps } from "../../pages/Adopt";
+import type { DogProps } from "../../data/dogs";
 import styles from "./DogModal.module.css";
 import { Button } from "../ui/Button";
 
