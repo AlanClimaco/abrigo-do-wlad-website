@@ -31,7 +31,10 @@ export const DOGS_DATA: DogProps[] = [
     temperamento: "Dócil, Amorosa",
     tags: ["Dócil", "Sociável"],
     status: "Vacinado e Castrado",
-    fotos: ["/dogs/manu1.png", "/dogs/manu2.png", "/dogs/manu3.png"],
+    fotos: [
+      "https://res.cloudinary.com/dx2hevcud/image/upload/v1768489292/manu1_xfniuj.png", 
+      "https://res.cloudinary.com/dx2hevcud/image/upload/v1768489292/manu2_bee7rm.png", 
+      "https://res.cloudinary.com/dx2hevcud/image/upload/v1768489291/manu3_pwgcir.png"],
     cor: "caramelo",
     instaLink: "https://www.instagram.com/reels/DTS7xAmEfxb/",
     descricaoCompleta:
@@ -46,7 +49,10 @@ export const DOGS_DATA: DogProps[] = [
     temperamento: "Doce, Energética",
     tags: ["Dócil", "Ativo"],
     status: "Vacinado e Castrado",
-    fotos: ["/dogs/teka1.png", "/dogs/teka2.png", "/dogs/teka3.png"],
+    fotos: [
+      "https://res.cloudinary.com/dx2hevcud/image/upload/v1768489293/teka1_zz4noo.png", 
+      "https://res.cloudinary.com/dx2hevcud/image/upload/v1768489294/teka2_s5yyot.png", 
+      "https://res.cloudinary.com/dx2hevcud/image/upload/v1768489294/teka3_d3ksve.png"],
     cor: "caramelo",
     instaLink: "https://www.instagram.com/reels/DTTFu6PkbFb/",
     descricaoCompleta:
@@ -61,7 +67,10 @@ export const DOGS_DATA: DogProps[] = [
     temperamento: "Tranquilo, Amoroso",
     tags: ["Tranquilo", "Dócil", "Sociável"],
     status: "Vacinado e Castrado",
-    fotos: ["/dogs/flocos1.png", "/dogs/flocos2.png", "/dogs/flocos3.png"],
+    fotos: [
+      "https://res.cloudinary.com/dx2hevcud/image/upload/v1768489291/flocos1_b4aarf.png", 
+      "https://res.cloudinary.com/dx2hevcud/image/upload/v1768489291/flocos2_wld995.png", 
+      "https://res.cloudinary.com/dx2hevcud/image/upload/v1768489291/flocos3_jqntg7.png"],
     cor: "BrasilEgito",
     instaLink: "https://www.instagram.com/reels/DSIUEXyEaZc/",
     descricaoCompleta:
@@ -76,7 +85,10 @@ export const DOGS_DATA: DogProps[] = [
     temperamento: "Tranquilo, Dócil",
     tags: ["Tranquilo", "Dócil"],
     status: "Vacinado e Castrado",
-    fotos: ["/dogs/romeu1.png", "/dogs/romeu2.png", "/dogs/romeu3.png"],
+    fotos: [
+      "https://res.cloudinary.com/dx2hevcud/image/upload/v1768489291/romeu1_e0r4ni.png", 
+      "https://res.cloudinary.com/dx2hevcud/image/upload/v1768489292/romeu2_hjdrdw.png", 
+      "https://res.cloudinary.com/dx2hevcud/image/upload/v1768489292/romeu3_uzora9.png"],
     cor: "BrasilEgito",
     instaLink: "https://www.instagram.com/reels/DTTW2DbCVJy/",
     descricaoCompleta:
@@ -91,7 +103,10 @@ export const DOGS_DATA: DogProps[] = [
     temperamento: "Doce, Cheia de vida",
     tags: ["Dócil", "Ativo", "Resiliente"],
     status: "Vacinada e Castrada",
-    fotos: ["/dogs/ruby1.png", "/dogs/ruby2.png", "/dogs/ruby3.png"],
+    fotos: [
+      "https://res.cloudinary.com/dx2hevcud/image/upload/v1768489293/ruby1_cmvldt.png", 
+      "https://res.cloudinary.com/dx2hevcud/image/upload/v1768489293/ruby2_ppbaml.png", 
+      "https://res.cloudinary.com/dx2hevcud/image/upload/v1768489293/ruby3_wj8uze.png"],
     cor: "pretinho",
     instaLink: "https://www.instagram.com/reels/DTX94fwEbqi/",
     descricaoCompleta:
