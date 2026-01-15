@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import * as Lucide from "lucide-react"
+import * as Lucide from "lucide-react";
 import { Link } from "react-router";
 import type { DogProps } from "../../pages/Adopt";
 import styles from "./DogModal.module.css";
 import { Button } from "../ui/Button";
+import { Dialog, DialogContent } from "../ui/Dialog";
 
 interface ModalProps {
   dog: DogProps | null;
@@ -14,19 +15,14 @@ interface ModalProps {
 export function DogModal({ dog, isOpen, onClose }: ModalProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Trava o scroll da página de trás
+  // reseta o índice da img quando é fechado ou o cão muda
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
+    if (!isOpen) {
+      setTimeout(() => setCurrentImageIndex(0), 150);
     }
-    return () => {
-      document.body.style.overflow = "";
-    };
   }, [isOpen]);
 
-  if (!isOpen || !dog) return null;
+  if (!dog) return null;
 
   const hasMultipleImages = dog.fotos && dog.fotos.length > 1;
 
@@ -43,17 +39,13 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
   };
 
   const handleClose = () => {
-    setCurrentImageIndex(0)
+    setCurrentImageIndex(0);
     onClose();
-  }
+  };
 
   return (
-    <div className={styles.overlay} onClick={handleClose}>
-      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <button className={styles.closeButton} onClick={handleClose}>
-          <Lucide.X size={24} />
-        </button>
-
+    <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
+      <DialogContent className={styles.modalContent}>
         <div className={styles.contentGrid}>
           <div className={styles.carousel}>
             <img
@@ -61,7 +53,6 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
               alt={dog.nome}
               className={styles.mainImage}
             />
-
             {hasMultipleImages && (
               <div className={styles.carouselNav}>
                 <button onClick={prevImage} className={styles.navButton}>
@@ -112,7 +103,7 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 }

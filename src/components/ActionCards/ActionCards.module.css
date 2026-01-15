@@ -18,6 +18,11 @@
   animation-delay: 0.5s;
 }
 
+.qrCodeImg {
+  max-width: 400px;
+  max-height: 400px;
+}
+
 @keyframes revealCard {
   to {
     opacity: 1;

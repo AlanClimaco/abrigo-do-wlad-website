@@ -11,6 +11,13 @@ import {
   CardIcon,
   CardTitle,
 } from "../ui/Card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/Dialog";
 
 export function ActionCards() {
   const [copied, setCopied] = useState(false);
@@ -27,7 +34,6 @@ export function ActionCards() {
 
   return (
     <section className={`${styles.cardsContainer}`}>
-      
       {/* Adoção */}
       <Card>
         <CardHeader>
@@ -79,7 +85,6 @@ export function ActionCards() {
               size="sm"
               className={copied ? styles.copied : ""}
               title="Clique para copiar a chave PIX"
-              style={{ width: "100%" }}
             >
               {copied ? (
                 <>
@@ -93,10 +98,27 @@ export function ActionCards() {
                 </>
               )}
             </Button>
-            <Button size="sm" variant="secondary">
-              <Lucide.QrCode size={20} />
-              <span>Exibir Código QR</span>
-            </Button>
+
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button size="sm" variant="secondary">
+                  <Lucide.QrCode size={20} />
+                  <span>Exibir Código QR</span>
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogTitle>CÓDIGO QR</DialogTitle>
+                <DialogDescription>
+                  No seu banco, escaneie para fazer a doação via
+                  PIX.
+                </DialogDescription>
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  {/* QR code bancário de doação */}
+                  <img className={styles.qrCodeImg} src="" alt="" />
+                </div>
+              </DialogContent>
+            </Dialog>
+
             <span style={{ fontSize: "12px", opacity: "0.8" }}>
               Doações via <strong>PIX</strong>
             </span>
@@ -126,7 +148,6 @@ export function ActionCards() {
           </Link>
         </CardFooter>
       </Card>
-
     </section>
   );
 }
