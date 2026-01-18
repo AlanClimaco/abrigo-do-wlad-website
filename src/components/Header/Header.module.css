@@ -45,7 +45,7 @@
 
 .navLink {
     font-weight: 500;
-    color: var(--text-main);
+    color: var(--text-primary);
     position: relative;
     font-size: 1rem;
     cursor: pointer;

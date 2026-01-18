@@ -48,7 +48,7 @@
 
 .outline:hover {
   background-color: var(--white);
-  color: var(--text-light)
+  color: var(--text-secondary)
 }
 
 .instagram {

@@ -1,8 +1,8 @@
 .link {
-  color: var(--text-light);
+  color: var(--text-secondary);
   transition: var(--transition);
 }
 
 .link:hover {
-  color: var(--text-main);
+  color: var(--text-primary);
 }

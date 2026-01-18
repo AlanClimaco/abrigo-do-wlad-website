@@ -1,6 +1,6 @@
 .footer {
   background: var(--accent-primary);
-  color: var(--text-main);
+  color: var(--text-primary);
   padding: 5rem 0 0;
   margin-top: 6rem;
   position: relative;
@@ -32,7 +32,7 @@
   gap: 10px;
   font-size: 1.4rem;
   font-weight: 800;
-  color: var(--text-main);
+  color: var(--text-primary);
   margin-bottom: 1.5rem;
 }
 
@@ -49,18 +49,18 @@
   max-width: 350px;
 }
 
-.footerLocal {
+.footerPlace {
   display: flex;
   gap: 10px;
   font-size: 0.85rem;
   align-items: center;
   margin-top: 25px;
-  color: var(--text-light);
+  color: var(--text-muted);
 }
 
 /* TÍTULOS */
 .columnTitle {
-  color: var(--text-main);
+  color: var(--text-primary);
   margin-bottom: 2rem;
   font-size: 1rem;
   font-weight: 600;
@@ -85,7 +85,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: var(--text-light);
+  color: var(--text-secondary);
   margin-bottom: 1rem;
   text-decoration: none;
   transition: all 0.3s;
@@ -102,7 +102,7 @@
 }
 
 .linkItem:hover {
-  color: var(--text-main);
+  color: var(--text-primary);
   transform: translateX(5px);
 }
 
@@ -117,7 +117,7 @@
   align-items: center;
   gap: 15px;
   margin-bottom: 1.2rem;
-  color: var(--text-main);
+  color: var(--text-primary);
   text-decoration: none;
   transition: 0.3s;
   padding: 10px;
@@ -155,7 +155,7 @@
   margin-top: 4rem;
   margin-bottom: 2rem;
   font-size: 0.8rem;
-  color: var(--text-light);
+  color: var(--text-secondary);
 }
 
 .footerBottomGroup {
@@ -170,7 +170,12 @@
 }
 
 .credits a {
+  text-decoration: underline;
   margin: 0 3px;
+}
+
+.credits a:hover {
+  text-decoration: none;
 }
 
 /* --- MOBILE --- */

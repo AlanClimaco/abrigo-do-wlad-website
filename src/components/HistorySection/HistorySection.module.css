@@ -59,7 +59,7 @@
 .textSide p {
   margin-bottom: 1.5rem;
   font-size: 1.05rem;
-  color: var(--text-light);
+  color: var(--text-secondary);
   text-align: justify;
 }
 

@@ -19,7 +19,7 @@ export function Footer() {
             Resgatando vidas e transformando histórias desde 2012. Somos uma
             organização sem fins lucrativos dedicada ao amor e respeito animal.
           </p>
-          <div className={styles.footerLocal}>
+          <div className={styles.footerPlace}>
             <Lucide.MapPin size={16} />
             <span>Atuamos em Morumbi, SP</span>
           </div>

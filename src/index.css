@@ -1,8 +1,9 @@
 :root {
   /* typography */
   --font-sans: "Poppins", sans-serif;
-  --text-main: #1f2937;
-  --text-light: #6b7280;
+  --text-primary: #111827;
+  --text-secondary: #374151;
+  --text-muted: #6b7280;
 
   /* main colors */
   --bg-body: #fafafa;
@@ -42,7 +43,7 @@
 
 body {
   font-family: var(--font-sans);
-  color: var(--text-main);
+  color: var(--text-primary);
   background-color: var(--bg-body);
   line-height: 1.6;
   overflow-x: hidden;

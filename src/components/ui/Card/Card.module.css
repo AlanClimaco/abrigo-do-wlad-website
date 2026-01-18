@@ -64,11 +64,11 @@
 
 .cardContent {
   flex-grow: 1;
-  color: var(--text-light);
+  color: var(--text-secondary);
 }
 
 .cardContent p {
-  color: var(--text-main) !important;
+  color: var(--text-primary) !important;
   text-align: left;
   margin-bottom: 1rem;
 }

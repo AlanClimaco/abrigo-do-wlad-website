@@ -13,7 +13,7 @@
   margin-bottom: 1.5rem;
   font-size: 1.05rem;
   text-align: justify;
-  color: var(--text-light);
+  color: var(--text-secondary);
 }
 
 .historyText h2,
