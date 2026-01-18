@@ -11,9 +11,10 @@
   --primary: #ff6b35;
   --secondary: #004e89;
 
-  /* accent colors (used in quote cards, accordions, etc) */
+  /* accent colors (used in quote cards, accordions, etc) & border */
   --accent-primary: #fbe4dc;
   --accent-secondary: #d5e1e9;
+  --border: #d6d6d6;
 
   /* button colors */
   --btn-primary: #ff6b3546;
@@ -29,6 +30,8 @@
 
   --radius: 16px;
   --radius-sm: 6px;
+  --radius-lg: 25px;
+  --radius-xl: 38px;
 
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 

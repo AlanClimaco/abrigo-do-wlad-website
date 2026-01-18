@@ -6,26 +6,15 @@
   position: relative;
   overflow: hidden;
 }
-/* 
-.footer::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: var(--primary);
-} */
 
 .footerGrid {
   display: grid;
   grid-template-columns: 1.5fr 1fr 1.2fr;
   gap: 4rem;
   padding-bottom: 4rem;
-  /* border-bottom: 1px solid rgba(255, 255, 255, 0.1); */
 }
 
-/* MARCA E INFO */
+/* brand & info */
 .footerBrand {
   display: flex;
   align-items: center;
@@ -58,7 +47,7 @@
   color: var(--text-muted);
 }
 
-/* TÍTULOS */
+/* titles */
 .columnTitle {
   color: var(--text-primary);
   margin-bottom: 2rem;
@@ -80,7 +69,7 @@
   border-radius: 2px;
 }
 
-/* LINKS DE NAVEGAÇÃO */
+/* navigation links */
 .linkItem {
   display: flex;
   align-items: center;
@@ -111,7 +100,7 @@
   transform: translateX(0);
 }
 
-/* LINKS DE CONTATO */
+/* contact links */
 .contactItem {
   display: flex;
   align-items: center;
@@ -146,7 +135,7 @@
   color: var(--white);
 }
 
-/* RODAPÉ INFERIOR */
+/* lower footer */
 .footerBottom {
   display: flex;
   text-align: center;
@@ -178,7 +167,7 @@
   text-decoration: none;
 }
 
-/* --- MOBILE --- */
+/* media query */
 @media (max-width: 768px) {
   .footerGrid {
     display: flex;
@@ -243,17 +232,12 @@
     gap: 15px;
     justify-content: center;
   }
-
+  
   .credits {
     justify-content: center;
   }
 
-  .footerBottomGroup {
-    /* flex-direction: column; */
-  }
-
   .columnTitle::after {
-    /* display: none; */
     width: 100%;
   }
 

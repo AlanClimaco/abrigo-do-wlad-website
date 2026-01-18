@@ -1,7 +1,7 @@
 .contentSection {
   padding: 6rem 0;
   margin-top: 8rem;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .gridContainer {
@@ -31,21 +31,22 @@
   display: block;
 }
 
-.dogNameContainer {
+.dogBadge {
   position: absolute;
   display: flex;
   gap: 5px;
   align-items: center;
   background-color: var(--primary);
+  border: 3px solid var(--bg-body);
   color: var(--white);
   padding: 0.3rem 0.5rem;
-  bottom: 1rem;
-  left: 1rem;
-  border-radius: var(--radius);
+  bottom: -0.5rem;
+  left: -0.5rem;
+  border-radius: var(--radius-lg);
   z-index: 10;
 }
 
-.dogNameContainer span {
+.dogBadge span {
   font-size: 12px;
   font-weight: 600;
 }
@@ -89,11 +90,11 @@
   .textSide {
     transform: translateY(30px);
   }
-  
+
   .textSide {
-    padding-bottom: 1rem; 
+    padding-bottom: 1rem;
   }
-  
+
   .buttonWrapper {
     width: 100%;
     justify-content: center;

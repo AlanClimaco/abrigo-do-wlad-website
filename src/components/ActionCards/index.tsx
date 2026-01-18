@@ -1,4 +1,3 @@
-import { useState } from "react";
 import * as Lucide from "lucide-react";
 import styles from "./ActionCards.module.css";
 import { Link } from "react-router";
@@ -6,23 +5,15 @@ import { Link } from "react-router";
 import { Button } from "../ui/Button";
 import * as Card from "../ui/Card";
 import * as Dialog from "../ui/Dialog";
+import { useCopyToClipboard } from "@uidotdev/usehooks";
 
 export function ActionCards() {
-  const [copied, setCopied] = useState(false);
+  const [copiedText, copyToClipboard] = useCopyToClipboard();
   const pixKey = "abrigodowlad@gmail.com";
-
-  const handleCopyPix = () => {
-    navigator.clipboard.writeText(pixKey);
-    setCopied(true);
-
-    setTimeout(() => {
-      setCopied(false);
-    }, 3000);
-  };
 
   return (
     <section className={`${styles.cardsContainer}`}>
-      {/* Adoção */}
+      {/* adoption */}
       <Card.Card>
         <Card.CardHeader>
           <Card.CardIcon>
@@ -45,7 +36,7 @@ export function ActionCards() {
         </Card.CardFooter>
       </Card.Card>
 
-      {/* Doações */}
+      {/* donations */}
       <Card.Card>
         <Card.CardHeader>
           <Card.CardIcon>
@@ -69,12 +60,12 @@ export function ActionCards() {
             }}
           >
             <Button
-              onClick={handleCopyPix}
+              onClick={() => copyToClipboard(pixKey)}
               size="sm"
-              className={copied ? styles.copied : ""}
+              className={copiedText ? styles.copied : ""}
               title="Clique para copiar a chave PIX"
             >
-              {copied ? (
+              {copiedText ? (
                 <>
                   <Lucide.Check size={20} />
                   PIX Copiado!

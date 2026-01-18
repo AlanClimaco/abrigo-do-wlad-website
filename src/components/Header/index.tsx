@@ -4,13 +4,27 @@ import styles from "./Header.module.css";
 import logo from "../../assets/logo.png";
 import { Button } from "../ui/Button";
 import * as Lucide from "lucide-react";
+import { useMediaQuery } from "@uidotdev/usehooks";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
 
-  // Detecta Scroll
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+
+  useEffect(() => {
+    if (isMenuOpen && !isDesktop) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isMenuOpen, isDesktop]);
+
+  // scroll detect
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 40);
@@ -60,8 +74,8 @@ export function Header() {
       </div>
 
       {/* BOTÃO HAMBURGER (MOBILE) */}
-      <button 
-        className={`${styles.hamburger} ${isMenuOpen ? styles.active : ''}`} 
+      <button
+        className={`${styles.hamburger} ${isMenuOpen ? styles.active : ""}`}
         onClick={toggleMenu}
         aria-label="Menu"
       >
@@ -71,27 +85,38 @@ export function Header() {
       </button>
 
       {/* 3. NAVEGAÇÃO */}
-      <nav className={`${styles.navMenu} ${isMenuOpen ? styles.active : ''}`}>
+      <nav className={`${styles.navMenu} ${isMenuOpen ? styles.active : ""}`}>
         <Link to="/" className={getLinkClass("/")} onClick={closeMenu}>
           Início
         </Link>
-        
-        <Link to="/adotar" className={getLinkClass("/adotar")} onClick={closeMenu}>
+
+        <Link
+          to="/adotar"
+          className={getLinkClass("/adotar")}
+          onClick={closeMenu}
+        >
           Adotar
         </Link>
-        
-        <Link to="/historia" className={getLinkClass("/historia")} onClick={closeMenu}>
-          História
-        </Link>
-        
-        <Link to="/tampinhas" className={getLinkClass("/tampinhas")} onClick={closeMenu}>
-          Tampinhas
+
+        <Link
+          to="/historia"
+          className={getLinkClass("/historia")}
+          onClick={closeMenu}
+        >
+          Sobre Nós
         </Link>
 
+        <Link
+          to="/tampinhas"
+          className={getLinkClass("/tampinhas")}
+          onClick={closeMenu}
+        >
+          Tampinhas
+        </Link>
         {/* Botão de Ação */}
         <Link to="/formulario" onClick={closeMenu}>
-          <Button size="md" variant="secondary">
-            <Lucide.HeartHandshake size={20} style={{ marginRight: '8px' }}/>
+          <Button className={styles.mainBtn} size="md" variant="secondary">
+            <Lucide.HeartHandshake size={20} style={{ marginRight: "8px" }} />
             <span>Quero Ajudar</span>
           </Button>
         </Link>

@@ -44,8 +44,8 @@ export function HistorySection() {
           }`}
         >
           <img src={dogImage} alt="Simba" />
-          <div className={styles.dogNameContainer}>
-            <Lucide.PawPrint size={15} />
+          <div className={styles.dogBadge}>
+            <Lucide.Dog size={18} />
             <span>Simba</span>
           </div>
         </div>
