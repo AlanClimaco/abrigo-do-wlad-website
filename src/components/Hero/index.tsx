@@ -31,7 +31,7 @@ export function Hero() {
             </Link>
 
             <a href="#historia" className="btn-secondary">
-              <Button size="lg" variant="outline">
+              <Button blur={true} size="lg" variant="outline">
                 Nossa História
               </Button>
             </a>

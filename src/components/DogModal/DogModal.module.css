@@ -69,6 +69,8 @@
   height: 80vh;
   padding: 0;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .categoryTag {
@@ -127,6 +129,11 @@
 
 /* --- MOBILE --- */
 @media (max-width: 768px) {
+  .modalContent {
+    overflow-y: auto;
+    height: auto;
+  }
+
   .contentGrid {
     grid-template-columns: 1fr;
     height: auto;
