@@ -43,7 +43,7 @@
 
 .smallText {
   font-size: 0.85rem !important;
-  color: var(--text-light) !important;
+  color: var(--text-secondary) !important;
 }
 
 /* Sessões do Formulário */
@@ -76,7 +76,7 @@
 }
 
 .helperText {
-  color: var(--text-light);
+  color: var(--text-secondary);
   font-style: italic;
   margin-bottom: 1.5rem;
   font-size: 0.9rem;

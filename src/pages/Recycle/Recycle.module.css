@@ -6,7 +6,7 @@
 }
 
 .recycleTextContainer p {
-  color: var(--text-light);
+  color: var(--text-secondary);
   text-align: justify;
 }
 
