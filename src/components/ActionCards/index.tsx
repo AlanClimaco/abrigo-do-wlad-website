@@ -1,3 +1,4 @@
+import { useState } from "react";
 import * as Lucide from "lucide-react";
 import styles from "./ActionCards.module.css";
 import { Link } from "react-router";
@@ -7,9 +8,20 @@ import * as Card from "../ui/Card";
 import * as Dialog from "../ui/Dialog";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
 
+import qrCodePix from "../../assets/qr-code-example.png";
+
 export function ActionCards() {
-  const [copiedText, copyToClipboard] = useCopyToClipboard();
+  const [, copyToClipboard] = useCopyToClipboard();
+  const [isCopied, setIsCopied] = useState(false);
   const pixKey = "abrigodowlad@gmail.com";
+
+  const handleCopyClick = () => {
+    copyToClipboard(pixKey);
+    setIsCopied(true);
+    setTimeout(() => {
+      setIsCopied(false);
+    }, 2000);
+  };
 
   return (
     <section className={`${styles.cardsContainer}`}>
@@ -36,7 +48,7 @@ export function ActionCards() {
         </Card.CardFooter>
       </Card.Card>
 
-      {/* donations */}
+      {/* donations & pix modal */}
       <Card.Card>
         <Card.CardHeader>
           <Card.CardIcon>
@@ -51,60 +63,79 @@ export function ActionCards() {
           </p>
         </Card.CardContent>
         <Card.CardFooter>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "10px",
-              width: "100%",
-            }}
-          >
-            <Button
-              onClick={() => copyToClipboard(pixKey)}
-              size="sm"
-              className={copiedText ? styles.copied : ""}
-              title="Clique para copiar a chave PIX"
-            >
-              {copiedText ? (
-                <>
-                  <Lucide.Check size={20} />
-                  PIX Copiado!
-                </>
-              ) : (
-                <>
-                  <Lucide.Copy size={20} />
-                  abrigodowlad@gmail.com
-                </>
-              )}
-            </Button>
-
+          <div>
             <Dialog.Dialog>
               <Dialog.DialogTrigger asChild>
-                <Button size="sm" variant="secondary">
+                <Button size="sm" variant="primary">
                   <Lucide.QrCode size={20} />
-                  <span>Exibir Código QR</span>
+                  <span>Doação via PIX</span>
                 </Button>
               </Dialog.DialogTrigger>
               <Dialog.DialogContent>
-                <Dialog.DialogTitle>CÓDIGO QR</Dialog.DialogTitle>
+                <Dialog.DialogTitle>Faça uma doação via PIX</Dialog.DialogTitle>
                 <Dialog.DialogDescription>
-                  No seu banco, escaneie para fazer a doação via PIX.
+                  Para doar, escaneie o QR Code com o app do seu banco ou copie
+                  a chave PIX abaixo.
                 </Dialog.DialogDescription>
-                <div style={{ display: "flex", justifyContent: "center" }}>
-                  {/* QR code bancário de doação */}
-                  <img className={styles.qrCodeImg} src="" alt="" />
+                <div className={styles.pixModalContainer}>
+                  {/* qr code image */}
+                  <div className={styles.qrCodeWrapper}>
+                    <img src={qrCodePix} alt="Código QR para doação via PIX" />
+                  </div>
+                  {/* clipboard pix key */}
+                  <div className={styles.pixCard}>
+                    <div>
+                      <p>Ou copie a chave PIX</p>
+                      <span>Clique para copiar</span>
+                    </div>
+                    <Button
+                      size="sm"
+                      variant="primary"
+                      onClick={handleCopyClick}
+                      disabled={isCopied}
+                    >
+                      {isCopied ? (
+                        <>
+                          <Lucide.Check size={20} />
+                          Copiado!
+                        </>
+                      ) : (
+                        <>
+                          <Lucide.Copy size={20} />
+                          {pixKey}
+                        </>
+                      )}
+                    </Button>
+                  </div>
+
+                  {/* beneficiary data */}
+                  <div>
+                    <ul className={styles.beneficiaryData}>
+                      <li>
+                        <strong>Beneficiário:</strong> WLADMIR MARTINS DA CRUZ
+                      </li>
+                      <li>
+                        <strong>CPF:</strong> 137.451.868-93
+                      </li>
+                      <li>
+                        <strong>Banco:</strong> 237 - Bradesco
+                      </li>
+                      <li>
+                        <strong>Agência:</strong> 0118
+                      </li>
+                      <li>
+                        <strong>Conta Corrente:</strong> 0136878-8
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </Dialog.DialogContent>
             </Dialog.Dialog>
-
-            <span style={{ fontSize: "12px", opacity: "0.8" }}>
-              Doações via <strong>PIX</strong>
-            </span>
           </div>
         </Card.CardFooter>
       </Card.Card>
 
-      {/* Tampinhas */}
+      {/* tampinhas */}
       <Card.Card>
         <Card.CardHeader>
           <Card.CardIcon>

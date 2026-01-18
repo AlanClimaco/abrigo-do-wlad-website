@@ -66,6 +66,14 @@
   color: var(--white);
 }
 
+.ghost {
+  color: var(--text-main);
+}
+
+.ghost:hover {
+  background-color: rgb(232, 232, 232);
+}
+
 .text {
   display: flex;
   align-items: center;

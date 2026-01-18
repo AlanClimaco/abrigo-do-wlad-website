@@ -14,7 +14,7 @@
   /* accent colors (used in quote cards, accordions, etc) & border */
   --accent-primary: #fbe4dc;
   --accent-secondary: #d5e1e9;
-  --border: #d6d6d6;
+  --border: #b7b7b7;
 
   /* button colors */
   --btn-primary: #ff6b3546;
@@ -65,6 +65,10 @@ img {
   display: block;
 }
 
+.text-muted {
+  color: var(--text-muted);
+}
+
 .section-title {
   font-size: 2.5rem;
   color: var(--secondary);
@@ -103,7 +107,7 @@ img {
 }
 
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 @media (max-width: 768px) {
