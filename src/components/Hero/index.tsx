@@ -14,7 +14,7 @@ export function Hero() {
 
   return (
     <section className={styles.heroContainer}>
-      <div className={`${styles.heroContent}`}>
+      <div className={styles.heroContent}>
         <h1 className={styles.title}>
           Transformando abandono em finais felizes.
         </h1>
