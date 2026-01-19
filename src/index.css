@@ -14,6 +14,8 @@
   /* accent colors (used in quote cards, accordions, etc) & border */
   --accent-primary: #fbe4dc;
   --accent-secondary: #d5e1e9;
+  --accent-green: #e1fde0;
+  --accent-red: #fbe0e0;
   --border: #b7b7b7;
 
   /* button colors */

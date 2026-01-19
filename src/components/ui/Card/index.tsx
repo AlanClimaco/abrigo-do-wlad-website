@@ -1,15 +1,10 @@
-/**
- * CARD ui components
- * based on shadcn-ui
- */
-
 import type { HTMLAttributes } from "react";
 import styles from "./Card.module.css";
 import { cn } from "../../../lib/utils";
 
 type CardProps = HTMLAttributes<HTMLDivElement> & {
   variant?: "default" | "quote";
-  color?: "primary" | "secondary";
+  color?: "primary" | "secondary" | "red" | "green";
   size?: "sm" | "md" | "lg";
 };
 
@@ -26,9 +21,11 @@ export function Card({
         styles.card,
         variant === "quote" && styles.quote,
         color === "secondary" && styles.colorSecondary,
+        color === "green" && styles.colorGreen,
+        color === "red" && styles.colorRed,
         size === "sm" && styles.sm,
         size === "lg" && styles.lg,
-        className
+        className,
       )}
       {...props}
     />
@@ -63,9 +60,23 @@ export function CardContent({
   return <div className={cn(styles.cardContent, className)} {...props} />;
 }
 
+export function CardBody({
+  className,
+  ...props
+}: HTMLAttributes<HTMLDivElement>) {
+  return <div className={cn(styles.cardBody, className)} {...props} />;
+}
+
 export function CardFooter({
   className,
   ...props
 }: HTMLAttributes<HTMLDivElement>) {
   return <div className={cn(styles.cardFooter, className)} {...props} />;
+}
+
+export function CardButton({
+  className,
+  ...props
+}: HTMLAttributes<HTMLDivElement>) {
+  return <div className={cn(styles.cardButton, className)} {...props} />;
 }

@@ -1,5 +1,6 @@
 import {
   Card,
+  CardBody,
   CardContent,
   CardFooter,
   CardHeader,
@@ -127,55 +128,66 @@ export default function Recycle() {
               size="sm"
               variant="quote"
             >
-              <CardHeader>
-                <CardIcon>
-                  <Lucide.CircleAlert />
-                </CardIcon>
-                <CardTitle>Dica Importante</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p>
-                  Por favor, se possível, entregue as tampinhas lavadas e
-                  separadas por cor. Isso agiliza muito nosso trabalho!
-                </p>
-              </CardContent>
+              <CardBody>
+                <CardHeader>
+                  <CardIcon>
+                    <Lucide.CircleAlert />
+                  </CardIcon>
+                  <CardTitle>Dica Importante</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p>
+                    Por favor, se possível, entregue as tampinhas lavadas e
+                    separadas por cor. Isso agiliza muito nosso trabalho!
+                  </p>
+                </CardContent>
+              </CardBody>
             </Card>
           </div>
           <Card>
-            <CardHeader>
-              <CardIcon>
-                <Lucide.MapPin size={48} />
-              </CardIcon>
-              <CardTitle>Pontos de Coleta</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p>Encontre o local mais próximo de você:</p>
-              <ScrollArea style={{ height: "300px", padding: "10px" }}>
-                {collectionPoints.map((point) => (
-                  <div key={point.zone} className={styles.collectionContainer}>
-                    <h4>{point.zone}</h4>
-                    {point.locations.map((location, index, locationsArray) => {
-                      const showNeighborhood =
-                        index === 0 ||
-                        location.neighborhood !==
-                          locationsArray[index - 1].neighborhood;
+            <CardBody>
+              <CardHeader>
+                <CardIcon>
+                  <Lucide.MapPin size={48} />
+                </CardIcon>
+                <CardTitle>Pontos de Coleta</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p>Encontre o local mais próximo de você:</p>
+                <ScrollArea style={{ height: "300px", padding: "10px" }}>
+                  {collectionPoints.map((point) => (
+                    <div
+                      key={point.zone}
+                      className={styles.collectionContainer}
+                    >
+                      <h4>{point.zone}</h4>
+                      {point.locations.map(
+                        (location, index, locationsArray) => {
+                          const showNeighborhood =
+                            index === 0 ||
+                            location.neighborhood !==
+                              locationsArray[index - 1].neighborhood;
 
-                      return (
-                        <div key={index}>
-                          {showNeighborhood && <h5>{location.neighborhood}</h5>}
-                          {location.name && (
-                            <p>
-                              <strong>{location.name}</strong>
-                            </p>
-                          )}
-                          <p>{location.address}</p>
-                        </div>
-                      );
-                    })}
-                  </div>
-                ))}
-              </ScrollArea>
-            </CardContent>
+                          return (
+                            <div key={index}>
+                              {showNeighborhood && (
+                                <h5>{location.neighborhood}</h5>
+                              )}
+                              {location.name && (
+                                <p>
+                                  <strong>{location.name}</strong>
+                                </p>
+                              )}
+                              <p>{location.address}</p>
+                            </div>
+                          );
+                        },
+                      )}
+                    </div>
+                  ))}
+                </ScrollArea>
+              </CardContent>
+            </CardBody>
             <CardFooter style={{ textAlign: "center" }}>
               <Button size="lg">
                 <span>Combinar Entrega Grande</span>

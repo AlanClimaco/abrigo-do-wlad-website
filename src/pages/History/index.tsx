@@ -1,5 +1,7 @@
 import {
   Card,
+  CardBody,
+  CardButton,
   CardContent,
   CardFooter,
   CardHeader,
@@ -8,7 +10,6 @@ import {
 } from "../../components/ui/Card";
 import * as Lucide from "lucide-react";
 import HeroSmall from "../../components/HeroSmall";
-import { Button } from "../../components/ui/Button";
 import styles from "./History.module.css";
 import { Link } from "react-router";
 
@@ -71,27 +72,29 @@ export default function History() {
             </p>
 
             <Card color="secondary" variant="quote">
-              <CardHeader>
-                <CardIcon>
-                  <Lucide.Coins size={30} strokeWidth={1.5} />
-                </CardIcon>
-                <CardTitle>Captação de Recursos</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p style={{ textAlign: "justify" }}>
-                  Um dos projetos implantado para arrecadação de recursos para
-                  financiar a obra foi a reciclagem de tampinhas plásticas.
-                  Consiste na coleta de tampas plásticas ou qualquer material
-                  que seja de polipropileno que é vendido para empresas que
-                  transformam esse material e revendem para a indústria de
-                  brinquedos, eletrodomésticos, automobilística e outras.
-                </p>
-              </CardContent>
+              <CardBody>
+                <CardHeader>
+                  <CardIcon>
+                    <Lucide.Coins size={30} strokeWidth={1.5} />
+                  </CardIcon>
+                  <CardTitle>Captação de Recursos</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p style={{ textAlign: "justify" }}>
+                    Um dos projetos implantado para arrecadação de recursos para
+                    financiar a obra foi a reciclagem de tampinhas plásticas.
+                    Consiste na coleta de tampas plásticas ou qualquer material
+                    que seja de polipropileno que é vendido para empresas que
+                    transformam esse material e revendem para a indústria de
+                    brinquedos, eletrodomésticos, automobilística e outras.
+                  </p>
+                </CardContent>
+              </CardBody>
               <CardFooter>
                 <Link to="/tampinhas" className="btn-text">
-                  <Button size="md" variant="text">
+                  <CardButton>
                     Saiba Mais <Lucide.ArrowRight size={20} />
-                  </Button>
+                  </CardButton>
                 </Link>
               </CardFooter>
             </Card>

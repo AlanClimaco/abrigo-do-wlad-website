@@ -34,7 +34,7 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
   const prevImage = () => {
     if (!hasMultipleImages) return;
     setCurrentImageIndex(
-      (prev) => (prev - 1 + dog.fotos.length) % dog.fotos.length
+      (prev) => (prev - 1 + dog.fotos.length) % dog.fotos.length,
     );
   };
 
