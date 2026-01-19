@@ -24,27 +24,6 @@
   display: block;
 }
 
-.dogBadge {
-  position: absolute;
-  display: flex;
-  gap: 5px;
-  align-items: center;
-  background-color: var(--primary);
-  border: 3px solid var(--bg-body);
-  color: var(--white);
-  padding: 0.3rem 0.5rem;
-  bottom: -0.5rem;
-  left: -0.5rem;
-  border-radius: var(--radius-lg);
-  z-index: 10;
-  pointer-events: none;
-}
-
-.dogBadge span {
-  font-size: 12px;
-  font-weight: 600;
-}
-
 .textSide {
   opacity: 0;
   transform: translateX(50px);
