@@ -113,5 +113,5 @@
 }
 
 .blur {
-  backdrop-filter: blur(var(--blur));
+  backdrop-filter: var(--blur);
 }

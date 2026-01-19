@@ -100,9 +100,8 @@ export default function History() {
             </Card>
           </div>
           <div className={styles.historyImageContainer}>
-            {/* img temporaria */}
             <img
-              src="https://img.freepik.com/fotos-gratis/e6mmqmducags9ema81vqg4lssvin112lzmqib9g8jpg_181624-57371.jpg?semt=ais_hybrid&w=740&q=80"
+              src="https://res.cloudinary.com/dx2hevcud/image/upload/v1768489291/flocos1_b4aarf.png"
               alt=""
             />
 

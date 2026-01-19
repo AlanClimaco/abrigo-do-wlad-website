@@ -15,7 +15,7 @@ input {
 
 .content {
   z-index: 9999;
-  background-color: var(--bg-body);
+  background-color: var(--white);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
   position: fixed;
@@ -51,7 +51,7 @@ input {
   margin: 0;
   font-weight: 700;
   color: var(--title-primary);
-  text-align: center;
+  text-align: left;
   font-size: 17px;
   flex-grow: 1;
 }
@@ -61,7 +61,7 @@ input {
   max-width: 400px;
   color: var(--title-secondary);
   font-size: 15px;
-  text-align: center;
+  text-align: left;
   line-height: 1.5;
 }
 
@@ -103,4 +103,19 @@ input {
 
 /* media query */
 @media (max-width: 768px) {
+  .header {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+
+  .title,
+  .description {
+    text-align: center;
+  }
 }

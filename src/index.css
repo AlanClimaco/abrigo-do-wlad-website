@@ -6,7 +6,7 @@
   --text-muted: #6b7280;
 
   /* main colors */
-  --bg-body: #fafafa;
+  --bg-body: #fceae3;
   --white: #ffffff;
   --primary: #ff6b35;
   --secondary: #004e89;
@@ -19,10 +19,10 @@
   --border: #b7b7b7;
 
   /* button colors */
-  --btn-primary: #ff6b3546;
+  --btn-primary: #fe9e7b46;
   --btn-primary-hover: #e85d2a;
-  --btn-secondary: #004e89;
-  --btn-secondary-hover: #022947;
+  --btn-secondary: #006ec2;
+  --btn-secondary-hover: #004d87;
   --btn-instagram: #ce579a;
 
   /* shadow & etc */
@@ -37,7 +37,7 @@
 
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-  --blur: 6px;
+  --blur: blur(6px);
 }
 
 * {

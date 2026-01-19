@@ -72,7 +72,7 @@ export function HistorySection() {
           </p>
 
           <div className={styles.buttonWrapper}>
-            <Link to="/historia">
+            <Link to="/sobre">
               <Button variant="text">
                 Ler história completa <ArrowRight size={20} />
               </Button>

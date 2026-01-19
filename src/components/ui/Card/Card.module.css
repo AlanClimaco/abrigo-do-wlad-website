@@ -2,6 +2,7 @@
   padding: 0.5rem;
   border-radius: var(--radius);
   box-shadow: var(--shadow-md);
+  background-color: var(--white);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid rgb(221, 221, 221);
   display: flex;

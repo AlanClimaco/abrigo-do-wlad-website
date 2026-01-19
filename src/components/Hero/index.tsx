@@ -2,8 +2,16 @@ import { Link } from "react-router";
 import styles from "./Hero.module.css";
 import { Button } from "../ui/Button";
 import * as Lucide from "lucide-react";
+import { useState } from "react";
+import type { DogProps } from "../../data/dogs";
+import { getRandomDog } from "../../utils/getDog";
 
 export function Hero() {
+  const [dog] = useState<DogProps>(getRandomDog);
+
+  const mainImage = dog?.fotos[0] ?? null;
+  const secondaryImage = dog?.fotos[1] ?? null;
+
   return (
     <section className={`container ${styles.heroContainer}`}>
       <div className={`${styles.heroContent}`}>
@@ -12,8 +20,8 @@ export function Hero() {
         </h1>
 
         <p className={styles.description}>
-          O <strong>Abrigo do Wlad</strong> é refúgio, cura e esperança para centenas de cães que
-          só conheciam a dor. Adote, doe, faça parte.
+          O <strong>Abrigo do Wlad</strong> é refúgio, cura e esperança para
+          centenas de cães que só conheciam a dor. Adote, doe, faça parte.
         </p>
 
         <div className={styles.btnGroup}>
@@ -32,8 +40,24 @@ export function Hero() {
 
       {/* image */}
       <div className={styles.heroOverlay}>
-        <img className={styles.heroImage} src="https://res.cloudinary.com/dx2hevcud/image/upload/v1768489291/romeu1_e0r4ni.png" alt="" />
-        <img className={styles.heroSecondaryImage} src="https://res.cloudinary.com/dx2hevcud/image/upload/v1768489292/romeu2_hjdrdw.png" alt="" />
+        <img
+          className={styles.heroImage}
+          src={mainImage}
+          alt={dog ? `Foto de ${dog.nome}` : "Cachorro para adoção"}
+        />
+        {secondaryImage && (
+          <img
+            className={styles.heroSecondaryImage}
+            src={secondaryImage}
+            alt={dog ? `Foto de ${dog.nome}` : "Cachorro para adoção"}
+          />
+        )}
+        {dog && dog.nome && (
+          <div className={styles.dogBadge}>
+            <Lucide.Dog size={18} />
+            <span>{dog.nome}</span>
+          </div>
+        )}
       </div>
     </section>
   );

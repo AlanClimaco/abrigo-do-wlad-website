@@ -157,7 +157,7 @@ export function ActionCards() {
           </Card.CardContent>
         </Card.CardBody>
         <Card.CardFooter>
-          <Link to="/tampinhas" className="btn-text">
+          <Link to="/tampinhas">
             <Card.CardButton>
               Ver Pontos de Coleta <Lucide.ChevronRight size={20} />
             </Card.CardButton>

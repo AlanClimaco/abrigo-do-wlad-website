@@ -2,7 +2,6 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
-  margin-top: -80px;
   position: relative;
   z-index: 10;
   padding-bottom: 4rem;
@@ -37,8 +36,10 @@
 .qrCodeWrapper {
   display: flex;
   justify-content: center;
-  border: 2px dashed var(--border);
+  border: 2px dashed var(--primary);
   border-radius: var(--radius);
+  background-color: var(--accent-primary);
+  padding: 1rem 0;
 }
 
 .qrCodeWrapper img {

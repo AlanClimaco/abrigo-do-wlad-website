@@ -1,28 +1,14 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router";
+import { NavLink, useLocation } from "react-router";
 import styles from "./Header.module.css";
 import logo from "../../assets/logo.png";
 import { Button } from "../ui/Button";
 import * as Lucide from "lucide-react";
-import { useMediaQuery } from "@uidotdev/usehooks";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
-
-  const isDesktop = useMediaQuery("(min-width: 768px)");
-
-  useEffect(() => {
-    if (isMenuOpen && !isDesktop) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [isMenuOpen, isDesktop]);
 
   // scroll detect
   useEffect(() => {
@@ -36,12 +22,12 @@ export function Header() {
 
   // Função para abrir/fechar o menu
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+    setMenuOpen(!menuOpen);
   };
 
   // Função para fechar o menu ao clicar em um link (importante para UX mobile)
   const closeMenu = () => {
-    setIsMenuOpen(false);
+    setMenuOpen(false);
   };
 
   const getLinkClass = (path: string) => {
@@ -50,14 +36,13 @@ export function Header() {
       : styles.navLink;
   };
 
+  const headerClasses = `${styles.headerContainer} ${
+    isScrolled && !menuOpen ? styles.headerScrolled : ""
+  }`;
   return (
-    <header
-      className={`${styles.headerContainer} ${
-        isScrolled ? styles.headerScrolled : ""
-      }`}
-    >
+    <header className={headerClasses}>
       <div className={styles.logo}>
-        <Link to="/" onClick={closeMenu}>
+        <NavLink to="/" onClick={closeMenu}>
           <img
             src={logo}
             alt="Abrigo do Wlad"
@@ -70,12 +55,12 @@ export function Header() {
               }
             }}
           />
-        </Link>
+        </NavLink>
       </div>
 
       {/* BOTÃO HAMBURGER (MOBILE) */}
       <button
-        className={`${styles.hamburger} ${isMenuOpen ? styles.active : ""}`}
+        className={`${styles.hamburger} ${menuOpen ? styles.active : ""}`}
         onClick={toggleMenu}
         aria-label="Menu"
       >
@@ -84,42 +69,42 @@ export function Header() {
         <span className={styles.bar}></span>
       </button>
 
-      {/* 3. NAVEGAÇÃO */}
-      <nav className={`${styles.navMenu} ${isMenuOpen ? styles.active : ""}`}>
-        <Link to="/" className={getLinkClass("/")} onClick={closeMenu}>
+      {/* NAVEGAÇÃO */}
+      <nav className={`${styles.navMenu} ${menuOpen ? styles.active : ""}`}>
+        <NavLink to="/" className={getLinkClass("/")} onClick={closeMenu}>
           Início
-        </Link>
+        </NavLink>
 
-        <Link
+        <NavLink
           to="/adotar"
           className={getLinkClass("/adotar")}
           onClick={closeMenu}
         >
           Adotar
-        </Link>
+        </NavLink>
 
-        <Link
-          to="/historia"
-          className={getLinkClass("/historia")}
+        <NavLink
+          to="/sobre"
+          className={getLinkClass("/sobre")}
           onClick={closeMenu}
         >
           Sobre Nós
-        </Link>
+        </NavLink>
 
-        <Link
+        <NavLink
           to="/tampinhas"
           className={getLinkClass("/tampinhas")}
           onClick={closeMenu}
         >
           Tampinhas
-        </Link>
+        </NavLink>
         {/* Botão de Ação */}
-        <Link to="/formulario" onClick={closeMenu}>
+        <NavLink to="/formulario" onClick={closeMenu}>
           <Button className={styles.mainBtn} size="md" variant="secondary">
             <Lucide.HeartHandshake size={20} style={{ marginRight: "8px" }} />
             <span>Quero Ajudar</span>
           </Button>
-        </Link>
+        </NavLink>
       </nav>
     </header>
   );
