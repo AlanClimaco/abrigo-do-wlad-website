@@ -1,5 +1,4 @@
 .heroContainer {
-  margin: 10rem 0;
   display: grid;
   grid-template-columns: 1.5fr 1fr;
   gap: 60px;
@@ -9,10 +8,8 @@
 .heroContent {
   position: relative;
   z-index: 2;
-  max-width: 900px;
-  padding: 0 20px;
   color: var(--text-primary);
-  margin: 0 auto;
+  /* margin: 0 auto; */
   /* opacity: 0; */
   /* transform: translateY(30px); */
   /* transition: all 0.8s ease-out; */
@@ -126,12 +123,13 @@
 
   .btnGroup {
     flex-direction: column;
+    justify-content: center;
   }
 
   .heroImage {
     border-radius: var(--radius);
     box-shadow: var(--shadow-lg);
-    width: auto;
+    width: 100%;
     height: auto;
     object-fit: cover;
     display: block;

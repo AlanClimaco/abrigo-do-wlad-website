@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { NavLink } from "react-router";
 import * as Lucide from "lucide-react";
 import styles from "./Footer.module.css";
 
@@ -28,21 +28,21 @@ export function Footer() {
         {/* Navigation */}
         <div className={styles.footerLinks}>
           <h4 className={styles.columnTitle}>Navegação</h4>
-          <Link to="/" className={styles.linkItem}>
+          <NavLink to="/" className={styles.linkItem}>
             <Lucide.ChevronRight /> Início
-          </Link>
-          <Link to="/adotar" className={styles.linkItem}>
+          </NavLink>
+          <NavLink to="/adotar" className={styles.linkItem}>
             <Lucide.ChevronRight /> Quero Ajudar
-          </Link>
-          <Link to="/historia" className={styles.linkItem}>
-            <Lucide.ChevronRight /> Nossa história
-          </Link>
-          <Link to="/tampinhas" className={styles.linkItem}>
+          </NavLink>
+          <NavLink to="/sobre" className={styles.linkItem}>
+            <Lucide.ChevronRight /> Sobre Nós
+          </NavLink>
+          <NavLink to="/tampinhas" className={styles.linkItem}>
             <Lucide.ChevronRight /> Projeto Tampinhas
-          </Link>
-          <Link to="/formulario" className={styles.linkItem}>
+          </NavLink>
+          <NavLink to="/formulario" className={styles.linkItem}>
             <Lucide.ChevronRight /> Formulário de Interesse
-          </Link>
+          </NavLink>
         </div>
 
         {/* Contact */}

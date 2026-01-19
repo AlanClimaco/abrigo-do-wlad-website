@@ -13,7 +13,7 @@ export function Hero() {
   const secondaryImage = dog?.fotos[1] ?? null;
 
   return (
-    <section className={`container ${styles.heroContainer}`}>
+    <section className={styles.heroContainer}>
       <div className={`${styles.heroContent}`}>
         <h1 className={styles.title}>
           Transformando abandono em finais felizes.
