@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router";
+import { NavLink, useLocation } from "react-router";
 import styles from "./Header.module.css";
 import logo from "../../assets/logo.png";
 import { Button } from "../ui/Button";
@@ -7,10 +7,10 @@ import * as Lucide from "lucide-react";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
 
-  // Detecta Scroll
+  // scroll detect
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 40);
@@ -22,12 +22,12 @@ export function Header() {
 
   // Função para abrir/fechar o menu
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+    setMenuOpen(!menuOpen);
   };
 
   // Função para fechar o menu ao clicar em um link (importante para UX mobile)
   const closeMenu = () => {
-    setIsMenuOpen(false);
+    setMenuOpen(false);
   };
 
   const getLinkClass = (path: string) => {
@@ -36,14 +36,13 @@ export function Header() {
       : styles.navLink;
   };
 
+  const headerClasses = `${styles.headerContainer} ${
+    isScrolled && !menuOpen ? styles.headerScrolled : ""
+  }`;
   return (
-    <header
-      className={`${styles.headerContainer} ${
-        isScrolled ? styles.headerScrolled : ""
-      }`}
-    >
+    <header className={headerClasses}>
       <div className={styles.logo}>
-        <Link to="/" onClick={closeMenu}>
+        <NavLink to="/" onClick={closeMenu}>
           <img
             src={logo}
             alt="Abrigo do Wlad"
@@ -56,12 +55,12 @@ export function Header() {
               }
             }}
           />
-        </Link>
+        </NavLink>
       </div>
 
       {/* BOTÃO HAMBURGER (MOBILE) */}
-      <button 
-        className={`${styles.hamburger} ${isMenuOpen ? styles.active : ''}`} 
+      <button
+        className={`${styles.hamburger} ${menuOpen ? styles.active : ""}`}
         onClick={toggleMenu}
         aria-label="Menu"
       >
@@ -70,31 +69,42 @@ export function Header() {
         <span className={styles.bar}></span>
       </button>
 
-      {/* 3. NAVEGAÇÃO */}
-      <nav className={`${styles.navMenu} ${isMenuOpen ? styles.active : ''}`}>
-        <Link to="/" className={getLinkClass("/")} onClick={closeMenu}>
+      {/* NAVEGAÇÃO */}
+      <nav className={`${styles.navMenu} ${menuOpen ? styles.active : ""}`}>
+        <NavLink to="/" className={getLinkClass("/")} onClick={closeMenu}>
           Início
-        </Link>
-        
-        <Link to="/adotar" className={getLinkClass("/adotar")} onClick={closeMenu}>
-          Adotar
-        </Link>
-        
-        <Link to="/historia" className={getLinkClass("/historia")} onClick={closeMenu}>
-          História
-        </Link>
-        
-        <Link to="/tampinhas" className={getLinkClass("/tampinhas")} onClick={closeMenu}>
-          Tampinhas
-        </Link>
+        </NavLink>
 
+        <NavLink
+          to="/adotar"
+          className={getLinkClass("/adotar")}
+          onClick={closeMenu}
+        >
+          Adotar
+        </NavLink>
+
+        <NavLink
+          to="/sobre"
+          className={getLinkClass("/sobre")}
+          onClick={closeMenu}
+        >
+          Sobre Nós
+        </NavLink>
+
+        <NavLink
+          to="/tampinhas"
+          className={getLinkClass("/tampinhas")}
+          onClick={closeMenu}
+        >
+          Tampinhas
+        </NavLink>
         {/* Botão de Ação */}
-        <Link to="/formulario" onClick={closeMenu}>
-          <Button size="md" variant="secondary">
-            <Lucide.HeartHandshake size={20} style={{ marginRight: '8px' }}/>
+        <NavLink to="/formulario" onClick={closeMenu}>
+          <Button className={styles.mainBtn} size="md" variant="secondary">
+            <Lucide.HeartHandshake size={20} style={{ marginRight: "8px" }} />
             <span>Quero Ajudar</span>
           </Button>
-        </Link>
+        </NavLink>
       </nav>
     </header>
   );

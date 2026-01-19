@@ -1,5 +1,8 @@
+import { useState } from "react";
 import {
   Card,
+  CardBody,
+  CardButton,
   CardContent,
   CardFooter,
   CardHeader,
@@ -8,11 +11,15 @@ import {
 } from "../../components/ui/Card";
 import * as Lucide from "lucide-react";
 import HeroSmall from "../../components/HeroSmall";
-import { Button } from "../../components/ui/Button";
 import styles from "./History.module.css";
 import { Link } from "react-router";
+import type { DogProps } from "../../data/dogs";
+import { getRandomDog } from "../../utils/getDog";
 
 export default function History() {
+  const [dog] = useState<DogProps>(getRandomDog);
+  const image = dog?.fotos[0] ?? null;
+
   return (
     <>
       <HeroSmall
@@ -71,38 +78,36 @@ export default function History() {
             </p>
 
             <Card color="secondary" variant="quote">
-              <CardHeader>
-                <CardIcon>
-                  <Lucide.Coins size={30} strokeWidth={1.5} />
-                </CardIcon>
-                <CardTitle>Captação de Recursos</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p style={{ textAlign: "justify" }}>
-                  Um dos projetos implantado para arrecadação de recursos para
-                  financiar a obra foi a reciclagem de tampinhas plásticas.
-                  Consiste na coleta de tampas plásticas ou qualquer material
-                  que seja de polipropileno que é vendido para empresas que
-                  transformam esse material e revendem para a indústria de
-                  brinquedos, eletrodomésticos, automobilística e outras.
-                </p>
-              </CardContent>
+              <CardBody>
+                <CardHeader>
+                  <CardIcon>
+                    <Lucide.Coins size={30} strokeWidth={1.5} />
+                  </CardIcon>
+                  <CardTitle>Captação de Recursos</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p style={{ textAlign: "justify" }}>
+                    Um dos projetos implantado para arrecadação de recursos para
+                    financiar a obra foi a reciclagem de tampinhas plásticas.
+                    Consiste na coleta de tampas plásticas ou qualquer material
+                    que seja de polipropileno que é vendido para empresas que
+                    transformam esse material e revendem para a indústria de
+                    brinquedos, eletrodomésticos, automobilística e outras.
+                  </p>
+                </CardContent>
+              </CardBody>
               <CardFooter>
                 <Link to="/tampinhas" className="btn-text">
-                  <Button size="md" variant="text">
+                  <CardButton>
                     Saiba Mais <Lucide.ArrowRight size={20} />
-                  </Button>
+                  </CardButton>
                 </Link>
               </CardFooter>
             </Card>
           </div>
           <div className={styles.historyImageContainer}>
-            {/* img temporaria */}
-            <img
-              src="https://img.freepik.com/fotos-gratis/e6mmqmducags9ema81vqg4lssvin112lzmqib9g8jpg_181624-57371.jpg?semt=ais_hybrid&w=740&q=80"
-              alt=""
-            />
-
+            <img src={image} alt={`Foto de ${dog.nome}`} />
+            
             <div className={styles.historyImageDescription}>
               <h4>12+ Anos de História</h4>
               <p>

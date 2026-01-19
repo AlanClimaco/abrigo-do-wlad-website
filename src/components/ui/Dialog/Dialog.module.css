@@ -7,7 +7,7 @@ input {
 
 .overlay {
   z-index: 9998;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: rgba(0, 0, 0, 0.396);
   position: fixed;
   inset: 0;
   animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -15,8 +15,8 @@ input {
 
 .content {
   z-index: 9999;
-  background-color: var(--bg-body);
-  border-radius: var(--radius);
+  background-color: var(--white);
+  border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
   position: fixed;
   top: 50%;
@@ -27,6 +27,8 @@ input {
   max-height: 85vh;
   padding: 25px;
   animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
 }
 .content:focus {
   outline: none;
@@ -35,59 +37,48 @@ input {
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.headerContent {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .title {
   margin: 0;
   font-weight: 700;
-  color: var(--title-main);
+  color: var(--title-primary);
+  text-align: left;
   font-size: 17px;
+  flex-grow: 1;
 }
 
 .description {
-  margin: 10px 0 20px;
-  color: var(--title-light);
+  margin: 10px auto 20px;
+  max-width: 400px;
+  color: var(--title-secondary);
   font-size: 15px;
+  text-align: left;
   line-height: 1.5;
 }
 
 .closeButton {
-  all: unset;
-  font-family: inherit;
+  position: relative;
   border-radius: 100%;
-  height: 25px;
-  width: 25px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--violet-11);
-  background-color: var(--gray-3);
-}
-.closeButton:hover {
-  background-color: var(--violet-4);
-}
-.closeButton:focus {
-  box-shadow: 0 0 0 2px var(--violet-7);
-}
-
-.closeButton {
-  position: absolute;
-  right: 25px;
-  top: 25px;
-  border-radius: 100%;
-  height: 25px;
-  width: 25px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--title-light);
+  background-color: var(--bg-body);
+  color: var(--text-secondary);
   cursor: pointer;
+  transition: var(--transition);
+  flex-shrink: 0;
 }
 .closeButton:hover {
-  color: var(--primary);
-  transform: rotate(90deg);
-  transition: 0.3s;
+  color: var(--text-primary);
 }
 
 @keyframes overlayShow {
@@ -107,5 +98,24 @@ input {
   to {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* media query */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+
+  .title,
+  .description {
+    text-align: center;
   }
 }

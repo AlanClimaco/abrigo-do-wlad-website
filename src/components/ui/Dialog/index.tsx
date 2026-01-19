@@ -36,9 +36,6 @@ const DialogContent = React.forwardRef<
       {...props}
     >
       {children}
-      <DialogPrimitive.Close className={styles.closeButton}>
-        <X />
-      </DialogPrimitive.Close>
     </DialogPrimitive.Content>
   </DialogPortal>
 ));
@@ -46,9 +43,15 @@ DialogContent.displayName = DialogPrimitive.Content.displayName;
 
 const DialogHeader = ({
   className,
+  children,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn(styles.header, className)} {...props} />
+  <div className={cn(styles.header, className)} {...props}>
+    <div className={styles.headerContent}>{children}</div>
+    <DialogPrimitive.Close className={styles.closeButton}>
+      <X />
+    </DialogPrimitive.Close>
+  </div>
 );
 DialogHeader.displayName = "DialogHeader";
 

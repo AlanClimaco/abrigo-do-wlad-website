@@ -13,18 +13,19 @@
   margin-bottom: 1.5rem;
   font-size: 1.05rem;
   text-align: justify;
-  color: var(--text-light);
+  color: var(--text-secondary);
 }
 
 .historyText h2,
 h3 {
-  color: var(--secondary);
+  color: var(--text-primary);
   margin-top: 40px;
   margin-bottom: 15px;
 }
 
 .historyText h3 {
   font-size: 1.8rem;
+  letter-spacing: -0.8px;
 }
 
 .imageWrapper {
@@ -34,16 +35,6 @@ h3 {
   opacity: 0;
   transform: translateX(-50px);
   transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
-}
-
-.imageWrapper img {
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-lg);
-  width: 100%;
-  height: 100%;
-  max-height: 450px;
-  object-fit: cover;
-  display: block;
 }
 
 .historyImageContainer {
@@ -59,7 +50,7 @@ h3 {
   border-radius: var(--radius);
   box-shadow: var(--shadow-lg);
   width: 100%;
-  height: 90%;
+  max-height: 600px;
   object-fit: cover;
   display: block;
 }

@@ -19,7 +19,7 @@ export function AppRoutes() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/como-ajudar" element={<HowToHelp />} />
-        <Route path="/historia" element={<History />} />
+        <Route path="/sobre" element={<History />} />
         <Route path="/tampinhas" element={<Recycle />} />
         <Route path="/adotar" element={<Adopt />} />
         <Route path="/formulario" element={<Form />} />

@@ -1,17 +1,50 @@
 .card {
-  background: var(--white);
-  padding: 2.5rem; /* md default */
+  padding: 0.5rem;
   border-radius: var(--radius);
   box-shadow: var(--shadow-md);
+  background-color: var(--white);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border-top: 5px solid transparent;
+  border: 1px solid rgb(221, 221, 221);
   display: flex;
   flex-direction: column;
   height: 100%;
+  overflow: hidden;
+}
+
+.cardBody {
+  background-color: var(--accent-primary);
+  padding: 2.5rem; /* md (default) */
+  border-radius: var(--radius);
+  flex-grow: 1;
+}
+
+/* accents */
+.card.colorSecondary .cardBody {
+  background-color: var(--accent-secondary);
+}
+
+.card.colorGreen .cardBody {
+  background-color: var(--accent-green);
+}
+
+.card.colorRed .cardBody {
+  background-color: var(--accent-red);
+}
+
+.colorSecondary .cardIcon {
+  color: var(--secondary);
+}
+
+.colorGreen .cardIcon {
+  color: green;
+}
+
+.colorRed .cardIcon {
+  color: red;
 }
 
 /* sizes */
-.sm {
+.sm .cardBody {
   padding: 1.5rem;
 }
 
@@ -23,7 +56,7 @@
   font-size: 1rem;
 }
 
-.lg {
+.lg .cardBody {
   padding: 3.5rem;
 }
 
@@ -34,11 +67,6 @@
 .card:hover {
   transform: translateY(-10px);
   box-shadow: var(--shadow-lg);
-  border-top-color: var(--primary);
-}
-
-.colorSecondary:hover {
-  border-top-color: var(--secondary);
 }
 
 .cardHeader {
@@ -52,36 +80,51 @@
   color: var(--primary);
 }
 
-.colorSecondary .cardIcon {
-  color: var(--secondary);
-}
-
 .cardTitle {
   font-size: 1.5rem;
-  color: var(--secondary);
+  color: var(--text-primary);
   margin: 0;
 }
 
 .cardContent {
   flex-grow: 1;
-  color: var(--text-light);
+  color: var(--text-secondary);
 }
 
 .cardContent p {
-  color: var(--text-main) !important;
+  color: var(--text-primary) !important;
   text-align: left;
   margin-bottom: 1rem;
 }
 
 .cardFooter {
   margin-top: 1.5rem;
+  padding: 0.5rem 1rem;
+}
+
+.cardButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--text-secondary);
+  width: 100%;
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.cardButton:hover {
+  color: var(--text-primary);
+  transform: scale(1.02);
 }
 
 .quote {
-  border-top-color: transparent;
   box-shadow: none;
   background-color: var(--accent-primary);
   color: var(--primary);
+}
+
+.quote .card {
+  padding: 0;
 }
 
 .quote.colorSecondary {
@@ -105,7 +148,6 @@
 .quote:hover {
   transform: none;
   box-shadow: none;
-  border-top-color: transparent;
 }
 
 @media (max-width: 768px) {
