@@ -32,10 +32,6 @@ export default function Adopt() {
     setCurrentPage(1);
   }, [filterAge, filterBehavior, filterColor]);
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [currentPage]); 
-
   // Lógica de Paginação
   const totalItems = filteredDogs.length;
   const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
@@ -61,8 +57,8 @@ export default function Adopt() {
         {/* Barra de Filtros */}
         <section className={styles.filtersContainer}>
           <div className={styles.filterLabel}>
-            <Filter size={20} color="var(--primary)" />
-            <strong>Filtrar busca:</strong>
+            <Filter size={20} />
+            <strong>Filtrar Busca</strong>
           </div>
 
           <select

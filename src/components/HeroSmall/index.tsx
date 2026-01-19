@@ -1,3 +1,4 @@
+import { Badge } from "../ui/Badge";
 import styles from "./HeroSmall.module.css";
 
 type HeroSmallProps = {
@@ -23,7 +24,14 @@ export default function HeroSmall({
     >
       <div className={styles.heroOverlay} />
       <div className={`${styles.heroSmallContent}`}>
-        <span className={styles.badge}>{badge}</span>
+        <Badge
+          size="lg"
+          variant="outline"
+          blur={true}
+          style={{ color: "var(--white)", textTransform: "uppercase" }}
+        >
+          {badge}
+        </Badge>
         <h1>{title}</h1>
         <p>{description}</p>
       </div>

@@ -5,6 +5,7 @@ import type { DogProps } from "../../data/dogs";
 import styles from "./DogModal.module.css";
 import { Button } from "../ui/Button";
 import { Dialog, DialogContent } from "../ui/Dialog";
+import { Badge } from "../ui/Badge";
 
 interface ModalProps {
   dog: DogProps | null;
@@ -66,13 +67,15 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
           </div>
 
           <div className={styles.details}>
-            <span className={styles.categoryTag}>{dog.cor}</span>
+            <div>
+              <Badge>{dog.cor}</Badge>
+            </div>
 
-            <h2>{dog.nome}</h2>
+            <h2 className={styles.title}>{dog.nome}</h2>
 
-            <div className={styles.tags}>
-              <span className={styles.tag}>{dog.idade}</span>
-              <span className={styles.tag}>{dog.status}</span>
+            <div className={styles.badges}>
+              <Badge variant="secondary">{dog.idade}</Badge>
+              <Badge variant="secondary">{dog.status}</Badge>
             </div>
 
             <p className={styles.description}>

@@ -8,6 +8,7 @@ type BadgeProps = {
   size?: "sm" | "md" | "lg";
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
+  blur?: boolean;
 } & ComponentProps<"div">;
 
 export function Badge({
@@ -16,6 +17,7 @@ export function Badge({
   size = "md",
   leftIcon,
   rightIcon,
+  blur,
   className,
   ...props
 }: BadgeProps) {
