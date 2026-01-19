@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Card,
   CardBody,
@@ -12,8 +13,13 @@ import * as Lucide from "lucide-react";
 import HeroSmall from "../../components/HeroSmall";
 import styles from "./History.module.css";
 import { Link } from "react-router";
+import type { DogProps } from "../../data/dogs";
+import { getRandomDog } from "../../utils/getDog";
 
 export default function History() {
+  const [dog] = useState<DogProps>(getRandomDog);
+  const image = dog?.fotos[0] ?? null;
+
   return (
     <>
       <HeroSmall
@@ -100,11 +106,8 @@ export default function History() {
             </Card>
           </div>
           <div className={styles.historyImageContainer}>
-            <img
-              src="https://res.cloudinary.com/dx2hevcud/image/upload/v1768489291/flocos1_b4aarf.png"
-              alt=""
-            />
-
+            <img src={image} alt={`Foto de ${dog.nome}`} />
+            
             <div className={styles.historyImageDescription}>
               <h4>12+ Anos de História</h4>
               <p>

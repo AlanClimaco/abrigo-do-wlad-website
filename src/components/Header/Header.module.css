@@ -54,7 +54,7 @@
 
 .navLink {
   font-weight: 500;
-  color: var(--text-primary);
+  color: var(--text-secondary);
   position: relative;
   font-size: 1rem;
   cursor: pointer;
@@ -63,7 +63,7 @@
 }
 
 .navLink:hover {
-  color: var(--secondary);
+  color: var(--primary);
 }
 
 .navLink::after {
@@ -75,6 +75,10 @@
   left: 0;
   background: var(--primary);
   transition: width 0.3s ease-in-out;
+}
+
+.activeLink {
+  color: var(--primary)
 }
 
 .navLink:hover::after,
