@@ -76,27 +76,6 @@
   pointer-events: none;
 }
 
-.dogBadge {
-  position: absolute;
-  display: flex;
-  gap: 5px;
-  align-items: center;
-  background-color: var(--primary);
-  border: 3px solid var(--bg-body);
-  color: var(--white);
-  padding: 0.3rem 0.5rem;
-  bottom: -0.5rem;
-  right: -0.5rem;
-  border-radius: var(--radius-lg);
-  z-index: 10;
-  pointer-events: none;
-}
-
-.dogBadge span {
-  font-size: 12px;
-  font-weight: 600;
-}
-
 /* media query */
 @media (max-width: 768px) {
   .heroContainer {

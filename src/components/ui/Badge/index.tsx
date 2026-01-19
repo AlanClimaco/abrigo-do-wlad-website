@@ -1,0 +1,38 @@
+import type { ComponentProps, ReactNode } from "react";
+import styles from "./Badge.module.css";
+import { cn } from "../../../lib/utils";
+
+type BadgeProps = {
+  children: ReactNode;
+  variant?: "primary" | "secondary" | "outline";
+  size?: "sm" | "md" | "lg";
+  leftIcon?: ReactNode;
+  rightIcon?: ReactNode;
+} & ComponentProps<"div">;
+
+export function Badge({
+  children,
+  variant = "primary",
+  size = "md",
+  leftIcon,
+  rightIcon,
+  className,
+  ...props
+}: BadgeProps) {
+  return (
+    <div
+      className={cn(
+        styles.badge,
+        styles[variant],
+        styles[size],
+        { [styles.blur]: blur },
+        className,
+      )}
+      {...props}
+    >
+      {leftIcon && <span className={styles.icon}>{leftIcon}</span>}
+      <span className={styles.content}>{children}</span>
+      {rightIcon && <span className={styles.icon}>{rightIcon}</span>}
+    </div>
+  );
+}

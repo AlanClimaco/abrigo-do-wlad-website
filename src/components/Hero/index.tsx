@@ -5,6 +5,7 @@ import * as Lucide from "lucide-react";
 import { useState } from "react";
 import type { DogProps } from "../../data/dogs";
 import { getRandomDog } from "../../utils/getDog";
+import { Badge } from "../ui/Badge";
 
 export function Hero() {
   const [dog] = useState<DogProps>(getRandomDog);
@@ -53,10 +54,21 @@ export function Hero() {
           />
         )}
         {dog && dog.nome && (
-          <div className={styles.dogBadge}>
-            <Lucide.Dog size={18} />
-            <span>{dog.nome}</span>
-          </div>
+          <Badge
+            variant="primary"
+            size="sm"
+            leftIcon={<Lucide.Dog size={16} />}
+            style={{
+              position: "absolute",
+              bottom: "-0.5rem",
+              right: "-0.5rem",
+              zIndex: 10,
+              pointerEvents: "none",
+              border: "3px solid var(--bg-body)",
+            }}
+          >
+            {dog.nome}
+          </Badge>
         )}
       </div>
     </section>

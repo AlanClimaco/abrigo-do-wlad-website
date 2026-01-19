@@ -30,7 +30,7 @@
 }
 
 .mainBtn {
-  border-radius: 30px !important;
+  border-radius: var(--radius-xl) !important;
 }
 
 .logo img {

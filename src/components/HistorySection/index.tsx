@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import styles from "./HistorySection.module.css";
 import dogImage from "../../assets/simba.jpg";
 import { Button } from "../ui/Button";
+import { Badge } from "../ui/Badge";
 import * as Lucide from "lucide-react";
 
 export function HistorySection() {
@@ -21,7 +22,7 @@ export function HistorySection() {
       },
       {
         threshold: 0.2,
-      }
+      },
     );
 
     if (sectionRef.current) {
@@ -44,10 +45,21 @@ export function HistorySection() {
           }`}
         >
           <img src={dogImage} alt="Simba" />
-          <div className={styles.dogBadge}>
-            <Lucide.Dog size={18} />
-            <span>Simba</span>
-          </div>
+          <Badge
+            variant="primary"
+            size="sm"
+            leftIcon={<Lucide.Dog size={16} />}
+            style={{
+              position: "absolute",
+              bottom: "-0.5rem",
+              left: "-0.5rem",
+              zIndex: 10,
+              pointerEvents: "none",
+              border: "3px solid var(--bg-body)",
+            }}
+          >
+            Simba
+          </Badge>
         </div>
 
         <div
