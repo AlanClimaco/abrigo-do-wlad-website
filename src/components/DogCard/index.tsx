@@ -11,6 +11,7 @@ import {
   CardTitle,
 } from "../ui/Card";
 import { Badge } from "../ui/Badge";
+import { getOptimizedImageUrl } from "../../utils/cdn";
 
 interface DogCardProps {
   data: DogProps;
@@ -18,13 +19,22 @@ interface DogCardProps {
 }
 
 export function DogCard({ data, onClick }: DogCardProps) {
+  const dogImage = data.fotos[0] ?? null;
+  
+  const dogImageUrl = getOptimizedImageUrl(dogImage, {
+    crop: "fill",
+    width: 200,
+    height: 350,
+    quality: 100,
+  });
+
   return (
     <Card
-      imageSrc={data.fotos[0]}
+      imageSrc={dogImageUrl}
       onClick={onClick}
       style={{ cursor: "pointer" }}
     >
-      <CardBody imageSrc={data.fotos[0]}>
+      <CardBody imageSrc={dogImageUrl}>
         <CardHeader>
           <CardTitle>{data.nome}</CardTitle>
         </CardHeader>
