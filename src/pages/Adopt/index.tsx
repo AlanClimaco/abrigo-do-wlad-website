@@ -1,21 +1,24 @@
-import { useState, useEffect } from "react";
-import { Filter, Frown, ChevronLeft, ChevronRight } from "lucide-react";
+import * as React from "react";
+import * as Lucide from "lucide-react";
+import * as SelectComponent from "../../components/ui/Select";
 import { DogCard } from "../../components/DogCard";
 import HeroSmall from "../../components/HeroSmall";
 import { DogModal } from "../../components/DogModal";
 import styles from "./Adopt.module.css";
 
 import { DOGS_DATA, CORES_MAP, type DogProps } from "../../data/dogs";
+import { Badge } from "../../components/ui/Badge";
+import { Button } from "../../components/ui/Button";
 
 const ITEMS_PER_PAGE = 9;
 
 export default function Adopt() {
-  const [filterAge, setFilterAge] = useState("all");
-  const [filterBehavior, setFilterBehavior] = useState("all");
-  const [filterColor, setFilterColor] = useState("all");
+  const [filterAge, setFilterAge] = React.useState("all");
+  const [filterBehavior, setFilterBehavior] = React.useState("all");
+  const [filterColor, setFilterColor] = React.useState("all");
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [selectedDog, setSelectedDog] = useState<DogProps | null>(null);
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [selectedDog, setSelectedDog] = React.useState<DogProps | null>(null);
 
   // Filtragem
   const filteredDogs = DOGS_DATA.filter((dog) => {
@@ -28,7 +31,7 @@ export default function Adopt() {
   });
 
   // Resetar página ao mudar filtros
-  useEffect(() => {
+  React.useEffect(() => {
     setCurrentPage(1);
   }, [filterAge, filterBehavior, filterColor]);
 
@@ -55,49 +58,97 @@ export default function Adopt() {
 
       <div className="container">
         {/* Barra de Filtros */}
-        <section className={styles.filtersContainer}>
-          <div className={styles.filterLabel}>
-            <Filter size={20} />
-            <strong>Filtrar Busca</strong>
+        <div className={styles.filterContainer}>
+          <div className={styles.filterItemContainer}>
+            <SelectComponent.Select
+              value={filterBehavior}
+              onValueChange={setFilterBehavior}
+            >
+              <SelectComponent.SelectTrigger className={styles.selectTrigger}>
+                <SelectComponent.SelectValue placeholder="Qualquer Temperamento" />
+              </SelectComponent.SelectTrigger>
+              <SelectComponent.SelectContent>
+                <SelectComponent.SelectItem value="all">
+                  Qualquer Temperamento
+                </SelectComponent.SelectItem>
+                <SelectComponent.SelectItem value="Tranquilo">
+                  Tranquilo / Calmo
+                </SelectComponent.SelectItem>
+                <SelectComponent.SelectItem value="Ativo">
+                  Ativo / Energético
+                </SelectComponent.SelectItem>
+                <SelectComponent.SelectItem value="Dócil">
+                  Dócil / Amoroso
+                </SelectComponent.SelectItem>
+                <SelectComponent.SelectItem value="Sociável">
+                  Sociável
+                </SelectComponent.SelectItem>
+                <SelectComponent.SelectItem value="Resiliente">
+                  Guerreiro / Resiliente
+                </SelectComponent.SelectItem>
+              </SelectComponent.SelectContent>
+            </SelectComponent.Select>
+
+            <SelectComponent.Select
+              value={filterAge}
+              onValueChange={setFilterAge}
+            >
+              <SelectComponent.SelectTrigger className={styles.selectTrigger}>
+                <SelectComponent.SelectValue placeholder="Todas as Idades" />
+              </SelectComponent.SelectTrigger>
+              <SelectComponent.SelectContent>
+                <SelectComponent.SelectItem value="all">
+                  Todas as Idades
+                </SelectComponent.SelectItem>
+                <SelectComponent.SelectItem value="filhote">
+                  Filhote (até 1 ano)
+                </SelectComponent.SelectItem>
+                <SelectComponent.SelectItem value="adulto">
+                  Adulto (2 a 7 anos)
+                </SelectComponent.SelectItem>
+                <SelectComponent.SelectItem value="idoso">
+                  Idoso (+8 anos)
+                </SelectComponent.SelectItem>
+              </SelectComponent.SelectContent>
+            </SelectComponent.Select>
+
+            <SelectComponent.Select
+              value={filterColor}
+              onValueChange={setFilterColor}
+            >
+              <SelectComponent.SelectTrigger className={styles.selectTrigger}>
+                <SelectComponent.SelectValue placeholder="Todas as Cores" />
+              </SelectComponent.SelectTrigger>
+              <SelectComponent.SelectContent>
+                <SelectComponent.SelectItem value="all">
+                  Todas as Cores
+                </SelectComponent.SelectItem>
+                <SelectComponent.SelectItem value="caramelo">
+                  Caramelo (Patrimônio Nacional)
+                </SelectComponent.SelectItem>
+                <SelectComponent.SelectItem value="pretinho">
+                  Pretinho (Nada Básico)
+                </SelectComponent.SelectItem>
+                <SelectComponent.SelectItem value="fiapoManga">
+                  Fiapo de Manga (Arrepiados)
+                </SelectComponent.SelectItem>
+                <SelectComponent.SelectItem value="peludinhos">
+                  Peludinhos
+                </SelectComponent.SelectItem>
+                <SelectComponent.SelectItem value="BrasilEgito">
+                  Mistura do Brasil com Egito
+                </SelectComponent.SelectItem>
+              </SelectComponent.SelectContent>
+            </SelectComponent.Select>
           </div>
-
-          <select
-            className={styles.selectInput}
-            value={filterAge}
-            onChange={(e) => setFilterAge(e.target.value)}
+          <Badge
+            leftIcon={<Lucide.PawPrint size={16} />}
+            variant="secondary"
+            size="sm"
           >
-            <option value="all">Todas as Idades</option>
-            <option value="filhote">Filhote (até 1 ano)</option>
-            <option value="adulto">Adulto (2 a 7 anos)</option>
-            <option value="idoso">Idoso (+8 anos)</option>
-          </select>
-
-          <select
-            className={styles.selectInput}
-            value={filterBehavior}
-            onChange={(e) => setFilterBehavior(e.target.value)}
-          >
-            <option value="all">Qualquer Temperamento</option>
-            <option value="Tranquilo">Tranquilo / Calmo</option>
-            <option value="Ativo">Ativo / Energético</option>
-            <option value="Dócil">Dócil / Amoroso</option>
-            <option value="Sociável">Sociável</option>
-            <option value="Resiliente">Guerreiro / Resiliente</option>
-          </select>
-
-          <select
-            className={styles.selectInput}
-            value={filterColor}
-            onChange={(e) => setFilterColor(e.target.value)}
-          >
-            <option value="all">Todas as Cores</option>
-            <option value="caramelo">Caramelo (Patrimônio Nacional)</option>
-            <option value="pretinho">Pretinho (Nada Básico)</option>
-            <option value="fiapoManga">Fiapo de Manga (Arrepiados)</option>
-            <option value="peludinhos">Peludinhos</option>
-            <option value="BrasilEgito">Mistura do Brasil com Egito</option>
-          </select>
-        </section>
+            {totalItems} doguinhos
+          </Badge>
+        </div>
 
         {/* Grid de Resultados */}
         <div className={styles.dogGrid}>
@@ -111,8 +162,10 @@ export default function Adopt() {
             ))
           ) : (
             <div className={styles.emptyState}>
-              <Frown size={48} />
-              <p>Nenhum doguinho encontrado com essas características no momento.</p>
+              <Lucide.Frown size={48} />
+              <p>
+                Nenhum doguinho encontrado com essas características no momento.
+              </p>
             </div>
           )}
         </div>
@@ -120,25 +173,27 @@ export default function Adopt() {
         {/* Paginação */}
         {totalPages > 1 && (
           <div className={styles.pagination}>
-            <button 
+            <Button
+              size="icon"
+              variant="outline"
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1}
-              className={styles.pageButton}
             >
-              <ChevronLeft size={20} />
-            </button>
-            
+              <Lucide.ChevronLeft size={20} />
+            </Button>
+
             <span className={styles.pageInfo}>
               Página {currentPage} de {totalPages}
             </span>
 
-            <button 
+            <Button
+              size="icon"
+              variant="outline"
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className={styles.pageButton}
             >
-              <ChevronRight size={20} />
-            </button>
+              <Lucide.ChevronRight size={20} />
+            </Button>
           </div>
         )}
       </div>

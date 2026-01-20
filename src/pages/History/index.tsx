@@ -25,7 +25,7 @@ export default function History() {
     crop: "fill",
     width: 400,
     height: 600,
-    quality: 200,
+    quality: 100,
   });
 
   return (

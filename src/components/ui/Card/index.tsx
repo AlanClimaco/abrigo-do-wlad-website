@@ -9,6 +9,11 @@ type CardProps = HTMLAttributes<HTMLDivElement> & {
   imageSrc?: string;
 };
 
+/**
+ * A container component that groups related content.
+ * @param param0 
+ * @returns a JSX element representing the card container.
+ */
 export function Card({
   className,
   variant = "default",

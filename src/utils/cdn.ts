@@ -9,6 +9,12 @@ export interface CloudinaryOptions {
   effect?: string;
 }
 
+/**
+ * Optimizes a Cloudinary image URL by adding transformation parameters.
+ * @param originalUrl the original Cloudinary image URL.
+ * @param options an object of options for optimization.
+ * @returns the optimized image URL, or the original URL if it's not a Cloudinary URL.
+ */
 export function getOptimizedImageUrl(
   originalUrl: string,
   options: CloudinaryOptions = {},
@@ -62,8 +68,12 @@ export function getOptimizedImageUrl(
 }
 
 /**
- * Ex.: Hero thumbnail image
- * @returns
+ * Generates an optimized URL for a square thumbnail.
+ * This is a checkpoint for getOptimizedImageUrl with predefined options for thumbnails.
+ * @param originalUrl the original Cloudinary image URL.
+ * @param size the width and height of the thumbnail in pixels. Defaults to 300.
+ * @param quality the quality of the optimized image (0-100). Defaults to 50.
+ * @returns the optimized thumbnail image URL.
  */
 export function getThumbnaillUrl(
   originalUrl: string,

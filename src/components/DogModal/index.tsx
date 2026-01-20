@@ -6,6 +6,8 @@ import styles from "./DogModal.module.css";
 import { Button } from "../ui/Button";
 import { Dialog, DialogContent } from "../ui/Dialog";
 import { Badge } from "../ui/Badge";
+import { TextLink } from "../common/Link";
+import { useMediaQuery } from "@uidotdev/usehooks";
 
 interface ModalProps {
   dog: DogProps | null;
@@ -15,6 +17,8 @@ interface ModalProps {
 
 export function DogModal({ dog, isOpen, onClose }: ModalProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   // reseta o índice da img quando é fechado ou o cão muda
   useEffect(() => {
@@ -54,16 +58,28 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
               alt={dog.nome}
               className={styles.mainImage}
             />
-            {hasMultipleImages && (
-              <div className={styles.carouselNav}>
-                <button onClick={prevImage} className={styles.navButton}>
-                  <Lucide.ChevronLeft size={24} color="#333" />
-                </button>
-                <button onClick={nextImage} className={styles.navButton}>
-                  <Lucide.ChevronRight size={24} color="#333" />
-                </button>
+            <div className={styles.carouselButtons}>
+              <div>
+                <Button
+                  blur={true}
+                  variant="outline"
+                  size="icon"
+                  onClick={handleClose}
+                >
+                  <Lucide.X size={24} />
+                </Button>
               </div>
-            )}
+              {hasMultipleImages && (
+                <div className={styles.carouselNav}>
+                  <Button variant="outline" size="icon" onClick={prevImage}>
+                    <Lucide.ChevronLeft size={24} />
+                  </Button>
+                  <Button variant="outline" size="icon" onClick={nextImage}>
+                    <Lucide.ChevronRight size={24} />
+                  </Button>
+                </div>
+              )}
+            </div>
           </div>
 
           <div className={styles.details}>
@@ -86,20 +102,24 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
             <div className={styles.footer}>
               <div className={styles.footerBtn}>
                 {dog.instaLink && (
-                  <a
-                    href={dog.instaLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Button size="lg" variant="instagram">
-                      <Lucide.Instagram />
+                  <TextLink href={dog.instaLink as string}>
+                    <Button
+                      leftIcon={<Lucide.Instagram />}
+                      size={`${isDesktop ? "md" : "lg"}`}
+                      variant="instagram"
+                    >
                       Ver vídeo no Instagram
                     </Button>
-                  </a>
+                  </TextLink>
                 )}
+
                 <Link to={`/formulario?pet=${encodeURIComponent(dog.nome)}`}>
-                  <Button size="lg" variant="primary">
-                    Tenho Interesse em Adotar
+                  <Button
+                    leftIcon={<Lucide.Heart />}
+                    size={`${isDesktop ? "md" : "lg"}`}
+                    variant="primary"
+                  >
+                    Tenho Interesse
                   </Button>
                 </Link>
               </div>

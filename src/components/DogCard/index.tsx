@@ -20,7 +20,7 @@ interface DogCardProps {
 
 export function DogCard({ data, onClick }: DogCardProps) {
   const dogImage = data.fotos[0] ?? null;
-  
+
   const dogImageUrl = getOptimizedImageUrl(dogImage, {
     crop: "fill",
     width: 200,

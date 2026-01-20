@@ -11,12 +11,16 @@ type ButtonProps = {
     | "instagram"
     | "text"
     | "ghost";
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "icon"
   blur?: boolean;
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
 } & ComponentProps<"button">;
 
+/**
+ * A customizable button ui component.
+ * @returns a JSX element representing the button.
+ */
 export function Button({
   children,
   variant = "primary",
