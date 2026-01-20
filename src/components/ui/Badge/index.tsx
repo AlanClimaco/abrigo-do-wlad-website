@@ -8,14 +8,20 @@ type BadgeProps = {
   size?: "sm" | "md" | "lg";
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
+  blur?: boolean;
 } & ComponentProps<"div">;
 
+/**
+ * A badge component to display small pieces of information.
+ * @returns a JSX element representing the badge.
+ */
 export function Badge({
   children,
   variant = "primary",
   size = "md",
   leftIcon,
   rightIcon,
+  blur,
   className,
   ...props
 }: BadgeProps) {

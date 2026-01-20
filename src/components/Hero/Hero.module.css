@@ -57,14 +57,13 @@
 .heroImage {
   border-radius: var(--radius);
   width: 100%;
-  height: 600px;
-  max-height: 450px;
+  height: 500px;
   object-fit: cover;
   display: block;
   pointer-events: none;
 }
 
-.heroSecondaryImage {
+.heroThumbnail {
   position: absolute;
   top: -1.5rem;
   left: -30px;
@@ -73,7 +72,11 @@
   object-fit: cover;
   border-radius: var(--radius-lg);
   border: 4px solid var(--bg-body);
-  pointer-events: none;
+  transition: var(--transition);
+}
+
+.heroThumbnail:hover {
+  transform: translateY(-5px);
 }
 
 /* media query */

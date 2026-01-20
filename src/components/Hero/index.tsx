@@ -6,12 +6,20 @@ import { useState } from "react";
 import type { DogProps } from "../../data/dogs";
 import { getRandomDog } from "../../utils/getDog";
 import { Badge } from "../ui/Badge";
+import { getOptimizedImageUrl, getThumbnaillUrl } from "../../utils/cdn";
 
 export function Hero() {
   const [dog] = useState<DogProps>(getRandomDog);
 
   const mainImage = dog?.fotos[0] ?? null;
   const secondaryImage = dog?.fotos[1] ?? null;
+
+  const heroImageUrl = getOptimizedImageUrl(mainImage, {
+    crop: "fill",
+    width: 600,
+    height: 500,
+  });
+  const thumbnailImageUrl = getThumbnaillUrl(secondaryImage, 128, 200);
 
   return (
     <section className={styles.heroContainer}>
@@ -43,13 +51,13 @@ export function Hero() {
       <div className={styles.heroOverlay}>
         <img
           className={styles.heroImage}
-          src={mainImage}
+          src={heroImageUrl}
           alt={dog ? `Foto de ${dog.nome}` : "Cachorro para adoção"}
         />
-        {secondaryImage && (
+        {mainImage && secondaryImage && thumbnailImageUrl && heroImageUrl && (
           <img
-            className={styles.heroSecondaryImage}
-            src={secondaryImage}
+            className={styles.heroThumbnail}
+            src={thumbnailImageUrl}
             alt={dog ? `Foto de ${dog.nome}` : "Cachorro para adoção"}
           />
         )}

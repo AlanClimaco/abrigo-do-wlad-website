@@ -18,6 +18,60 @@
   flex-grow: 1;
 }
 
+/* image variant */
+
+.imageVariant .cardBody {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.imageVariant .cardBody::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 78, 137, 0.181) 0%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+  border-radius: var(--radius);
+  z-index: 1;
+}
+
+.imageVariant .cardHeader,
+.imageVariant .cardContent,
+.imageVariant .cardFooter {
+  position: relative;
+  z-index: 2;
+}
+
+.imageVariant .badge,
+.imageVariant .cardTitle,
+.imageVariant .cardContent p {
+  color: var(--white) !important;
+  text-shadow: 0px 2px 4px #00000066;
+}
+
+.imageVariant .cardContent {
+  min-height: 350px;
+}
+
+.card.imageVariant:hover .cardBody::before {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 78, 137, 0.066) 0%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+}
+
 /* accents */
 .card.colorSecondary .cardBody {
   background-color: var(--accent-secondary);

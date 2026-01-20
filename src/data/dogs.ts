@@ -30,7 +30,7 @@ export const DOGS_DATA: DogProps[] = [
     porte: "Grande",
     temperamento: "Doce, Energética",
     tags: ["Dócil", "Ativo"],
-    status: "Vacinado e Castrado",
+    status: "Vacinada e Castrada",
     fotos: [
       "https://res.cloudinary.com/dx2hevcud/image/upload/v1768489293/teka1_zz4noo.png", 
       "https://res.cloudinary.com/dx2hevcud/image/upload/v1768489294/teka2_s5yyot.png", 

@@ -2,10 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 import { ArrowRight } from "lucide-react";
 import styles from "./HistorySection.module.css";
-import dogImage from "../../assets/simba.jpg";
 import { Button } from "../ui/Button";
 import { Badge } from "../ui/Badge";
 import * as Lucide from "lucide-react";
+
+import dogImage from "../../assets/simba.jpg";
 
 export function HistorySection() {
   const [isVisible, setIsVisible] = useState(false);

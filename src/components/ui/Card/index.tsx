@@ -6,13 +6,20 @@ type CardProps = HTMLAttributes<HTMLDivElement> & {
   variant?: "default" | "quote";
   color?: "primary" | "secondary" | "red" | "green";
   size?: "sm" | "md" | "lg";
+  imageSrc?: string;
 };
 
+/**
+ * A container component that groups related content.
+ * @param param0 
+ * @returns a JSX element representing the card container.
+ */
 export function Card({
   className,
   variant = "default",
   color = "primary",
   size = "md",
+  imageSrc,
   ...props
 }: CardProps) {
   return (
@@ -25,6 +32,7 @@ export function Card({
         color === "red" && styles.colorRed,
         size === "sm" && styles.sm,
         size === "lg" && styles.lg,
+        imageSrc && styles.imageVariant,
         className,
       )}
       {...props}
@@ -62,9 +70,13 @@ export function CardContent({
 
 export function CardBody({
   className,
+  style,
+  imageSrc,
   ...props
-}: HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn(styles.cardBody, className)} {...props} />;
+}: HTMLAttributes<HTMLDivElement> & { imageSrc?: string }) {
+  const bodyStyle = imageSrc ? { backgroundImage: `url(${imageSrc})`, ...style } : style;
+
+  return <div className={cn(styles.cardBody, className)} style={bodyStyle} {...props} />;
 }
 
 export function CardFooter({

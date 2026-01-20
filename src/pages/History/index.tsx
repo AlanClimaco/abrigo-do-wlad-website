@@ -15,10 +15,18 @@ import styles from "./History.module.css";
 import { Link } from "react-router";
 import type { DogProps } from "../../data/dogs";
 import { getRandomDog } from "../../utils/getDog";
+import { getOptimizedImageUrl } from "../../utils/cdn";
 
 export default function History() {
   const [dog] = useState<DogProps>(getRandomDog);
   const image = dog?.fotos[0] ?? null;
+
+  const sectionImageUrl = getOptimizedImageUrl(image, {
+    crop: "fill",
+    width: 400,
+    height: 600,
+    quality: 100,
+  });
 
   return (
     <>
@@ -106,8 +114,8 @@ export default function History() {
             </Card>
           </div>
           <div className={styles.historyImageContainer}>
-            <img src={image} alt={`Foto de ${dog.nome}`} />
-            
+            <img src={sectionImageUrl} alt={`Foto de ${dog.nome}`} />
+
             <div className={styles.historyImageDescription}>
               <h4>12+ Anos de História</h4>
               <p>
