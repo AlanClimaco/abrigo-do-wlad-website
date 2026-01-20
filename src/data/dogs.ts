@@ -110,6 +110,7 @@ export const DOGS_DATA: DogProps[] = [
       "https://res.cloudinary.com/dx2hevcud/image/upload/v1768857592/Maylon_3_fcgjyl.jpg",
     ],
     cor: "caramelo",
+    instaLink: "https://www.instagram.com/reels/DSEBgaRifjv/",
     descricaoCompleta:
       "Maylon é daqueles cãozinhos que chegam devagar, conquistam no olhar e abraçam a gente com a própria doçura. Ele está há 4 anos no abrigo e, mesmo assim, nunca perdeu a delicadeza e a esperança. Maylon não pede muito, só quer pertencer e ser amado. Acordar todos os dias sabendo que, enfim, encontrou seu lugar no mundo.",
   },
@@ -128,6 +129,7 @@ export const DOGS_DATA: DogProps[] = [
       "https://res.cloudinary.com/dx2hevcud/image/upload/v1768857594/Docinho_3_xccuqg.jpg",
     ],
     cor: "caramelo",
+    instaLink: "www.instagram.com/reel/DR7esAQkTqd/?igsh=MWZkN2w0b3Z0anh2Mw==",
     descricaoCompleta:
       "Docinho é uma caramelo puro charme! Tranquila, amável e com um jeitinho que derrete qualquer coração. Essa princesa linda só precisa de uma chance para mostrar todo o amor que tem pra dar. Ela sonha em passar o Natal no colo de uma família especial… quem sabe a sua?",
   },
@@ -145,7 +147,8 @@ export const DOGS_DATA: DogProps[] = [
       "https://res.cloudinary.com/dx2hevcud/image/upload/v1768857593/David_Bowie_2_xmrvyh.jpg",
       "https://res.cloudinary.com/dx2hevcud/image/upload/v1768857593/David_Bowie_3_pb8zbw.jpg",
     ],
-    cor: "BrasilEgito",
+    cor: "caramelo",
+    instaLink: "https://www.instagram.com/p/DRvWLZ-ie50/?igsh=enNuYXo0ZWFkaHc0",
     descricaoCompleta:
       "David Bowie tem esse nome por conta de seus olhos únicos: um azul e outro verde. Foi abandonado ainda bebê e cresceu no abrigo vendo outros cães irem embora. É impossível olhar pro Bowie e não sentir algo mexer por dentro. Ele carrega uma beleza única e um olhar que parece pedir silenciosamente: 'Me escolhe também?'. Ele é doce, carinhoso e encantador.",
   },
@@ -161,7 +164,8 @@ export const DOGS_DATA: DogProps[] = [
     fotos: [
       "https://res.cloudinary.com/dx2hevcud/image/upload/v1768857595/Vit%C3%B3rio_hufqbl.jpg",
     ],
-    cor: "pretinho",
+    cor: "peludinhos",
+    instaLink: "www.instagram.com/reel/DRbGsdrEcoD/?igsh=MTd0NzR2c2Jram1mag==",
     descricaoCompleta:
       "Se existe um doguinho que nasceu para ser amado, é ele. Vitório chegou ao mundo único, especial, e com um coração enorme pedindo apenas uma chance. Ele só quer aquilo que todo cãozinho merece: um colo pra chamar de seu. Ele segue no abrigo aguardando uma oportunidade de ser feliz e descobrir a vida aqui fora.",
   },
@@ -178,7 +182,8 @@ export const DOGS_DATA: DogProps[] = [
       "https://res.cloudinary.com/dx2hevcud/image/upload/v1768857591/Francisco_1_j9tbjc.jpg", 
       "https://res.cloudinary.com/dx2hevcud/image/upload/v1768857591/Francisco_2_q4ehnc.jpg",
     ],
-    cor: "peludinhos",
+    cor: "pretinho",
+    instaLink: "https://www.instagram.com/p/DQ2CcL3Cba-/?img_index=3&igsh=cDVyMXlmem4ya3Ri",
     descricaoCompleta:
       "Francisco é um jovem senhor irresistível de 8 anos. Um cãozinho extremamente tranquilo e amável que não desiste de encontrar um lar amoroso e calmo, igual a ele. Perfeito para quem busca um companheiro que já passou da fase de destruir coisas e só quer paz e amor.",
   },
@@ -196,13 +201,14 @@ export const DOGS_DATA: DogProps[] = [
       "https://res.cloudinary.com/dx2hevcud/image/upload/v1768857595/Wisky_2_gdsga6.jpg",
       "https://res.cloudinary.com/dx2hevcud/image/upload/v1768857596/Wisky_3_dhkyyw.jpg",
     ],
-    cor: "caramelo",
+    cor: "BrasilEgito",
+    instaLink: "www.instagram.com/reel/DTd8zIvCeCg/?igsh=MXphODNpNTE0cjZo",
     descricaoCompleta:
       "Ele não pede muito… Só um lar, um colo e alguém pra amar. O Wisky é conhecido por ser o cãozinho mais carinhoso e fofo do abrigo, mas espera há tempo demais. É gracioso, dócil e temos certeza que sua família está por aí.",
   },
   {
     id: 11,
-    nome: "Eros",
+    nome: "Éros",
     idade: "2 anos",
     cateIdade: "adulto",
     porte: "Pequeno",
@@ -215,6 +221,7 @@ export const DOGS_DATA: DogProps[] = [
       "https://res.cloudinary.com/dx2hevcud/image/upload/v1768857591/Eros_3_mgwmya.jpg",
     ],
     cor: "pretinho",
+    instaLink: "www.instagram.com/reel/DTJLeA3ibYl/?igsh=eGN0bnFteGpvYzlr",
     descricaoCompleta:
       "Eros precisa de uma família muito especial, pois ele é capaz de ficar paralisado de medo. Porém, depois que confia, ele se entrega totalmente, sobe no colo e adora carinho. A confiança nasce no dia a dia. Você é essa família especial que vai transformar a vida do Eros?",
   },
@@ -232,7 +239,8 @@ export const DOGS_DATA: DogProps[] = [
       "https://res.cloudinary.com/dx2hevcud/image/upload/v1768857594/Pistache_2_dlkfjg.jpg",
       "https://res.cloudinary.com/dx2hevcud/image/upload/v1768857594/Pistache_3_tt21rr.jpg",
     ],
-    cor: "fiapoManga",
+    cor: "BrasilEgito",
+    instaLink: "www.instagram.com/reel/DQVZcESEesd/?igsh=MWU0eHZibmZpb2Y2",
     descricaoCompleta:
       "Pistache foi resgatado após ser amarrado em um poste, mas é impressionante como ele consegue mostrar alegria depois de tanto sofrimento. Ele só quer amar, ter um cesto de brinquedos e passear no parque. Sonha em brincar de bolinha com sua nova família.",
   },
@@ -250,7 +258,8 @@ export const DOGS_DATA: DogProps[] = [
       "https://res.cloudinary.com/dx2hevcud/image/upload/v1768857592/Danny_DeVito_2_ts8rkt.jpg",
       "https://res.cloudinary.com/dx2hevcud/image/upload/v1768857592/Danny_DeVito_3_wnxb0h.jpg",
     ],
-    cor: "peludinhos",
+    cor: "BrasilEgito",
+    instaLink: "www.instagram.com/reel/DQP-u6PCfhz/?igsh=M214ZzI5bDA0Z2dp",
     descricaoCompleta:
       "Danny DeVito é uma figuraça! Alegria em forma de cachorro. Ele é muito engraçado, cheio de energia e AMA crianças. Se você gosta de um cãozinho alegre para iluminar a casa, vai amar o Danny.",
   },
@@ -268,7 +277,8 @@ export const DOGS_DATA: DogProps[] = [
       "https://res.cloudinary.com/dx2hevcud/image/upload/v1768857592/Bob_3_a62u2v.jpg",
       "https://res.cloudinary.com/dx2hevcud/image/upload/v1768857595/Bob_2_ftabvq.jpg",
     ],
-    cor: "caramelo",
+    cor: "pretinho",
+    instaLink: "www.instagram.com/reel/DQF2QYMCZd3/?igsh=dnpobDhxczF1aGpn",
     descricaoCompleta:
       "Bob está pronto para viver o amor! Carinhoso, tranquilo e super companheiro. Depois de tanto tempo no abrigo vendo amigos indo embora, ele continua com o mesmo olhar doce, acreditando que um dia será a vez dele. Só quer um cantinho e um colo.",
   },
@@ -286,6 +296,7 @@ export const DOGS_DATA: DogProps[] = [
       "https://res.cloudinary.com/dx2hevcud/image/upload/v1768857595/Pudim_2_pjy2qj.jpg",
     ],
     cor: "caramelo",
+    instaLink: "www.instagram.com/reel/DOQ1Sg0DQB0/?igsh=MXMyMnRrdjluNTlnMQ==",
     descricaoCompleta:
       "Pudim é um sobrevivente. Viveu na rua e sofreu muito (foi ferido por um motoqueiro), mas não perdeu seu jeito alegre e amoroso de ser. É extremamente dócil com pessoas, ama passear, se comporta bem no carro e anda tranquilo na guia. Se dá bem com outros cães do abrigo.",
   },
@@ -302,7 +313,8 @@ export const DOGS_DATA: DogProps[] = [
       "https://res.cloudinary.com/dx2hevcud/image/upload/v1768857593/Peter_1_jvkwnc.jpg", 
       "https://res.cloudinary.com/dx2hevcud/image/upload/v1768857593/Peter_2_c88dz7.jpg",
     ],
-    cor: "pretinho",
+    cor: "peludinhos",
+    instaLink: "https://www.instagram.com/p/DOH0lM0iN04/?igsh=ZTc1NTRzeGM2a3Rs",
     descricaoCompleta:
       "Peter chegou ao abrigo com cinomose, lutou bravamente e venceu! Ficaram pequenas sequelas na boquinha e patinha, mas nada que impeça ele de viver com muita energia. Ele adora brincar, é animado e está prontíssimo para dar e receber amor. Precisa de uma família que enxergue além das marcas do passado.",
   },
