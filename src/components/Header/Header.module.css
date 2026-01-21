@@ -29,10 +29,6 @@
   align-items: center;
 }
 
-.mainBtn {
-  border-radius: var(--radius-xl) !important;
-}
-
 .logo img {
   height: 70px;
   width: auto;

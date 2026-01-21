@@ -4,6 +4,8 @@ import styles from "./Header.module.css";
 import logo from "../../assets/logo.png";
 import { Button } from "../ui/Button";
 import * as Lucide from "lucide-react";
+import * as Dialog from "../ui/Dialog";
+import PixModal from "../PixModal";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -98,13 +100,21 @@ export function Header() {
         >
           Tampinhas
         </NavLink>
-        {/* Botão de Ação */}
-        <NavLink to="/formulario" onClick={closeMenu}>
-          <Button className={styles.mainBtn} size="md" variant="secondary">
-            <Lucide.HeartHandshake size={20} style={{ marginRight: "8px" }} />
-            <span>Quero Ajudar</span>
-          </Button>
-        </NavLink>
+        {/* Botão de Doação */}
+        <Dialog.Dialog>
+          <Dialog.DialogTrigger asChild>
+            <Button
+              className={styles.mainBtn}
+              size="md"
+              variant="secondary"
+              style={{ borderRadius: "var(--radius-xl)" }}
+            >
+              <Lucide.HeartHandshake size={20} />
+              <span>Quero Ajudar</span>
+            </Button>
+          </Dialog.DialogTrigger>
+          <PixModal />
+        </Dialog.Dialog>
       </nav>
     </header>
   );
