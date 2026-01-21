@@ -9,16 +9,19 @@ import styles from "./Adopt.module.css";
 import { DOGS_DATA, CORES_MAP, type DogProps } from "../../data/dogs";
 import { Badge } from "../../components/ui/Badge";
 import { Button } from "../../components/ui/Button";
+import { preloadDogImages } from "../../utils/getDog";
 
-const ITEMS_PER_PAGE = 9;
+const ITEMS_PER_PAGE: number = 9;
 
 export default function Adopt() {
-  const [filterAge, setFilterAge] = React.useState("all");
-  const [filterBehavior, setFilterBehavior] = React.useState("all");
-  const [filterColor, setFilterColor] = React.useState("all");
+  const [filterAge, setFilterAge] = React.useState<string>("all");
+  const [filterBehavior, setFilterBehavior] = React.useState<string>("all");
+  const [filterColor, setFilterColor] = React.useState<string>("all");
 
-  const [currentPage, setCurrentPage] = React.useState(1);
+  const [currentPage, setCurrentPage] = React.useState<number>(1);
   const [selectedDog, setSelectedDog] = React.useState<DogProps | null>(null);
+
+  const [loadingDogId, setLoadingDogId] = React.useState<number | null>(null);
 
   // Filtragem
   const filteredDogs = DOGS_DATA.filter((dog) => {
@@ -45,6 +48,21 @@ export default function Adopt() {
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
+  };
+
+  const handleDogClick = async (dog: DogProps) => {
+    if (!dog.fotos || dog.fotos.length === 0) return;
+
+    setLoadingDogId(dog.id);
+
+    try {
+      await preloadDogImages(dog.fotos);
+      setSelectedDog(dog);
+    } catch (error) {
+      console.error("Não foi possível pré-carregar as imagens!\n", error);
+    } finally {
+      setLoadingDogId(null);
+    }
   };
 
   return (
@@ -157,7 +175,8 @@ export default function Adopt() {
               <DogCard
                 key={dog.id}
                 data={dog}
-                onClick={() => setSelectedDog(dog)}
+                onClick={() => handleDogClick(dog)}
+                isLoading={loadingDogId === dog.id}
               />
             ))
           ) : (
