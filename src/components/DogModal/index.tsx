@@ -71,12 +71,27 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
               </div>
               {hasMultipleImages && (
                 <div className={styles.carouselNav}>
-                  <Button variant="outline" size="icon" onClick={prevImage}>
-                    <Lucide.ChevronLeft size={24} />
-                  </Button>
-                  <Button variant="outline" size="icon" onClick={nextImage}>
-                    <Lucide.ChevronRight size={24} />
-                  </Button>
+                  <div className={styles.carouselNavButtons}>
+                    <Button variant="outline" size="icon" onClick={prevImage}>
+                      <Lucide.ChevronLeft size={24} />
+                    </Button>
+                    <Button variant="outline" size="icon" onClick={nextImage}>
+                      <Lucide.ChevronRight size={24} />
+                    </Button>
+                  </div>
+
+                  <div className={styles.carouselNavDots}>
+                    {dog.fotos.map((_, index) => (
+                      <button
+                        key={index}
+                        className={`${styles.dot} ${
+                          currentImageIndex === index ? styles.dotActive : ""
+                        }`}
+                        onClick={() => setCurrentImageIndex(index)}
+                        aria-label={`Ir para imagem ${index + 1}`}
+                      />
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
