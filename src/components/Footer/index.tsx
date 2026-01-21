@@ -82,7 +82,7 @@ export function Footer() {
         </div>
         <div className={styles.footerBottomGroup}>
           <TextLink href="#">Política de Privacidade</TextLink>
-          <TextLink href="#">Termos de Uso</TextLink>
+          <TextLink href="#">Termos de Responsabilidade</TextLink>
           <p className={styles.credits}>
             Por <TextLink href="https://github.com/AlanClimaco">Alan</TextLink>&{" "}
             <TextLink href="https://github.com/spantalho">Luis</TextLink>

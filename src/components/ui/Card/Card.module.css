@@ -171,6 +171,10 @@
   transform: scale(1.02);
 }
 
+.card:hover .cardButton {
+  color: var(--text-primary);
+}
+
 .quote {
   box-shadow: none;
   background-color: var(--accent-primary);
