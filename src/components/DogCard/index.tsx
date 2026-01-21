@@ -1,24 +1,18 @@
-import { BriefcaseMedical, Calendar, ChevronUp } from "lucide-react";
+import * as Lucide from "lucide-react";
+import * as CardComponent from "../ui/Card";
 import type { DogProps } from "../../data/dogs";
-import styles from "./DogCard.module.css";
-import {
-  Card,
-  CardBody,
-  CardButton,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "../ui/Card";
 import { Badge } from "../ui/Badge";
 import { getOptimizedImageUrl } from "../../utils/cdn";
+
+import styles from "./DogCard.module.css";
 
 interface DogCardProps {
   data: DogProps;
   onClick: () => void;
+  isLoading?: boolean;
 }
 
-export function DogCard({ data, onClick }: DogCardProps) {
+export function DogCard({ data, onClick, isLoading }: DogCardProps) {
   const dogImage = data.fotos[0] ?? null;
 
   const dogImageUrl = getOptimizedImageUrl(dogImage, {
@@ -29,22 +23,27 @@ export function DogCard({ data, onClick }: DogCardProps) {
   });
 
   return (
-    <Card
+    <CardComponent.Card
       imageSrc={dogImageUrl}
-      onClick={onClick}
-      style={{ cursor: "pointer" }}
+      onClick={isLoading ? undefined : onClick}
+      style={{ cursor: isLoading ? "wait" : "pointer", position: "relative" }}
     >
-      <CardBody imageSrc={dogImageUrl}>
-        <CardHeader>
-          <CardTitle>{data.nome}</CardTitle>
-        </CardHeader>
-        <CardContent>
+      {isLoading && (
+        <div className={styles.loadingOverlay}>
+          <Lucide.LoaderCircle className={styles.spinner} size={48} />
+        </div>
+      )}
+      <CardComponent.CardBody imageSrc={dogImageUrl}>
+        <CardComponent.CardHeader>
+          <CardComponent.CardTitle>{data.nome}</CardComponent.CardTitle>
+        </CardComponent.CardHeader>
+        <CardComponent.CardContent>
           <div className={styles.cardContainer}>
             <div className={styles.badgeContainer}>
               <Badge
                 size="sm"
                 blur={true}
-                leftIcon={<Calendar size={14} />}
+                leftIcon={<Lucide.Calendar size={14} />}
                 variant="outline"
                 style={{
                   color: "var(--white)",
@@ -55,7 +54,7 @@ export function DogCard({ data, onClick }: DogCardProps) {
               <Badge
                 size="sm"
                 blur={true}
-                leftIcon={<BriefcaseMedical size={14} />}
+                leftIcon={<Lucide.BriefcaseMedical size={14} />}
                 variant="outline"
                 style={{
                   color: "var(--white)",
@@ -66,14 +65,14 @@ export function DogCard({ data, onClick }: DogCardProps) {
             </div>
             <p>{data.temperamento}</p>
           </div>
-        </CardContent>
-      </CardBody>
-      <CardFooter>
-        <CardButton>
+        </CardComponent.CardContent>
+      </CardComponent.CardBody>
+      <CardComponent.CardFooter>
+        <CardComponent.CardButton>
           Conhecer Mais
-          <ChevronUp />
-        </CardButton>
-      </CardFooter>
-    </Card>
+          <Lucide.ChevronUp />
+        </CardComponent.CardButton>
+      </CardComponent.CardFooter>
+    </CardComponent.Card>
   );
 }

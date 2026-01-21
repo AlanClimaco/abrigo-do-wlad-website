@@ -12,6 +12,32 @@
   height: 100%;
 }
 
+.loadingOverlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+  border-radius: var(--radius);
+  color: var(--white);
+  transition: opacity 0.2s ease-in-out;
+}
+
+.spinner {
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* media query */
 @media (max-width: 768px) {
   .badgeContainer {

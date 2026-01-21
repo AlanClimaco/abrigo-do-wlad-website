@@ -17,94 +17,9 @@
   animation-delay: 0.5s;
 }
 
-.pixModalContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  flex-grow: 1;
-}
-
-.pixModalCode {
-  display: flex;
-  justify-content: center;
-  border: 1px dashed var(--border);
-  border-radius: var(--radius);
-}
-
-.qrCodeWrapper {
-  display: flex;
-  justify-content: center;
-  border: 2px dashed var(--primary);
-  border-radius: var(--radius);
-  background-color: var(--accent-primary);
-  padding: 1rem 0;
-}
-
-.qrCodeWrapper img {
-  max-width: 250px;
-  max-height: 250px;
-}
-
-.pixCard {
-  margin-top: 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.pixCard span {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-}
-
-.beneficiaryData {
-  list-style: none;
-  margin-top: 25px;
-  background-color: var(--bg-secondary);
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  text-align: left;
-}
-
-.beneficiaryData li {
-  display: flex;
-  justify-content: space-between;
-  padding: 4px 0;
-}
-
-.beneficiaryData li + li {
-  border-top: 1px solid var(--border);
-}
-
 @keyframes revealCard {
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-/* media query */
-@media (max-width: 768px) {
-  .beneficiaryData li {
-    flex-direction: column;
-    text-align: center;
-    justify-content: center;
-    gap: 5px;
-  }
-
-  .pixCard {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .qrCodeWrapper img {
-    max-width: 200px;
-    max-height: 200px;
-  }
-
-  .qrCodeWrapper {
-    border: none;
   }
 }
