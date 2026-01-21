@@ -16,14 +16,13 @@ interface ModalProps {
 }
 
 export function DogModal({ dog, isOpen, onClose }: ModalProps) {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
+  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
-  // reseta o índice da img quando é fechado ou o cão muda
   useEffect(() => {
     if (!isOpen) {
-      setTimeout(() => setCurrentImageIndex(0), 150);
+      const timer = setTimeout(() => setCurrentImageIndex(0), 150);
+      return () => clearTimeout(timer);
     }
   }, [isOpen]);
 
@@ -44,7 +43,6 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
   };
 
   const handleClose = () => {
-    setCurrentImageIndex(0);
     onClose();
   };
 
@@ -58,6 +56,7 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
               alt={dog.nome}
               className={styles.mainImage}
             />
+
             <div className={styles.carouselButtons}>
               <div>
                 <Button

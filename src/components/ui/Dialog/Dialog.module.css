@@ -52,6 +52,7 @@ input {
   font-weight: 700;
   color: var(--title-primary);
   text-align: left;
+  max-width: 350px;
   font-size: 17px;
   flex-grow: 1;
 }
