@@ -146,7 +146,7 @@ export default function Adopt() {
             variant="secondary"
             size="sm"
           >
-            {totalItems} doguinhos
+            {totalItems}+ doguinhos
           </Badge>
         </div>
 

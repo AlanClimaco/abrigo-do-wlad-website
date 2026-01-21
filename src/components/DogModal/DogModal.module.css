@@ -84,8 +84,9 @@
   font-size: 1.3rem;
 }
 
-.footer {
-  margin-top: 1.5rem;
+.badges {
+  display: flex;
+  gap: 5px;
 }
 
 .badges {
@@ -101,7 +102,7 @@
   gap: 10px;
 }
 
-/* --- MOBILE --- */
+/* media query */
 @media (max-width: 768px) {
   .modalContent {
     overflow-y: auto;
@@ -141,5 +142,13 @@
   .footerBtn {
     flex-direction: column;
     gap: 15px;
+  }
+
+  .description {
+    font-size: 1rem;
+  }
+
+  .title {
+    font-size: 3rem;
   }
 }
