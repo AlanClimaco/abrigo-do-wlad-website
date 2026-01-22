@@ -1,4 +1,4 @@
-import type { Dog } from "./types/dogs";
+import type { Dog } from "../types/dogs";
 
 /**
  * Retorna um cachorro aleatório de uma lista fornecida.
