@@ -6,39 +6,71 @@ import HeroSmall from "../../components/HeroSmall";
 import { DogModal } from "../../components/DogModal";
 import styles from "./Adopt.module.css";
 
-import { CORES_MAP, type Dog } from "../../types/dogs";
-import { getDogs } from "../../services/dogService"; 
+import { CORES_MAP, TAGS_MAP, type Dog } from "../../types/dogs";
+import type { DocumentData } from "firebase/firestore";
+
+import { getDogsWithFilters } from "../../services/dogService";
+import { preloadDogImages } from "../../utils/getDog";
+import { getOptimizedImageUrl } from "../../utils/cdn";
 
 import { Badge } from "../../components/ui/Badge";
+import { Skeleton } from "../../components/ui/Skeleton";
 import { Button } from "../../components/ui/Button";
-import { preloadDogImages } from "../../utils/getDog";
 
-const ITEMS_PER_PAGE: number = 9;
+const ITEMS_PER_PAGE: number = 6;
+
+function DogCardSkeleton() {
+  return <Skeleton style={{ height: "500px", width: "100%" }} />;
+}
 
 export default function Adopt() {
   // --- ESTADOS ---
   // Dados do Firebase
   const [dogs, setDogs] = React.useState<Dog[]>([]);
-  const [loading, setLoading] = React.useState(true); 
-  
-  // Estado visual de carregamento do card individual
-  const [loadingDogId, setLoadingDogId] = React.useState<string | null>(null);
+  const [loading, setLoading] = React.useState<boolean>(true);
+  const [totalItems, setTotalItems] = React.useState<number>(0);
+
+  const pageDocsRef = React.useRef<{ [key: number]: DocumentData }>({});
+
+  type AgeFilter = "all" | "filhote" | "adulto" | "idoso";
+  type BehaviorFilter = "all" | keyof typeof TAGS_MAP;
+  type ColorFilter = "all" | keyof typeof CORES_MAP;
 
   // Filtros
-  const [filterAge, setFilterAge] = React.useState("all");
-  const [filterBehavior, setFilterBehavior] = React.useState("all");
-  const [filterColor, setFilterColor] = React.useState("all");
+  const [filterAge, setFilterAge] = React.useState<AgeFilter>("all");
+  const [filterBehavior, setFilterBehavior] =
+    React.useState<BehaviorFilter>("all");
+  const [filterColor, setFilterColor] = React.useState<ColorFilter>("all");
 
   // Paginação e Modal
-  const [currentPage, setCurrentPage] = React.useState(1);
+  const [currentPage, setCurrentPage] = React.useState<number>(1);
   const [selectedDog, setSelectedDog] = React.useState<Dog | null>(null);
+  const [loadingDogId, setLoadingDogId] = React.useState<string | null>(null);
 
-  // --- Buscar dados aso recarregar a página ---
   React.useEffect(() => {
     async function loadData() {
+      setLoading(true);
       try {
-        const data = await getDogs();
-        setDogs(data);
+        const docForPage = pageDocsRef.current[currentPage - 1];
+
+        const {
+          dogs: newDogs,
+          totalItems: newTotal,
+          lastVisibleDoc: newLastVisible,
+        } = await getDogsWithFilters(
+          { cateIdade: filterAge, tags: filterBehavior, cor: filterColor },
+          currentPage,
+          ITEMS_PER_PAGE,
+          docForPage,
+        );
+
+        setDogs(newDogs);
+        setTotalItems(newTotal);
+
+        // salva o último doc da página atual para a próxima
+        if (newLastVisible) {
+          pageDocsRef.current[currentPage] = newLastVisible;
+        }
       } catch (error) {
         console.error("Erro ao carregar cachorros:", error);
       } finally {
@@ -46,62 +78,92 @@ export default function Adopt() {
       }
     }
     loadData();
-  }, []);
-
-  // --- 2Filtragem baseada nos dados do banco ---
-  const filteredDogs = dogs.filter((dog) => {
-    const matchAge = filterAge === "all" || dog.cateIdade === filterAge;
-    const matchBehavior =
-      filterBehavior === "all" || dog.tags.includes(filterBehavior);
-    const matchColor = filterColor === "all" || (dog.cor && dog.cor === filterColor);
-
-    return matchAge && matchBehavior && matchColor;
-  });
+  }, [currentPage, filterAge, filterBehavior, filterColor]);
 
   // Resetar página ao mudar filtros
   React.useEffect(() => {
     setCurrentPage(1);
+    pageDocsRef.current = {};
   }, [filterAge, filterBehavior, filterColor]);
 
-  // --- 3. PAGINAÇÃO ---
-  const totalItems = filteredDogs.length;
+  // --- PAGINAÇÃO ---
   const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+  const currentDogs = dogs;
 
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
-  const currentDogs = filteredDogs.slice(startIndex, endIndex);
+  // pré-carregamento per-page (melhora desempenho e uso de banda).
+  React.useEffect(() => {
+    const imagesToPreload = currentDogs
+      .map((dog) => {
+        const originalUrl = dog.fotos?.[0];
+
+        return getOptimizedImageUrl(originalUrl, {
+          width: 400,
+          height: 600,
+          quality: 75,
+          crop: "fill",
+          gravity: "auto",
+        });
+      })
+      .filter((url): url is string => !!url);
+
+    if (imagesToPreload.length > 0) {
+      preloadDogImages(imagesToPreload);
+    }
+  }, [currentDogs]);
+
+  // leva ao topo quando muda de página
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentPage]);
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
   };
 
   const handleDogClick = async (dog: Dog) => {
-    // Se não tiver foto, abre direto
-    if (!dog.fotos || dog.fotos.length === 0) {
-       setSelectedDog(dog);
-       return;
-    }
-
     setLoadingDogId(dog.id);
 
     try {
-      // Tenta baixar a imagem antes de abrir o modal pra não piscar
-      await preloadDogImages(dog.fotos);
+      // pré-carregamento de todas as fotos do cão
+      if (dog.fotos && dog.fotos.length > 0) {
+        await preloadDogImages(dog.fotos);
+      }
       setSelectedDog(dog);
     } catch (error) {
       console.error("Erro no preload:", error);
-      setSelectedDog(dog); 
+      setSelectedDog(dog);
     } finally {
       setLoadingDogId(null);
     }
   };
 
-  // --- RENDER ---
+  // renderiza skeleton da página
   if (loading) {
     return (
-      <div style={{ padding: "4rem", textAlign: "center" }}>
-        <p>Carregando doguinhos...</p>
-      </div>
+      <main>
+        <HeroSmall
+          image="https://www.petz.com.br/blog/wp-content/uploads/2025/11/vira-lata1.jpg"
+          title="Nossos Doguinhos"
+          badge="Amigos Fiéis"
+          description="Cada um tem uma história e uma personalidade única. Utilize os filtros abaixo para encontrar quem combina com seu estilo de vida."
+        />
+        <div className="container">
+          <div className={styles.filterContainer}>
+            <div className={styles.filterItemContainer}>
+              <Skeleton style={{ height: "35px", width: "220px" }} />
+              <Skeleton style={{ height: "35px", width: "220px" }} />
+              <Skeleton style={{ height: "35px", width: "220px" }} />
+            </div>
+            <Skeleton style={{ height: "32px", width: "150px" }} />
+          </div>
+
+          <div className={styles.dogGrid}>
+            {Array.from({ length: ITEMS_PER_PAGE }).map((_, index) => (
+              <DogCardSkeleton key={index} />
+            ))}
+          </div>
+        </div>
+      </main>
     );
   }
 
@@ -115,12 +177,14 @@ export default function Adopt() {
       />
 
       <div className="container">
-        {/* Barra de Filtros */}
+        {/* Filtros */}
         <div className={styles.filterContainer}>
           <div className={styles.filterItemContainer}>
             <SelectComponent.Select
               value={filterBehavior}
-              onValueChange={setFilterBehavior}
+              onValueChange={(value) =>
+                setFilterBehavior(value as BehaviorFilter)
+              }
             >
               <SelectComponent.SelectTrigger className={styles.selectTrigger}>
                 <SelectComponent.SelectValue placeholder="Qualquer Temperamento" />
@@ -129,27 +193,17 @@ export default function Adopt() {
                 <SelectComponent.SelectItem value="all">
                   Qualquer Temperamento
                 </SelectComponent.SelectItem>
-                <SelectComponent.SelectItem value="Tranquilo">
-                  Tranquilo / Calmo
-                </SelectComponent.SelectItem>
-                <SelectComponent.SelectItem value="Ativo">
-                  Ativo / Energético
-                </SelectComponent.SelectItem>
-                <SelectComponent.SelectItem value="Dócil">
-                  Dócil / Amoroso
-                </SelectComponent.SelectItem>
-                <SelectComponent.SelectItem value="Sociável">
-                  Sociável
-                </SelectComponent.SelectItem>
-                <SelectComponent.SelectItem value="Resiliente">
-                  Guerreiro / Resiliente
-                </SelectComponent.SelectItem>
+                {Object.entries(TAGS_MAP).map(([key, label]) => (
+                  <SelectComponent.SelectItem key={key} value={label}>
+                    {label}
+                  </SelectComponent.SelectItem>
+                ))}
               </SelectComponent.SelectContent>
             </SelectComponent.Select>
 
             <SelectComponent.Select
               value={filterAge}
-              onValueChange={setFilterAge}
+              onValueChange={(value) => setFilterAge(value as AgeFilter)}
             >
               <SelectComponent.SelectTrigger className={styles.selectTrigger}>
                 <SelectComponent.SelectValue placeholder="Todas as Idades" />
@@ -172,7 +226,7 @@ export default function Adopt() {
 
             <SelectComponent.Select
               value={filterColor}
-              onValueChange={setFilterColor}
+              onValueChange={(value) => setFilterColor(value as ColorFilter)}
             >
               <SelectComponent.SelectTrigger className={styles.selectTrigger}>
                 <SelectComponent.SelectValue placeholder="Todas as Cores" />
@@ -181,21 +235,11 @@ export default function Adopt() {
                 <SelectComponent.SelectItem value="all">
                   Todas as Cores
                 </SelectComponent.SelectItem>
-                <SelectComponent.SelectItem value="caramelo">
-                  Caramelo (Patrimônio Nacional)
-                </SelectComponent.SelectItem>
-                <SelectComponent.SelectItem value="pretinho">
-                  Pretinho (Nada Básico)
-                </SelectComponent.SelectItem>
-                <SelectComponent.SelectItem value="fiapoManga">
-                  Fiapo de Manga (Arrepiados)
-                </SelectComponent.SelectItem>
-                <SelectComponent.SelectItem value="peludinhos">
-                  Peludinhos
-                </SelectComponent.SelectItem>
-                <SelectComponent.SelectItem value="BrasilEgito">
-                  Mistura do Brasil com Egito
-                </SelectComponent.SelectItem>
+                {Object.entries(CORES_MAP).map(([key, label]) => (
+                  <SelectComponent.SelectItem key={key} value={key}>
+                    {label}
+                  </SelectComponent.SelectItem>
+                ))}
               </SelectComponent.SelectContent>
             </SelectComponent.Select>
           </div>
@@ -204,7 +248,7 @@ export default function Adopt() {
             variant="secondary"
             size="sm"
           >
-            {totalItems}+ doguinhos
+            {totalItems} doguinhos
           </Badge>
         </div>
 

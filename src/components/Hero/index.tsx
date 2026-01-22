@@ -2,10 +2,12 @@ import styles from "./Hero.module.css";
 import { Button } from "../ui/Button";
 import * as Lucide from "lucide-react";
 import { useState, useEffect } from "react";
-import type { Dog } from "../../types/dogs"; 
+import type { Dog } from "../../types/dogs";
 import { getDogs } from "../../services/dogService";
 import { Badge } from "../ui/Badge";
+import { Skeleton } from "../ui/Skeleton";
 import { getOptimizedImageUrl, getThumbnaillUrl } from "../../utils/cdn";
+import { getRandomDog } from "../../utils/getDog";
 import { Link } from "react-router";
 
 export function Hero() {
@@ -16,8 +18,7 @@ export function Hero() {
       try {
         const allDogs = await getDogs();
         if (allDogs.length > 0) {
-          const randomIndex = Math.floor(Math.random() * allDogs.length);
-          setDog(allDogs[randomIndex]);
+          setDog(getRandomDog(allDogs));
         }
       } catch (error) {
         console.error("Erro ao carregar dog do Hero:", error);
@@ -29,12 +30,17 @@ export function Hero() {
   const mainImage = dog?.fotos?.[0] ?? null;
   const secondaryImage = dog?.fotos?.[1] ?? null;
 
-  const heroImageUrl = mainImage 
-    ? getOptimizedImageUrl(mainImage, { crop: "fill", width: 600, height: 500 }) 
+  const heroImageUrl = mainImage
+    ? getOptimizedImageUrl(mainImage, {
+        crop: "fill",
+        gravity: "auto",
+        width: 600,
+        height: 500,
+      })
     : "";
-    
-  const thumbnailImageUrl = secondaryImage 
-    ? getThumbnaillUrl(secondaryImage, 128, 200) 
+
+  const thumbnailImageUrl = secondaryImage
+    ? getThumbnaillUrl(secondaryImage, 128, 200)
     : "";
 
   return (
@@ -72,7 +78,7 @@ export function Hero() {
             alt={dog ? `Foto de ${dog.nome}` : "Cachorro para adoção"}
           />
         ) : (
-          <div className={styles.heroImage} style={{ background: 'var(--white)' }} />
+          <Skeleton className={styles.heroImage} />
         )}
 
         {mainImage && secondaryImage && thumbnailImageUrl && (
@@ -82,7 +88,6 @@ export function Hero() {
             alt={dog ? `Foto de ${dog.nome}` : "Cachorro para adoção"}
           />
         )}
-        
         {dog && dog.nome && (
           <Badge
             variant="primary"
