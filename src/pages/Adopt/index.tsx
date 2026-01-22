@@ -7,6 +7,8 @@ import { DogModal } from "../../components/DogModal";
 import styles from "./Adopt.module.css";
 
 import { CORES_MAP, TAGS_MAP, type Dog } from "../../types/dogs";
+import type { DocumentData } from "firebase/firestore";
+
 import { getDogsWithFilters } from "../../services/dogService";
 import { preloadDogImages } from "../../utils/getDog";
 import { getOptimizedImageUrl } from "../../utils/cdn";
@@ -28,7 +30,7 @@ export default function Adopt() {
   const [loading, setLoading] = React.useState<boolean>(true);
   const [totalItems, setTotalItems] = React.useState<number>(0);
 
-  const [pageDocs, setPageDocs] = React.useState<{ [key: number]: any }>({});
+  const pageDocsRef = React.useRef<{ [key: number]: DocumentData }>({});
 
   type AgeFilter = "all" | "filhote" | "adulto" | "idoso";
   type BehaviorFilter = "all" | keyof typeof TAGS_MAP;
@@ -49,7 +51,7 @@ export default function Adopt() {
     async function loadData() {
       setLoading(true);
       try {
-        const docForPage = pageDocs[currentPage - 1];
+        const docForPage = pageDocsRef.current[currentPage - 1];
 
         const {
           dogs: newDogs,
@@ -67,7 +69,7 @@ export default function Adopt() {
 
         // salva o último doc da página atual para a próxima
         if (newLastVisible) {
-          setPageDocs((prev) => ({ ...prev, [currentPage]: newLastVisible }));
+          pageDocsRef.current[currentPage] = newLastVisible;
         }
       } catch (error) {
         console.error("Erro ao carregar cachorros:", error);
@@ -81,7 +83,7 @@ export default function Adopt() {
   // Resetar página ao mudar filtros
   React.useEffect(() => {
     setCurrentPage(1);
-    setPageDocs({});
+    pageDocsRef.current = {};
   }, [filterAge, filterBehavior, filterColor]);
 
   // --- PAGINAÇÃO ---
@@ -135,7 +137,7 @@ export default function Adopt() {
     }
   };
 
-  // renderiza grid com skeleton
+  // renderiza skeleton da página
   if (loading) {
     return (
       <main>
@@ -148,9 +150,9 @@ export default function Adopt() {
         <div className="container">
           <div className={styles.filterContainer}>
             <div className={styles.filterItemContainer}>
-              <Skeleton style={{ height: "40px", width: "100%" }} />
-              <Skeleton style={{ height: "40px", width: "100%" }} />
-              <Skeleton style={{ height: "40px", width: "100%" }} />
+              <Skeleton style={{ height: "35px", width: "220px" }} />
+              <Skeleton style={{ height: "35px", width: "220px" }} />
+              <Skeleton style={{ height: "35px", width: "220px" }} />
             </div>
             <Skeleton style={{ height: "32px", width: "150px" }} />
           </div>
