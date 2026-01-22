@@ -6,6 +6,16 @@ export const CORES_MAP: Record<string, string> = {
   BrasilEgito: "Mistura do Brasil com Egito",
 };
 
+export const TAGS_MAP: Record<string, string> = {
+  docil: "Dócil",
+  ativo: "Ativo",
+  tranquilo: "Tranquilo",
+  sociavel: "Sociável",
+  resiliente: "Resiliente",
+  carinhoso: "Carinhoso",
+  amavel: "Amável",
+};
+
 export interface Dog {
   id: string;
   nome: string;
@@ -21,3 +31,11 @@ export interface Dog {
   descricaoCompleta?: string;
   createdAt?: any;
 }
+
+type FilterValue<T> = T | "all";
+
+export type DogFilters = {
+  cateIdade?: FilterValue<Dog["cateIdade"]>;
+  cor?: FilterValue<Dog["cor"]>;
+  tags?: string;
+};

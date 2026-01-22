@@ -23,10 +23,11 @@ export function DogCard({ data, onClick, isLoading }: DogCardProps) {
   const dogImage = data.fotos?.[0] ?? null;
 
   const dogImageUrl = getOptimizedImageUrl(dogImage, {
-    crop: "fill",
     width: 200,
     height: 350,
-    quality: 100,
+    quality: 75,
+    crop: "fill",
+    gravity: "auto",
   });
 
   return (
@@ -55,6 +56,27 @@ export function DogCard({ data, onClick, isLoading }: DogCardProps) {
               <Badge
                 size="sm"
                 blur={true}
+                leftIcon={
+                  data.sexo === "Macho" ? (
+                    <Lucide.Mars size={14} />
+                  ) : (
+                    <Lucide.Venus size={14} />
+                  )
+                }
+                variant="outline"
+                style={{
+                  color: `${data.sexo === "Macho" ? "#70a3f6ff" : "#eb6fadff"}`,
+                  borderColor: `${data.sexo === "Macho" ? "#70a3f6ff" : "#eb6fadff"}`,
+                  backgroundColor: `${data.sexo === "Macho" ? "#70a3f63a" : "#eb6fad23"}`,
+                }}
+                className={styles.badgeContent}
+              >
+                {data.sexo === "Macho" ? "Macho" : "Fêmea"}
+              </Badge>
+
+              <Badge
+                size="sm"
+                blur={true}
                 leftIcon={<Lucide.Calendar size={14} />}
                 variant="outline"
                 style={{ color: "var(--white)" }}
@@ -72,27 +94,6 @@ export function DogCard({ data, onClick, isLoading }: DogCardProps) {
                 className={styles.badgeContent}
               >
                 {data.status}
-              </Badge>
-
-              <Badge
-                size="sm"
-                blur={true}
-                leftIcon={
-                  data.sexo === "Macho" ? (
-                    <Lucide.Mars size={14} />
-                  ) : (
-                    <Lucide.Venus size={14} />
-                  )
-                }
-                variant="outline"
-                style={{
-                  color: `${data.sexo === "Macho" ? "#70a3f6ff" : "#eb6fadff"}`,
-                  borderColor: `${data.sexo === "Macho" ? "#70a3f6ff" : "#eb6fadff"}`,
-                  backgroundColor: `${data.sexo === "Macho" ? "#70a3f63a" : "#eb6fad23"}`,
-                }}
-                className={styles.badgeContent}
-              >
-                {data.sexo === "Macho" ? "Macho" : "Fêmea"}
               </Badge>
             </div>
             <p>{data.temperamento}</p>

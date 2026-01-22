@@ -10,13 +10,14 @@
   --white: #ffffff;
   --primary: #ff6b35;
   --secondary: #004e89;
+  --border: #b7b7b7;
+  --skeleton: #dbdbdb;
 
-  /* accent colors (used in quote cards, accordions, etc) & border */
+  /* accent colors (used in quote cards, accordions, etc) */
   --accent-primary: #fbe4dc;
   --accent-secondary: #d5e1e9;
   --accent-green: #e1fde0;
   --accent-red: #fbe0e0;
-  --border: #b7b7b7;
 
   /* button colors */
   --btn-primary: #fe9e7b46;
