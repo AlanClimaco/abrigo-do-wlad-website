@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import * as Lucide from "lucide-react";
-import { Link } from "react-router-dom";
 import { type Dog, CORES_MAP } from "../../types/dogs"; 
 import styles from "./DogModal.module.css";
 import { Button } from "../ui/Button";
@@ -8,6 +7,7 @@ import { Dialog, DialogContent, DialogTitle, DialogDescription } from "../ui/Dia
 import { Badge } from "../ui/Badge";
 import { TextLink } from "../common/Link";
 import { useMediaQuery } from "@uidotdev/usehooks";
+import { Link } from "react-router";
 
 interface ModalProps {
   dog: Dog | null;
