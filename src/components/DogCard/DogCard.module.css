@@ -1,7 +1,12 @@
 .badgeContainer {
   display: flex;
-  gap: 5px;
+  gap: 10px;
   flex-wrap: wrap;
+}
+
+.badgeContent {
+  justify-content: start;
+  align-items: center;
 }
 
 .cardContainer {
@@ -11,32 +16,6 @@
   color: var(--white);
   justify-content: flex-end;
   height: 100%;
-}
-
-/* --- Insígnia de Sexo --- */
-.sexBadge {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  z-index: 10;
-  color: white; 
-}
-
-/* Cores Específicas */
-.male {
-  background-color: #3b82f6;
-}
-
-.female {
-  background-color: #ec4899;
 }
 
 /* --- Loading Overlay --- */
@@ -69,6 +48,12 @@
 /* media query */
 @media (max-width: 768px) {
   .badgeContainer {
-    justify-content: flex-start;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .badgeContent {
+    width: 100%;
+    justify-content: center;
   }
 }

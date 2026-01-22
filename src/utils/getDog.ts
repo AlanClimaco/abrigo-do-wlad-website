@@ -16,8 +16,8 @@ export function getRandomDog(list: Dog[]): Dog | null {
  * @param fotos Array de URLs das fotos
  * @returns Promise que resolve quando todas carregarem
  */
-export const preloadDogImages = (fotos: string[]): Promise<void[]> => {
-  const imagePromises = fotos.map((src) => {
+export const preloadDogImages = (media: string[]): Promise<void[]> => {
+  const imagePromises = media.map((src) => {
     return new Promise<void>((resolve, reject) => {
       const img = new Image();
       img.src = src;

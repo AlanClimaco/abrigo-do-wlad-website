@@ -13,10 +13,6 @@ import { getOptimizedImageUrl } from "../../utils/cdn";
 import { type Dog } from "../../types/dogs";
 import styles from "./DogCard.module.css";
 
-const getSexBadgeStyle = (sexo: string) => {
-  return `${styles.sexBadge} ${sexo === "Macho" ? styles.male : styles.female}`;
-};
-
 interface DogCardProps {
   data: Dog;
   onClick: () => void;
@@ -36,11 +32,11 @@ export function DogCard({ data, onClick, isLoading }: DogCardProps) {
   return (
     <Card
       imageSrc={dogImageUrl}
-      // Desabilita o click se estiver carregando
+      // disable click if loading
       onClick={isLoading ? undefined : onClick}
-      style={{ 
-        cursor: isLoading ? "wait" : "pointer", 
-        position: "relative" 
+      style={{
+        cursor: isLoading ? "wait" : "pointer",
+        position: "relative",
       }}
     >
       {isLoading && (
@@ -50,16 +46,6 @@ export function DogCard({ data, onClick, isLoading }: DogCardProps) {
       )}
 
       <CardBody imageSrc={dogImageUrl}>
-        
-        {/* --- Insígnia de Sexo --- */}
-        <div className={getSexBadgeStyle(data.sexo)} title={data.sexo}>
-          {data.sexo === "Macho" ? (
-            <Lucide.Mars size={20} strokeWidth={2.5} />
-          ) : (
-            <Lucide.Venus size={20} strokeWidth={2.5} />
-          )}
-        </div>
-
         <CardHeader>
           <CardTitle>{data.nome}</CardTitle>
         </CardHeader>
@@ -72,6 +58,7 @@ export function DogCard({ data, onClick, isLoading }: DogCardProps) {
                 leftIcon={<Lucide.Calendar size={14} />}
                 variant="outline"
                 style={{ color: "var(--white)" }}
+                className={styles.badgeContent}
               >
                 {data.idade}
               </Badge>
@@ -82,8 +69,30 @@ export function DogCard({ data, onClick, isLoading }: DogCardProps) {
                 leftIcon={<Lucide.BriefcaseMedical size={14} />}
                 variant="outline"
                 style={{ color: "var(--white)" }}
+                className={styles.badgeContent}
               >
                 {data.status}
+              </Badge>
+
+              <Badge
+                size="sm"
+                blur={true}
+                leftIcon={
+                  data.sexo === "Macho" ? (
+                    <Lucide.Mars size={14} />
+                  ) : (
+                    <Lucide.Venus size={14} />
+                  )
+                }
+                variant="outline"
+                style={{
+                  color: `${data.sexo === "Macho" ? "#70a3f6ff" : "#eb6fadff"}`,
+                  borderColor: `${data.sexo === "Macho" ? "#70a3f6ff" : "#eb6fadff"}`,
+                  backgroundColor: `${data.sexo === "Macho" ? "#70a3f63a" : "#eb6fad23"}`,
+                }}
+                className={styles.badgeContent}
+              >
+                {data.sexo === "Macho" ? "Macho" : "Fêmea"}
               </Badge>
             </div>
             <p>{data.temperamento}</p>

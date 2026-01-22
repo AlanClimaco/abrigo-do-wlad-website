@@ -65,7 +65,6 @@ export function Hero() {
 
       {/* image */}
       <div className={styles.heroOverlay}>
-        {/* Renderiza a imagem apenas se a URL existir */}
         {heroImageUrl ? (
           <img
             className={styles.heroImage}
@@ -73,7 +72,7 @@ export function Hero() {
             alt={dog ? `Foto de ${dog.nome}` : "Cachorro para adoção"}
           />
         ) : (
-          <div className={styles.heroImage} style={{ background: '#eee' }} />
+          <div className={styles.heroImage} style={{ background: 'var(--white)' }} />
         )}
 
         {mainImage && secondaryImage && thumbnailImageUrl && (
