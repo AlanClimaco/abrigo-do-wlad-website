@@ -1,5 +1,5 @@
-import { BriefcaseMedical, Calendar, ChevronUp } from "lucide-react";
-import type { DogProps } from "../../data/dogs";
+import { BriefcaseMedical, Calendar, ChevronUp, Mars, Venus } from "lucide-react";
+import type { Dog } from "../../types/dogs";
 import styles from "./DogCard.module.css";
 import {
   Card,
@@ -13,13 +13,17 @@ import {
 import { Badge } from "../ui/Badge";
 import { getOptimizedImageUrl } from "../../utils/cdn";
 
+const getSexBadgeStyle = (sexo: string) => {
+  return `${styles.sexBadge} ${sexo === "Macho" ? styles.male : styles.female}`;
+};
+
 interface DogCardProps {
-  data: DogProps;
+  data: Dog;
   onClick: () => void;
 }
 
 export function DogCard({ data, onClick }: DogCardProps) {
-  const dogImage = data.fotos[0] ?? null;
+  const dogImage = data.fotos?.[0] ?? null;
 
   const dogImageUrl = getOptimizedImageUrl(dogImage, {
     crop: "fill",
@@ -35,6 +39,15 @@ export function DogCard({ data, onClick }: DogCardProps) {
       style={{ cursor: "pointer" }}
     >
       <CardBody imageSrc={dogImageUrl}>
+        
+        <div className={getSexBadgeStyle(data.sexo)} title={data.sexo}>
+          {data.sexo === "Macho" ? (
+            <Mars size={20} strokeWidth={2.5} />
+          ) : (
+            <Venus size={20} strokeWidth={2.5} />
+          )}
+        </div>
+
         <CardHeader>
           <CardTitle>{data.nome}</CardTitle>
         </CardHeader>
@@ -46,20 +59,17 @@ export function DogCard({ data, onClick }: DogCardProps) {
                 blur={true}
                 leftIcon={<Calendar size={14} />}
                 variant="outline"
-                style={{
-                  color: "var(--white)",
-                }}
+                style={{ color: "var(--white)" }}
               >
                 {data.idade}
               </Badge>
+
               <Badge
                 size="sm"
                 blur={true}
                 leftIcon={<BriefcaseMedical size={14} />}
                 variant="outline"
-                style={{
-                  color: "var(--white)",
-                }}
+                style={{ color: "var(--white)" }}
               >
                 {data.status}
               </Badge>

@@ -6,26 +6,44 @@ import HeroSmall from "../../components/HeroSmall";
 import { DogModal } from "../../components/DogModal";
 import styles from "./Adopt.module.css";
 
-import { DOGS_DATA, CORES_MAP, type DogProps } from "../../data/dogs";
+import { CORES_MAP, type Dog } from "../../types/dogs";
+import { getDogs } from "../../services/dogService"; 
+
 import { Badge } from "../../components/ui/Badge";
 import { Button } from "../../components/ui/Button";
 
 const ITEMS_PER_PAGE = 9;
 
 export default function Adopt() {
+  const [dogs, setDogs] = React.useState<Dog[]>([]);
+  const [loading, setLoading] = React.useState(true); 
+
   const [filterAge, setFilterAge] = React.useState("all");
   const [filterBehavior, setFilterBehavior] = React.useState("all");
   const [filterColor, setFilterColor] = React.useState("all");
 
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [selectedDog, setSelectedDog] = React.useState<DogProps | null>(null);
+  const [selectedDog, setSelectedDog] = React.useState<Dog | null>(null);
 
-  // Filtragem
-  const filteredDogs = DOGS_DATA.filter((dog) => {
+  React.useEffect(() => {
+    async function loadData() {
+      try {
+        const data = await getDogs();
+        setDogs(data);
+      } catch (error) {
+        console.error("Erro ao carregar cachorros:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadData();
+  }, []);
+
+  const filteredDogs = dogs.filter((dog) => {
     const matchAge = filterAge === "all" || dog.cateIdade === filterAge;
     const matchBehavior =
       filterBehavior === "all" || dog.tags.includes(filterBehavior);
-    const matchColor = filterColor === "all" || dog.cor === filterColor;
+    const matchColor = filterColor === "all" || (dog.cor && dog.cor === filterColor);
 
     return matchAge && matchBehavior && matchColor;
   });
@@ -46,6 +64,14 @@ export default function Adopt() {
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
   };
+
+  if (loading) {
+    return (
+      <div style={{ padding: "4rem", textAlign: "center" }}>
+        <p>Carregando doguinhos...</p>
+      </div>
+    );
+  }
 
   return (
     <main>

@@ -1,6 +1,7 @@
 .badgeContainer {
   display: flex;
   gap: 5px;
+  flex-wrap: wrap;
 }
 
 .cardContainer {
@@ -12,9 +13,34 @@
   height: 100%;
 }
 
+/* --- Insígnia de Sexo --- */
+.sexBadge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  z-index: 10;
+  color: white; 
+}
+
+.male {
+  background-color: #3b82f6; /* Blue 500 */
+}
+
+.female {
+  background-color: #ec4899; /* Pink 500 */
+}
+
 /* media query */
 @media (max-width: 768px) {
   .badgeContainer {
-    justify-content: center;
+    justify-content: flex-start;
   }
 }

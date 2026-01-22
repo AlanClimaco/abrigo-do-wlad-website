@@ -1,25 +1,41 @@
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import styles from "./Hero.module.css";
 import { Button } from "../ui/Button";
 import * as Lucide from "lucide-react";
-import { useState } from "react";
-import type { DogProps } from "../../data/dogs";
-import { getRandomDog } from "../../utils/getDog";
+import { useState, useEffect } from "react";
+import type { Dog } from "../../types/dogs"; 
+import { getDogs } from "../../services/dogService";
 import { Badge } from "../ui/Badge";
 import { getOptimizedImageUrl, getThumbnaillUrl } from "../../utils/cdn";
 
 export function Hero() {
-  const [dog] = useState<DogProps>(getRandomDog);
+  const [dog, setDog] = useState<Dog | null>(null);
 
-  const mainImage = dog?.fotos[0] ?? null;
-  const secondaryImage = dog?.fotos[1] ?? null;
+  useEffect(() => {
+    async function fetchRandomDog() {
+      try {
+        const allDogs = await getDogs();
+        if (allDogs.length > 0) {
+          const randomIndex = Math.floor(Math.random() * allDogs.length);
+          setDog(allDogs[randomIndex]);
+        }
+      } catch (error) {
+        console.error("Erro ao carregar dog do Hero:", error);
+      }
+    }
+    fetchRandomDog();
+  }, []);
 
-  const heroImageUrl = getOptimizedImageUrl(mainImage, {
-    crop: "fill",
-    width: 600,
-    height: 500,
-  });
-  const thumbnailImageUrl = getThumbnaillUrl(secondaryImage, 128, 200);
+  const mainImage = dog?.fotos?.[0] ?? null;
+  const secondaryImage = dog?.fotos?.[1] ?? null;
+
+  const heroImageUrl = mainImage 
+    ? getOptimizedImageUrl(mainImage, { crop: "fill", width: 600, height: 500 }) 
+    : "";
+    
+  const thumbnailImageUrl = secondaryImage 
+    ? getThumbnaillUrl(secondaryImage, 128, 200) 
+    : "";
 
   return (
     <section className={styles.heroContainer}>
@@ -49,18 +65,25 @@ export function Hero() {
 
       {/* image */}
       <div className={styles.heroOverlay}>
-        <img
-          className={styles.heroImage}
-          src={heroImageUrl}
-          alt={dog ? `Foto de ${dog.nome}` : "Cachorro para adoção"}
-        />
-        {mainImage && secondaryImage && thumbnailImageUrl && heroImageUrl && (
+        {/* Renderiza a imagem apenas se a URL existir */}
+        {heroImageUrl ? (
+          <img
+            className={styles.heroImage}
+            src={heroImageUrl}
+            alt={dog ? `Foto de ${dog.nome}` : "Cachorro para adoção"}
+          />
+        ) : (
+          <div className={styles.heroImage} style={{ background: '#eee' }} />
+        )}
+
+        {mainImage && secondaryImage && thumbnailImageUrl && (
           <img
             className={styles.heroThumbnail}
             src={thumbnailImageUrl}
             alt={dog ? `Foto de ${dog.nome}` : "Cachorro para adoção"}
           />
         )}
+        
         {dog && dog.nome && (
           <Badge
             variant="primary"

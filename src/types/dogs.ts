@@ -11,7 +11,7 @@ export interface Dog {
   nome: string;
   idade: string;
   cateIdade: "filhote" | "adulto" | "idoso";
-  porte: "Pequeno" | "Médio" | "Grande";
+  sexo: string;
   temperamento: string;
   tags: string[];
   status: string;

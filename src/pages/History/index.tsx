@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Card,
   CardBody,
@@ -12,21 +12,40 @@ import {
 import * as Lucide from "lucide-react";
 import HeroSmall from "../../components/HeroSmall";
 import styles from "./History.module.css";
-import { Link } from "react-router";
-import type { DogProps } from "../../data/dogs";
-import { getRandomDog } from "../../utils/getDog";
+import { Link } from "react-router-dom"; 
+
+import type { Dog } from "../../types/dogs";
+import { getDogs } from "../../services/dogService";
 import { getOptimizedImageUrl } from "../../utils/cdn";
 
 export default function History() {
-  const [dog] = useState<DogProps>(getRandomDog);
-  const image = dog?.fotos[0] ?? null;
+  const [dog, setDog] = useState<Dog | null>(null);
 
-  const sectionImageUrl = getOptimizedImageUrl(image, {
-    crop: "fill",
-    width: 400,
-    height: 600,
-    quality: 100,
-  });
+  useEffect(() => {
+    async function fetchRandomDog() {
+      try {
+        const allDogs = await getDogs();
+        if (allDogs.length > 0) {
+          const randomIndex = Math.floor(Math.random() * allDogs.length);
+          setDog(allDogs[randomIndex]);
+        }
+      } catch (error) {
+        console.error("Erro ao carregar dog da História:", error);
+      }
+    }
+    fetchRandomDog();
+  }, []);
+
+  const image = dog?.fotos?.[0] ?? null;
+
+  const sectionImageUrl = image 
+    ? getOptimizedImageUrl(image, {
+        crop: "fill",
+        width: 400,
+        height: 600,
+        quality: 100,
+      })
+    : ""; 
 
   return (
     <>
@@ -113,8 +132,13 @@ export default function History() {
               </CardFooter>
             </Card>
           </div>
+          
           <div className={styles.historyImageContainer}>
-            <img src={sectionImageUrl} alt={`Foto de ${dog.nome}`} />
+            {sectionImageUrl ? (
+              <img src={sectionImageUrl} alt={dog ? `Foto de ${dog.nome}` : "Cachorro do abrigo"} />
+            ) : (
+               <div style={{width: '100%', height: '600px', background: '#eee', borderRadius: '8px'}}></div>
+            )}
 
             <div className={styles.historyImageDescription}>
               <h4>12+ Anos de História</h4>
