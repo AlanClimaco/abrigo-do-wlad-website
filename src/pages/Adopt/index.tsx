@@ -11,20 +11,29 @@ import { getDogs } from "../../services/dogService";
 
 import { Badge } from "../../components/ui/Badge";
 import { Button } from "../../components/ui/Button";
+import { preloadDogImages } from "../../utils/getDog";
 
-const ITEMS_PER_PAGE = 9;
+const ITEMS_PER_PAGE: number = 9;
 
 export default function Adopt() {
+  // --- ESTADOS ---
+  // Dados do Firebase
   const [dogs, setDogs] = React.useState<Dog[]>([]);
   const [loading, setLoading] = React.useState(true); 
+  
+  // Estado visual de carregamento do card individual
+  const [loadingDogId, setLoadingDogId] = React.useState<string | null>(null);
 
+  // Filtros
   const [filterAge, setFilterAge] = React.useState("all");
   const [filterBehavior, setFilterBehavior] = React.useState("all");
   const [filterColor, setFilterColor] = React.useState("all");
 
+  // Paginação e Modal
   const [currentPage, setCurrentPage] = React.useState(1);
   const [selectedDog, setSelectedDog] = React.useState<Dog | null>(null);
 
+  // --- Buscar dados aso recarregar a página ---
   React.useEffect(() => {
     async function loadData() {
       try {
@@ -39,6 +48,7 @@ export default function Adopt() {
     loadData();
   }, []);
 
+  // --- 2Filtragem baseada nos dados do banco ---
   const filteredDogs = dogs.filter((dog) => {
     const matchAge = filterAge === "all" || dog.cateIdade === filterAge;
     const matchBehavior =
@@ -53,7 +63,7 @@ export default function Adopt() {
     setCurrentPage(1);
   }, [filterAge, filterBehavior, filterColor]);
 
-  // Lógica de Paginação
+  // --- 3. PAGINAÇÃO ---
   const totalItems = filteredDogs.length;
   const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
 
@@ -65,6 +75,28 @@ export default function Adopt() {
     setCurrentPage(newPage);
   };
 
+  const handleDogClick = async (dog: Dog) => {
+    // Se não tiver foto, abre direto
+    if (!dog.fotos || dog.fotos.length === 0) {
+       setSelectedDog(dog);
+       return;
+    }
+
+    setLoadingDogId(dog.id);
+
+    try {
+      // Tenta baixar a imagem antes de abrir o modal pra não piscar
+      await preloadDogImages(dog.fotos);
+      setSelectedDog(dog);
+    } catch (error) {
+      console.error("Erro no preload:", error);
+      setSelectedDog(dog); 
+    } finally {
+      setLoadingDogId(null);
+    }
+  };
+
+  // --- RENDER ---
   if (loading) {
     return (
       <div style={{ padding: "4rem", textAlign: "center" }}>
@@ -183,7 +215,8 @@ export default function Adopt() {
               <DogCard
                 key={dog.id}
                 data={dog}
-                onClick={() => setSelectedDog(dog)}
+                onClick={() => handleDogClick(dog)}
+                isLoading={loadingDogId === dog.id}
               />
             ))
           ) : (

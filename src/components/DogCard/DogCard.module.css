@@ -30,12 +30,40 @@
   color: white; 
 }
 
+/* Cores Específicas */
 .male {
-  background-color: #3b82f6; /* Blue 500 */
+  background-color: #3b82f6;
 }
 
 .female {
-  background-color: #ec4899; /* Pink 500 */
+  background-color: #ec4899;
+}
+
+/* --- Loading Overlay --- */
+.loadingOverlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+  border-radius: var(--radius);
+  color: var(--white);
+  transition: opacity 0.2s ease-in-out;
+}
+
+.spinner {
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* media query */

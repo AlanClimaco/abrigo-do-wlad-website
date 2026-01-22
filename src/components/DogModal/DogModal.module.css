@@ -39,14 +39,50 @@
 
 .carouselNav {
   display: flex;
-  gap: 0.8rem;
-  z-index: 20;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
   padding: 0.5rem 0.5rem;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   background-color: rgba(255, 255, 255, 0.223);
   -webkit-backdrop-filter: var(--blur);
   backdrop-filter: var(--blur);
+  pointer-events: none;
+}
+
+.carouselNavButtons {
+  display: flex;
+  gap: 0.8rem;
+  z-index: 20;
+  pointer-events: all;
+}
+
+.carouselNavDots {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  pointer-events: all;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.dot:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.dotActive {
+  background-color: white;
 }
 
 .details {
@@ -116,7 +152,7 @@
   }
 
   .carousel {
-    height: 300px;
+    height: 450px;
     min-height: auto;
   }
 
@@ -150,5 +186,9 @@
 
   .title {
     font-size: 3rem;
+  }
+
+  .carouselNavDots {
+    display: none;
   }
 }

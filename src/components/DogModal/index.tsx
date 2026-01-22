@@ -16,13 +16,13 @@ interface ModalProps {
 }
 
 export function DogModal({ dog, isOpen, onClose }: ModalProps) {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
+  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   useEffect(() => {
     if (!isOpen) {
-      setTimeout(() => setCurrentImageIndex(0), 150);
+      const timer = setTimeout(() => setCurrentImageIndex(0), 150);
+      return () => clearTimeout(timer);
     }
   }, [isOpen]);
 
@@ -44,7 +44,6 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
   };
 
   const handleClose = () => {
-    setCurrentImageIndex(0);
     onClose();
   };
 
@@ -62,18 +61,12 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
         <div className={styles.contentGrid}>
           {/* --- CARROSSEL DE IMAGENS --- */}
           <div className={styles.carousel}>
-            {photos.length > 0 ? (
-               <img
-               src={photos[currentImageIndex]}
-               alt={dog.nome}
-               className={styles.mainImage}
-             />
-            ) : (
-              <div className={styles.mainImage} style={{background: '#eee', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666'}}>
-                 Sem foto
-              </div>
-            )}
-           
+            <img
+              src={dog.fotos[currentImageIndex]}
+              alt={dog.nome}
+              className={styles.mainImage}
+            />
+
             <div className={styles.carouselButtons}>
               <div>
                 <Button
@@ -87,12 +80,27 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
               </div>
               {hasMultipleImages && (
                 <div className={styles.carouselNav}>
-                  <Button variant="outline" size="icon" onClick={prevImage}>
-                    <Lucide.ChevronLeft size={24} />
-                  </Button>
-                  <Button variant="outline" size="icon" onClick={nextImage}>
-                    <Lucide.ChevronRight size={24} />
-                  </Button>
+                  <div className={styles.carouselNavButtons}>
+                    <Button variant="outline" size="icon" onClick={prevImage}>
+                      <Lucide.ChevronLeft size={24} />
+                    </Button>
+                    <Button variant="outline" size="icon" onClick={nextImage}>
+                      <Lucide.ChevronRight size={24} />
+                    </Button>
+                  </div>
+
+                  <div className={styles.carouselNavDots}>
+                    {dog.fotos.map((_, index) => (
+                      <button
+                        key={index}
+                        className={`${styles.dot} ${
+                          currentImageIndex === index ? styles.dotActive : ""
+                        }`}
+                        onClick={() => setCurrentImageIndex(index)}
+                        aria-label={`Ir para imagem ${index + 1}`}
+                      />
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
