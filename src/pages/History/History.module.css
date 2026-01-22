@@ -46,7 +46,7 @@ h3 {
   top: 120px;
 }
 
-.historyImageContainer img {
+.historyImage {
   border-radius: var(--radius);
   box-shadow: var(--shadow-lg);
   width: 100%;

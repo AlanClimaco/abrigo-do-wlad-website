@@ -1,22 +1,16 @@
+import { Link } from "react-router";
 import { useState, useEffect } from "react";
-import {
-  Card,
-  CardBody,
-  CardButton,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardIcon,
-  CardTitle,
-} from "../../components/ui/Card";
+
 import * as Lucide from "lucide-react";
+import * as CardComponent from "../../components/ui/Card";
 import HeroSmall from "../../components/HeroSmall";
-import styles from "./History.module.css";
+import { Skeleton } from "../../components/ui/Skeleton";
 
 import type { Dog } from "../../types/dogs";
 import { getDogs } from "../../services/dogService";
 import { getOptimizedImageUrl } from "../../utils/cdn";
-import { Link } from "react-router";
+
+import styles from "./History.module.css";
 
 export default function History() {
   const [dog, setDog] = useState<Dog | null>(null);
@@ -38,14 +32,14 @@ export default function History() {
 
   const image = dog?.fotos?.[0] ?? null;
 
-  const sectionImageUrl = image 
+  const sectionImageUrl = image
     ? getOptimizedImageUrl(image, {
         crop: "fill",
         width: 400,
         height: 600,
         quality: 100,
       })
-    : ""; 
+    : "";
 
   return (
     <>
@@ -104,15 +98,17 @@ export default function History() {
               segurança, telas e telhado novo.
             </p>
 
-            <Card color="secondary" variant="quote">
-              <CardBody>
-                <CardHeader>
-                  <CardIcon>
+            <CardComponent.Card color="secondary" variant="quote">
+              <CardComponent.CardBody>
+                <CardComponent.CardHeader>
+                  <CardComponent.CardIcon>
                     <Lucide.Coins size={30} strokeWidth={1.5} />
-                  </CardIcon>
-                  <CardTitle>Captação de Recursos</CardTitle>
-                </CardHeader>
-                <CardContent>
+                  </CardComponent.CardIcon>
+                  <CardComponent.CardTitle>
+                    Captação de Recursos
+                  </CardComponent.CardTitle>
+                </CardComponent.CardHeader>
+                <CardComponent.CardContent>
                   <p style={{ textAlign: "justify" }}>
                     Um dos projetos implantado para arrecadação de recursos para
                     financiar a obra foi a reciclagem de tampinhas plásticas.
@@ -121,23 +117,27 @@ export default function History() {
                     transformam esse material e revendem para a indústria de
                     brinquedos, eletrodomésticos, automobilística e outras.
                   </p>
-                </CardContent>
-              </CardBody>
-              <CardFooter>
+                </CardComponent.CardContent>
+              </CardComponent.CardBody>
+              <CardComponent.CardFooter>
                 <Link to="/tampinhas" className="btn-text">
-                  <CardButton>
+                  <CardComponent.CardButton>
                     Saiba Mais <Lucide.ArrowRight size={20} />
-                  </CardButton>
+                  </CardComponent.CardButton>
                 </Link>
-              </CardFooter>
-            </Card>
+              </CardComponent.CardFooter>
+            </CardComponent.Card>
           </div>
-          
+
           <div className={styles.historyImageContainer}>
             {sectionImageUrl ? (
-              <img src={sectionImageUrl} alt={dog ? `Foto de ${dog.nome}` : "Cachorro do abrigo"} />
+              <img
+                className={styles.historyImage}
+                src={sectionImageUrl}
+                alt={dog ? `Foto de ${dog.nome}` : "Cachorro do abrigo"}
+              />
             ) : (
-               <div style={{width: '100%', height: '600px', background: '#eee', borderRadius: '8px'}}></div>
+              <Skeleton className={styles.historyImage} />
             )}
 
             <div className={styles.historyImageDescription}>

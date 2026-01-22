@@ -10,7 +10,7 @@ import { CORES_MAP, TAGS_MAP, type Dog } from "../../types/dogs";
 import type { DocumentData } from "firebase/firestore";
 
 import { getDogsWithFilters } from "../../services/dogService";
-import { preloadDogImages } from "../../utils/getDog";
+import { preloadDogImages } from "../../utils/common";
 import { getOptimizedImageUrl } from "../../utils/cdn";
 
 import { Badge } from "../../components/ui/Badge";

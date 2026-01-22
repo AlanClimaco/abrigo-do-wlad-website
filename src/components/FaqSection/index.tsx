@@ -5,7 +5,7 @@ import {
   AccordionTrigger,
 } from "../ui/Accordion";
 
-export default function FaqSection() {
+export function FaqSection() {
   return (
     <section id="faq">
       <Accordion type="single" defaultValue="item-1" collapsible style={{ width: "100%" }}>
