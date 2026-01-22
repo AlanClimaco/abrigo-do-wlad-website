@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import styles from "./Hero.module.css";
 import { Button } from "../ui/Button";
 import * as Lucide from "lucide-react";
@@ -7,6 +6,7 @@ import type { Dog } from "../../types/dogs";
 import { getDogs } from "../../services/dogService";
 import { Badge } from "../ui/Badge";
 import { getOptimizedImageUrl, getThumbnaillUrl } from "../../utils/cdn";
+import { Link } from "react-router";
 
 export function Hero() {
   const [dog, setDog] = useState<Dog | null>(null);

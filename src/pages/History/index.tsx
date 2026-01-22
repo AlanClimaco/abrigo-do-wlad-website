@@ -12,11 +12,11 @@ import {
 import * as Lucide from "lucide-react";
 import HeroSmall from "../../components/HeroSmall";
 import styles from "./History.module.css";
-import { Link } from "react-router-dom"; 
 
 import type { Dog } from "../../types/dogs";
 import { getDogs } from "../../services/dogService";
 import { getOptimizedImageUrl } from "../../utils/cdn";
+import { Link } from "react-router";
 
 export default function History() {
   const [dog, setDog] = useState<Dog | null>(null);
