@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore";
 import { IncomingMessage, ServerResponse } from "http";
 
-import { db } from "./_lib/firebase";
+import { db } from "./_lib/firebase.ts";
 
 const DOGS_COLLECTION = "dogs";
 
