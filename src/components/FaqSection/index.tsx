@@ -8,7 +8,7 @@ import {
 export function FaqSection() {
   return (
     <section id="faq">
-      <Accordion type="single" defaultValue="item-1" collapsible style={{ width: "100%" }}>
+      <Accordion type="single" collapsible style={{ width: "100%" }}>
         <AccordionItem value="item-1">
           <AccordionTrigger>Vocês resgatam?</AccordionTrigger>
           <AccordionContent>
