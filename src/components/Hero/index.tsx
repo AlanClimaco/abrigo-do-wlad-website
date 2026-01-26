@@ -1,32 +1,20 @@
-import styles from "./Hero.module.css";
-import { Button } from "../ui/Button";
-import * as Lucide from "lucide-react";
-import { useState, useEffect } from "react";
-import type { Dog } from "../../types/dogs";
-import { getDogs } from "../../services/dogService";
-import { Badge } from "../ui/Badge";
-import { Skeleton } from "../ui/Skeleton";
-import { getOptimizedImageUrl, getThumbnaillUrl } from "../../utils/cdn";
-import { getRandomDog } from "../../utils/getDog";
 import { Link } from "react-router";
 
-export function Hero() {
-  const [dog, setDog] = useState<Dog | null>(null);
+import { Button } from "../ui/Button";
+import * as Lucide from "lucide-react";
+import { Badge } from "../ui/Badge";
+import { Skeleton } from "../ui/Skeleton";
 
-  useEffect(() => {
-    async function fetchRandomDog() {
-      try {
-        const allDogs = await getDogs();
-        if (allDogs.length > 0) {
-          setDog(getRandomDog(allDogs));
-        }
-      } catch (error) {
-        console.error("Erro ao carregar dog do Hero:", error);
-      }
-    }
-    fetchRandomDog();
-  }, []);
+import type { Dog } from "../../types/dogs";
+import { getOptimizedImageUrl, getThumbnaillUrl } from "../../utils/cdn";
 
+import styles from "./Hero.module.css";
+
+interface HeroProps {
+  dog: Dog | null;
+}
+
+export function Hero({ dog }: HeroProps) {
   const mainImage = dog?.fotos?.[0] ?? null;
   const secondaryImage = dog?.fotos?.[1] ?? null;
 
