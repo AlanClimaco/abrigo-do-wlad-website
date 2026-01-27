@@ -1,15 +1,9 @@
-import {
-  Card,
-  CardBody,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardIcon,
-  CardTitle,
-} from "../../components/ui/Card";
+import * as CardComponent from "../../components/ui/Card";
 import HeroSmall from "../../components/HeroSmall";
 import { Button } from "../../components/ui/Button";
 import { ScrollArea } from "../../components/ui/ScrollArea";
+import { getThirdPartyImage } from "../../utils/common";
+
 import * as Lucide from "lucide-react";
 import styles from "./Recycle.module.css";
 
@@ -85,10 +79,11 @@ const collectionPoints = [
 ];
 
 export default function Recycle() {
+  const heroImage = getThirdPartyImage("recycle")?.url;
   return (
     <>
       <HeroSmall
-        image="https://images.unsplash.com/photo-1642631171488-23d631eba638?auto=format&fit=crop&w=1920&q=80"
+        image={heroImage as string}
         badge="Reciclagem Solidária"
         title="Sua tampinha vale vidas"
         description="Transformamos plástico em ração e medicamentos. Descubra como um gesto simples pode salvar nossos animais."
@@ -122,37 +117,41 @@ export default function Recycle() {
               </li>
             </ul>
 
-            <Card
+            <CardComponent.Card
               style={{ marginTop: "25px" }}
               color="primary"
               size="sm"
               variant="quote"
             >
-              <CardBody>
-                <CardHeader>
-                  <CardIcon>
+              <CardComponent.CardBody>
+                <CardComponent.CardHeader>
+                  <CardComponent.CardIcon>
                     <Lucide.CircleAlert />
-                  </CardIcon>
-                  <CardTitle>Dica Importante</CardTitle>
-                </CardHeader>
-                <CardContent>
+                  </CardComponent.CardIcon>
+                  <CardComponent.CardTitle>
+                    Dica Importante
+                  </CardComponent.CardTitle>
+                </CardComponent.CardHeader>
+                <CardComponent.CardContent>
                   <p>
                     Por favor, se possível, entregue as tampinhas lavadas e
                     separadas por cor. Isso agiliza muito nosso trabalho!
                   </p>
-                </CardContent>
-              </CardBody>
-            </Card>
+                </CardComponent.CardContent>
+              </CardComponent.CardBody>
+            </CardComponent.Card>
           </div>
-          <Card>
-            <CardBody>
-              <CardHeader>
-                <CardIcon>
+          <CardComponent.Card>
+            <CardComponent.CardBody>
+              <CardComponent.CardHeader>
+                <CardComponent.CardIcon>
                   <Lucide.MapPin size={48} />
-                </CardIcon>
-                <CardTitle>Pontos de Coleta</CardTitle>
-              </CardHeader>
-              <CardContent>
+                </CardComponent.CardIcon>
+                <CardComponent.CardTitle>
+                  Pontos de Coleta
+                </CardComponent.CardTitle>
+              </CardComponent.CardHeader>
+              <CardComponent.CardContent>
                 <p>Encontre o local mais próximo de você:</p>
                 <ScrollArea style={{ height: "300px", padding: "10px" }}>
                   {collectionPoints.map((point) => (
@@ -186,14 +185,14 @@ export default function Recycle() {
                     </div>
                   ))}
                 </ScrollArea>
-              </CardContent>
-            </CardBody>
-            <CardFooter style={{ textAlign: "center" }}>
+              </CardComponent.CardContent>
+            </CardComponent.CardBody>
+            <CardComponent.CardFooter style={{ textAlign: "center" }}>
               <Button size="lg">
                 <span>Combinar Entrega Grande</span>
               </Button>
-            </CardFooter>
-          </Card>
+            </CardComponent.CardFooter>
+          </CardComponent.Card>
         </div>
       </section>
     </>
