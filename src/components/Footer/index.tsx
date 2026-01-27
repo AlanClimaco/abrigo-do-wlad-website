@@ -32,7 +32,7 @@ export function Footer() {
             <Lucide.ChevronRight /> Início
           </NavLink>
           <NavLink to="/adotar" className={styles.linkItem}>
-            <Lucide.ChevronRight /> Quero Ajudar
+            <Lucide.ChevronRight /> Nossos Cães
           </NavLink>
           <NavLink to="/sobre" className={styles.linkItem}>
             <Lucide.ChevronRight /> Sobre Nós
