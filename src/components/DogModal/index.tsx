@@ -1,9 +1,14 @@
 import { useState, useEffect } from "react";
 import * as Lucide from "lucide-react";
-import { type Dog, CORES_MAP } from "../../types/dogs"; 
+import { type Dog, CORES_MAP } from "../../types/dogs";
 import styles from "./DogModal.module.css";
 import { Button } from "../ui/Button";
-import { Dialog, DialogContent, DialogTitle, DialogDescription } from "../ui/Dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+} from "../ui/Dialog";
 import { Badge } from "../ui/Badge";
 import { TextLink } from "../common/Link";
 import { useMediaQuery } from "@uidotdev/usehooks";
@@ -38,9 +43,7 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
 
   const prevImage = () => {
     if (!hasMultipleImages) return;
-    setCurrentImageIndex(
-      (prev) => (prev - 1 + photos.length) % photos.length,
-    );
+    setCurrentImageIndex((prev) => (prev - 1 + photos.length) % photos.length);
   };
 
   const handleClose = () => {
@@ -50,8 +53,19 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
       <DialogContent className={styles.modalContent}>
-        
-        <div style={{ position: 'absolute', width: 1, height: 1, padding: 0, margin: -1, overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0 }}>
+        <div
+          style={{
+            position: "absolute",
+            width: 1,
+            height: 1,
+            padding: 0,
+            margin: -1,
+            overflow: "hidden",
+            clip: "rect(0, 0, 0, 0)",
+            whiteSpace: "nowrap",
+            border: 0,
+          }}
+        >
           <DialogTitle>{dog.nome}</DialogTitle>
           <DialogDescription>
             Detalhes do cachorro {dog.nome}, {dog.idade}, {dog.sexo}.
@@ -115,19 +129,33 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
             <h2 className={styles.title}>{dog.nome}</h2>
 
             <div className={styles.badges}>
-              <Badge variant="secondary" leftIcon={<Lucide.Calendar size={14}/>}>
+              <Badge
+                className={styles.badgeContent}
+                variant="secondary"
+                leftIcon={<Lucide.Calendar size={14} />}
+              >
                 {dog.idade}
               </Badge>
-              
-              {/* --- BADGE DE SEXO --- */}
-              <Badge 
-                variant="secondary" 
-                leftIcon={dog.sexo === "Macho" ? <Lucide.Mars size={14} /> : <Lucide.Venus size={14} />}
+
+              <Badge
+                className={styles.badgeContent}
+                variant="secondary"
+                leftIcon={
+                  dog.sexo === "Macho" ? (
+                    <Lucide.Mars size={14} />
+                  ) : (
+                    <Lucide.Venus size={14} />
+                  )
+                }
               >
                 {dog.sexo}
               </Badge>
 
-              <Badge variant="secondary" leftIcon={<Lucide.BriefcaseMedical size={14}/>}>
+              <Badge
+                className={styles.badgeContent}
+                variant="secondary"
+                leftIcon={<Lucide.BriefcaseMedical size={14} />}
+              >
                 {dog.status}
               </Badge>
             </div>
