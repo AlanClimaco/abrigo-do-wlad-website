@@ -1,20 +1,37 @@
-// import type { Dog } from "../types/dogs";
+import type { ThirdPartyImagesData } from "../types/third-party-images";
+import thirdPartyImages from "../assets/third-party-images.json";
 
-// /**
-//  * Retorna um cachorro aleatório de uma lista fornecida.
-//  * @param list Array de cachorros (vindo do Firebase)
-//  * @returns {Dog | null} Um objeto de dog ou null se a lista estiver vazia.
-//  */
-// export function getRandomDog(list: Dog[]): Dog | null {
-//   if (!list || list.length === 0) return null;
-//   const randomIndex = Math.floor(Math.random() * list.length);
-//   return list[randomIndex];
-// }
+const imagesData: ThirdPartyImagesData = thirdPartyImages;
 
 /**
- * Pré-carrega imagens para o cache do navegador para evitar piscadas.
- * @param fotos Array de URLs das fotos
- * @returns Promise que resolve quando todas carregarem
+ * Gets the data for a third-party image and formats the Unsplash URL.
+ * @param name The name of the image (key in the JSON).
+ * @param options Unsplash formatting options.
+ * @returns An object with the image URL and credit data, or null if not found.
+ */
+export const getThirdPartyImage = (
+  name: string,
+  options: { w?: number; q?: number } = { w: 1920, q: 80 },
+) => {
+  const imageInfo = imagesData[name];
+
+  if (!imageInfo) {
+    console.error(`Third-Party image "${name}" not found.`);
+    return null;
+  }
+
+  const imageUrl = `https://images.unsplash.com/photo-${imageInfo.photoId}?auto=format&fit=crop&w=${options.w}&q=${options.q}`;
+
+  return {
+    url: imageUrl,
+    ...imageInfo,
+  };
+};
+
+/**
+ * Preloads images into the browser cache to prevent flickering.
+ * @param fotos Array of photo URLs
+ * @returns A promise that resolves when all images have loaded
  */
 export const preloadDogImages = (media: string[]): Promise<void[]> => {
   const imagePromises = media.map((src) => {
