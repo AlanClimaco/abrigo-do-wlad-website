@@ -1,0 +1,25 @@
+.resgateFaq {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: justify;
+}
+
+.resgateFaqList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.resgateFaqList li {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  gap: 10px;
+}
+
+.resgateFaqList svg {
+  color: green;
+  width: 0.9rem;
+  height: 0.9rem;
+}
