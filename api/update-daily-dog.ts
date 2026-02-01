@@ -57,11 +57,19 @@ export default async function handler(
   }
 
   try {
-    const randomDog = await getRandomDogFromServer();
-    if (randomDog) {
-      await kv.set("hero-dog", randomDog);
+    const currentDog: any = await kv.get("daily-dog");
+    let newDog;
+    let attempts = 0;
+
+    do {
+      newDog = await getRandomDogFromServer();
+      attempts++;
+    } while (newDog && currentDog && newDog.id === currentDog.id && attempts < 3);
+
+    if (newDog) {
+      await kv.set("daily-dog", newDog);
       res.statusCode = 200;
-      res.end(JSON.stringify({ message: "Hero dog updated!", dog: randomDog }));
+      res.end(JSON.stringify({ message: "Daily dog updated!", dog: newDog }));
     } else {
       res.statusCode = 404;
       res.end(JSON.stringify({ message: "No dog found" }));
@@ -69,6 +77,6 @@ export default async function handler(
   } catch (err) {
     console.error(err);
     res.statusCode = 500;
-    res.end(JSON.stringify({ message: "Error updating hero dog" }));
+    res.end(JSON.stringify({ message: "Error updating daily dog" }));
   }
 }

@@ -15,7 +15,7 @@ export default function Home() {
   React.useEffect(() => {
     async function fetchHeroDog() {
       try {
-        const response = await fetch("/api/get-hero-dog");
+        const response = await fetch("/api/get-daily-dog");
         if (response.ok) {
           const heroDog = await response.json();
           setDog(heroDog);

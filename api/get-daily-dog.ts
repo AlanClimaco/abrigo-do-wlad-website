@@ -6,7 +6,7 @@ export default async function handler(
   res: ServerResponse,
 ) {
   try {
-    const dog = await kv.get("hero-dog");
+    const dog = await kv.get("daily-dog");
 
     res.setHeader("Content-Type", "application/json");
 
@@ -15,12 +15,12 @@ export default async function handler(
       res.end(JSON.stringify(dog));
     } else {
       res.statusCode = 404;
-      res.end(JSON.stringify({ message: "Hero dog not found." }));
+      res.end(JSON.stringify({ message: "Daily dog not found." }));
     }
   } catch (err) {
     console.error(err);
     res.setHeader("Content-Type", "application/json");
     res.statusCode = 500;
-    res.end(JSON.stringify({ message: "Error fetching hero dog." }));
+    res.end(JSON.stringify({ message: "Error fetching daily dog." }));
   }
 }
