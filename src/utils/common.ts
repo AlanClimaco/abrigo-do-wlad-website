@@ -44,3 +44,19 @@ export const preloadDogImages = (media: string[]): Promise<void[]> => {
   });
   return Promise.all(imagePromises);
 };
+
+/**
+ * Shuffles an array in place using the Fisher-Yates (a.k.a Knuth)
+ * https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+ * It creates a shallow copy of the array to avoid modifying the original.
+ * @param {T[]} array The array to shuffle.
+ * @returns {T[]} A new array with the elements shuffled.
+ */
+export function shuffleArray<T>(array: T[]): T[] {
+  const shuffledArray = [...array];
+  for (let i = shuffledArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+  }
+  return shuffledArray;
+}

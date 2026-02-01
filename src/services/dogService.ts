@@ -13,6 +13,7 @@ import {
 import { db } from "./firebase";
 
 import type { Dog, DogFilters } from "../types/dogs";
+import { shuffleArray } from "../utils/common";
 
 const DOGS_COLLECTION = "dogs";
 
@@ -37,6 +38,50 @@ export async function getDogById(id: string): Promise<Dog | null> {
   } else {
     return null;
   }
+}
+
+/**
+ * Fetches multiple dogs from Firestore based on a list of their IDs.
+ * @param {string[]} ids - An array of dog document IDs to fetch.
+ * @returns {Promise<Dog[]>} A promise that resolves to an array of dog objects.
+ */
+export async function getDogsByIds(ids: string[]): Promise<Dog[]> {
+  if (!ids || ids.length === 0) {
+    return [];
+  }
+
+  const dogPromises = ids.map((id) => getDogById(id));
+  const dogs = await Promise.all(dogPromises);
+
+  return dogs.filter((dog): dog is Dog => dog !== null);
+}
+
+/**
+ * Fetches all dog IDs based on filters, shuffles them, and returns the shuffled list.
+ * @param {DogFilters} filters - An object containing the filter criteria.
+ * @returns {Promise<string[]>} A promise that resolves to an array of shuffled dog IDs.
+ */
+export async function getShuffledDogIds(
+  filters: DogFilters,
+): Promise<string[]> {
+  const docRef = collection(db, DOGS_COLLECTION);
+  let q = query(docRef);
+
+  // apply filters
+  if (filters.cateIdade && filters.cateIdade !== "all") {
+    q = query(q, where("cateIdade", "==", filters.cateIdade));
+  }
+  if (filters.cor && filters.cor !== "all") {
+    q = query(q, where("cor", "==", filters.cor));
+  }
+  if (filters.tags && filters.tags !== "all") {
+    q = query(q, where("tags", "array-contains", filters.tags));
+  }
+
+  const snapshot = await getDocs(q);
+  const dogIds = snapshot.docs.map((doc) => doc.id);
+
+  return shuffleArray(dogIds)
 }
 
 /**

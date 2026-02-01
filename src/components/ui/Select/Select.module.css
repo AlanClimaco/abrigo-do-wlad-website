@@ -1,21 +1,22 @@
 .trigger {
   display: flex;
-  gap: 3rem;
+  gap: 1rem;
+  color: var(--text-secondary);
   align-items: center;
   justify-content: space-between;
   border-radius: var(--radius);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
+  border: 1px solid transparent;
+  /* box-shadow: var(--shadow-sm); */
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
   line-height: 1.25rem;
   white-space: nowrap;
   transition: color 0.1s ease-in;
-  cursor: pointer;
 }
 
 .trigger:hover {
-  background-color: var(--white);
+  color: var(--text-primary);
+  border-color: var(--border);
 }
 
 .trigger:focus {
@@ -29,6 +30,8 @@
 }
 
 .trigger[data-state="open"] {
+  color: var(--text-primary);
+  border-color: var(--border);
   background-color: var(--white);
 }
 

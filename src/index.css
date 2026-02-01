@@ -14,12 +14,12 @@
   --skeleton: #dbdbdb;
 
   /* accent colors (used in quote cards, accordions, etc) */
-  --accent-primary: #fbe4dc;
+  --accent-primary: #ffddd3;
   --accent-secondary: #d5e1e9;
   --accent-green: #e1fde0;
   --accent-red: #fbe0e0;
 
-  /* button colors */
+  /* button & tooltip colors */
   --btn-primary: #fe9e7b46;
   --btn-primary-hover: #e85d2a;
   --btn-secondary: #006ec2;
@@ -28,6 +28,8 @@
 
   --badge-primary: #ff6c37;
   --badge-secondary: #038bf3;
+
+  --tooltip: #fbc5b4;
 
   /* shadow & etc */
   --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);

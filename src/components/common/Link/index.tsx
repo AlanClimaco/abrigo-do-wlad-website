@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import styles from "./Link.module.css";
 
 interface IconLinkProps {
@@ -8,6 +8,7 @@ interface IconLinkProps {
   className?: string;
   target?: string;
   rel?: string;
+  style?: CSSProperties;
 }
 
 interface TextLinkProps {
@@ -16,6 +17,7 @@ interface TextLinkProps {
   className?: string;
   target?: string;
   rel?: string;
+  style?: CSSProperties;
 }
 
 export const IconLink = ({
@@ -25,9 +27,10 @@ export const IconLink = ({
   className = "",
   target = "_blank",
   rel = "noopener noreferrer",
+  style,
 }: IconLinkProps) => {
   return (
-    <div className={`${className}`}>
+    <div className={`${styles.link} ${styles.iconLink} ${className}`} style={style}>
       {icon}
       <a href={href} target={target} rel={rel} className="ml-2">
         {children}
@@ -42,12 +45,14 @@ export const TextLink = ({
   className = "",
   target = "_blank",
   rel = "noopener noreferrer",
+  style,
 }: TextLinkProps) => {
   return (
     <a
       href={href}
       target={target}
       rel={rel}
+      style={style}
       className={`${styles.link} ${className}`}
     >
       {children}

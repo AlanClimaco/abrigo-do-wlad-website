@@ -110,7 +110,7 @@
   text-decoration: none;
   transition: 0.3s;
   padding: 10px;
-  background-color: #fedcd1;
+  background-color: var(--btn-primary);
   border-radius: var(--radius);
 }
 

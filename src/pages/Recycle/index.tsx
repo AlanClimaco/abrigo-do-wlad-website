@@ -145,14 +145,16 @@ export default function Recycle() {
             <CardComponent.CardBody>
               <CardComponent.CardHeader>
                 <CardComponent.CardIcon>
-                  <Lucide.MapPin size={48} />
+                  <Lucide.MapPinned size={48} />
                 </CardComponent.CardIcon>
                 <CardComponent.CardTitle>
                   Pontos de Coleta
                 </CardComponent.CardTitle>
               </CardComponent.CardHeader>
               <CardComponent.CardContent>
-                <p>Encontre o local mais próximo de você:</p>
+                <div>
+                  <p>Encontre o local mais próximo de você</p>
+                </div>
                 <ScrollArea style={{ height: "300px", padding: "10px" }}>
                   {collectionPoints.map((point) => (
                     <div
