@@ -1,34 +1,17 @@
 import { Link } from "react-router";
-import { useState, useEffect } from "react";
 
 import * as Lucide from "lucide-react";
 import * as CardComponent from "../../components/ui/Card";
 import HeroSmall from "../../components/HeroSmall";
 import { Skeleton } from "../../components/ui/Skeleton";
 
-import type { Dog } from "../../types/dogs";
-import { getDogs } from "../../services/dogService";
 import { getOptimizedImageUrl } from "../../utils/cdn";
+import { useDailyDog } from "../../hooks/useDailyDog";
 
 import styles from "./History.module.css";
 
 export default function History() {
-  const [dog, setDog] = useState<Dog | null>(null);
-
-  useEffect(() => {
-    async function fetchRandomDog() {
-      try {
-        const allDogs = await getDogs();
-        if (allDogs.length > 0) {
-          const randomIndex = Math.floor(Math.random() * allDogs.length);
-          setDog(allDogs[randomIndex]);
-        }
-      } catch (error) {
-        console.error("Erro ao carregar dog da História:", error);
-      }
-    }
-    fetchRandomDog();
-  }, []);
+  const dog = useDailyDog();
 
   const image = dog?.fotos?.[0] ?? null;
 
