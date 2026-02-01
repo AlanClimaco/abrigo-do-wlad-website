@@ -6,3 +6,9 @@
 .link:hover {
   color: var(--text-primary);
 }
+
+.iconLink {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
