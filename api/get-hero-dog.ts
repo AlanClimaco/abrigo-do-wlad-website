@@ -6,13 +6,8 @@ export default async function handler(
   res: ServerResponse,
 ) {
   try {
-    const dog = await kv.get("daily-dog");
+    const dog = await kv.get("hero-dog");
 
-    // 23h cache
-    res.setHeader(
-      "Cache-Control",
-      "s-maxage=82800, stale-while-revalidate=3600",
-    );
     res.setHeader("Content-Type", "application/json");
 
     if (dog) {
@@ -20,12 +15,12 @@ export default async function handler(
       res.end(JSON.stringify(dog));
     } else {
       res.statusCode = 404;
-      res.end(JSON.stringify({ message: "Daily dog not found." }));
+      res.end(JSON.stringify({ message: "Hero dog not found." }));
     }
   } catch (err) {
     console.error(err);
     res.setHeader("Content-Type", "application/json");
     res.statusCode = 500;
-    res.end(JSON.stringify({ message: "Error fetching daily dog." }));
+    res.end(JSON.stringify({ message: "Error fetching hero dog." }));
   }
 }
