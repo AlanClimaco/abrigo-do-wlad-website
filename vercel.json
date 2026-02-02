@@ -7,7 +7,7 @@
   ],
   "crons": [
     {
-      "path": "/api/update-daily-dog",
+      "path": "/api/update-hero-dog",
       "schedule": "0 0 * * *"
     }
   ]
