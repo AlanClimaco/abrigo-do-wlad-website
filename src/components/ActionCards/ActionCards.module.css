@@ -23,3 +23,24 @@
     transform: translateY(0);
   }
 }
+
+.card {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
+}
+
+.card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cardDelay1 {
+  transition-delay: 0.15s;
+}
+
+.cardDelay2 {
+  transition-delay: 0.3s;
+}

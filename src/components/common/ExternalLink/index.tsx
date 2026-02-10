@@ -11,7 +11,7 @@ interface IconLinkProps {
   style?: CSSProperties;
 }
 
-interface TextLinkProps {
+interface LinkProps {
   href: string;
   children: ReactNode;
   className?: string;
@@ -20,7 +20,7 @@ interface TextLinkProps {
   style?: CSSProperties;
 }
 
-export const IconLink = ({
+export const ExternalIconLink = ({
   href,
   icon,
   children,
@@ -39,14 +39,14 @@ export const IconLink = ({
   );
 };
 
-export const TextLink = ({
+export const ExternalLink = ({
   href,
   children,
   className = "",
   target = "_blank",
   rel = "noopener noreferrer",
   style,
-}: TextLinkProps) => {
+}: LinkProps) => {
   return (
     <a
       href={href}

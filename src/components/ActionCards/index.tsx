@@ -1,3 +1,4 @@
+import * as React from "react"
 import * as Lucide from "lucide-react";
 import styles from "./ActionCards.module.css";
 import { Link } from "react-router";
@@ -6,12 +7,39 @@ import * as Card from "../ui/Card";
 import * as Dialog from "../ui/Dialog";
 import PixModal from "../PixModal";
 
+
 export function ActionCards() {
+  const [isVisible, setIsVisible] = React.useState(false);
+  const sectionRef = React.useRef<HTMLElement>(null);
+
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      {
+        threshold: 0.2,
+      },
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <section className={`${styles.cardsContainer}`}>
+    <section className={styles.cardsContainer} ref={sectionRef}>
       {/* adoption */}
-      <Card.Card color="red">
+      <Card.Card
+        color="red"
+        className={`${styles.card} ${isVisible ? styles.visible : ""}`}
+      >
         <Card.CardBody>
           <Card.CardHeader>
             <Card.CardIcon>
@@ -37,7 +65,9 @@ export function ActionCards() {
       </Card.Card>
 
       {/* donations & pix modal */}
-      <Card.Card>
+      <Card.Card
+        className={`${styles.card} ${styles.cardDelay1} ${isVisible ? styles.visible : ""}`}
+      >
         <Card.CardBody>
           <Card.CardHeader>
             <Card.CardIcon>
@@ -66,7 +96,10 @@ export function ActionCards() {
       </Card.Card>
 
       {/* tampinhas */}
-      <Card.Card color="green">
+      <Card.Card
+        color="green"
+        className={`${styles.card} ${styles.cardDelay2} ${isVisible ? styles.visible : ""}`}
+      >
         <Card.CardBody>
           <Card.CardHeader>
             <Card.CardIcon>
