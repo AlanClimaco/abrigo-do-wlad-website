@@ -159,12 +159,7 @@
 }
 
 .credits a {
-  text-decoration: underline;
   margin: 0 3px;
-}
-
-.credits a:hover {
-  text-decoration: none;
 }
 
 /* media query */

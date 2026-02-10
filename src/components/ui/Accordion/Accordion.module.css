@@ -1,5 +1,5 @@
 /* .root {
-  overflow: auto;
+  padding: 0;
 } */
 
 .item {
@@ -28,6 +28,7 @@
 }
 
 .trigger {
+  position: relative;
   font-family: inherit;
   background-color: transparent;
   flex: 1;
@@ -37,12 +38,11 @@
   font-size: 15px;
   line-height: 1.2;
   font-weight: 700;
-  border: none;
   color: var(--text-secondary);
   cursor: pointer;
   transition: var(--transition);
-  text-align: left;
   gap: 10px;
+  padding-right: 30px;
 }
 
 .item:hover .trigger {
@@ -65,14 +65,6 @@
 
 .contentText {
   padding: 0 5px;
-  text-align: justify;
-}
-
-.chevron {
-  transition: transform 300ms cubic-bezier(0.87, 0, 0.13, 1);
-}
-.trigger[data-state="open"] > .chevron {
-  transform: rotate(180deg);
 }
 
 .item[data-state="open"] {
@@ -81,6 +73,35 @@
 
 .item[data-state="open"] .trigger {
   color: var(--secondary);
+}
+
+.iconPlus,
+.iconMinus {
+  position: absolute;
+  right: 0;
+  transition:
+    opacity 300ms cubic-bezier(0.87, 0, 0.13, 1),
+    transform 300ms cubic-bezier(0.87, 0, 0.13, 1);
+}
+
+.iconMinus {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.5);
+}
+
+.iconPlus {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+.trigger[data-state="open"] .iconPlus {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.5);
+}
+
+.trigger[data-state="open"] .iconMinus {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
 }
 
 @keyframes slideDown {

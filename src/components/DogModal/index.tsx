@@ -10,7 +10,7 @@ import {
   DialogDescription,
 } from "../ui/Dialog";
 import { Badge } from "../ui/Badge";
-import { TextLink } from "../common/Link";
+import { ExternalLink } from "../common/ExternalLink";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { Link } from "react-router";
 
@@ -168,7 +168,7 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
             <div className={styles.footer}>
               <div className={styles.footerBtn}>
                 {dog.instaLink && (
-                  <TextLink href={dog.instaLink as string}>
+                  <ExternalLink href={dog.instaLink as string}>
                     <Button
                       leftIcon={<Lucide.Instagram />}
                       size={`${isDesktop ? "md" : "lg"}`}
@@ -176,7 +176,7 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
                     >
                       Ver vídeo no Instagram
                     </Button>
-                  </TextLink>
+                  </ExternalLink>
                 )}
 
                 <Link to={`/formulario?pet=${encodeURIComponent(dog.nome)}`}>

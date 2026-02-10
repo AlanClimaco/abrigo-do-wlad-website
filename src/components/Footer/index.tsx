@@ -3,7 +3,7 @@ import * as Lucide from "lucide-react";
 import styles from "./Footer.module.css";
 
 import logo from "../../assets/logo.png";
-import { TextLink } from "../common/Link";
+import { ExternalLink } from "../common/ExternalLink";
 
 export function Footer() {
   return (
@@ -61,7 +61,7 @@ export function Footer() {
             <span>@abrigodowlad</span>
           </a>
 
-          <a
+          <ExternalLink
             href="mailto:abrigodowlad@gmail.com"
             className={styles.contactItem}
           >
@@ -69,7 +69,7 @@ export function Footer() {
               <Lucide.Mail size={20} />
             </div>
             <span>abrigodowlad@gmail.com</span>
-          </a>
+          </ExternalLink>
         </div>
       </div>
 
@@ -81,11 +81,17 @@ export function Footer() {
           </p>
         </div>
         <div className={styles.footerBottomGroup}>
-          <TextLink href="#">Política de Privacidade</TextLink>
-          <TextLink href="#">Termos de Responsabilidade</TextLink>
+          <ExternalLink href="#">Política de Privacidade</ExternalLink>
+          <ExternalLink href="#">Termos de Responsabilidade</ExternalLink>
           <p className={styles.credits}>
-            Por <TextLink href="https://github.com/AlanClimaco">Alan</TextLink>&{" "}
-            <TextLink href="https://github.com/spantalho">Luis</TextLink>
+            Por{" "}
+            <ExternalLink href="https://github.com/AlanClimaco">
+              Alan
+            </ExternalLink>
+            &{" "}
+            <ExternalLink href="https://github.com/spantalho">
+              Luis
+            </ExternalLink>
           </p>
         </div>
       </div>

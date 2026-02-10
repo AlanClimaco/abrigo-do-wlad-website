@@ -1,10 +1,12 @@
 .link {
   color: var(--text-secondary);
   transition: var(--transition);
+  text-decoration: underline;
 }
 
 .link:hover {
   color: var(--text-primary);
+  text-decoration: none;
 }
 
 .iconLink {
