@@ -87,18 +87,13 @@ export function FaqSection() {
                     </CardComponent.CardTitle>
                   </CardComponent.CardHeader>
                   <CardComponent.CardContent>
-                    <div
-                      style={{
-                        marginTop: "-0.5rem",
-                        marginBottom: "1rem",
-                        display: "flex",
-                        gap: "0.5rem",
-                      }}
-                    >
-                      <Badge variant="outline">
+                    <div className={styles.visitasBadges}>
+                      <Badge className={styles.faqBadge} variant="outline">
                         Segunda à Sábado (exceto feriados)
                       </Badge>
-                      <Badge variant="outline">14h às 17h</Badge>
+                      <Badge className={styles.faqBadge} variant="outline">
+                        14h às 17h
+                      </Badge>
                     </div>
                     <p>
                       As visitas são abertas para{" "}

@@ -32,6 +32,13 @@
   gap: 1rem;
 }
 
+.visitasBadges {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+}
+
 /* reveal */
 .titleFaq {
   opacity: 0;
@@ -57,4 +64,15 @@
 .accordionWrapper.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .visitasBadges {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .faqBadge {
+    justify-content: center;
+  }
 }

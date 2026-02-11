@@ -214,13 +214,7 @@
   .card {
     text-align: center !important;
   }
-
-  .cardFooter {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
+  
   .quote .cardHeader {
     flex-direction: column;
   }
