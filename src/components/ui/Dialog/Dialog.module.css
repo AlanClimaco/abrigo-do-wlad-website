@@ -7,10 +7,17 @@ input {
 
 .overlay {
   z-index: 9998;
-  background-color: rgba(0, 0, 0, 0.396);
+  background-color: rgba(0, 0, 0, 0.525);
   position: fixed;
   inset: 0;
-  animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.overlay[data-state="open"] {
+  animation: overlayShow 250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.overlay[data-state="closed"] {
+  animation: overlayHide 250ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .content {
@@ -22,16 +29,23 @@ input {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  /* max-width: 500px; */
   max-width: 90vw;
   max-height: 85vh;
   padding: 25px;
-  animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   flex-direction: column;
 }
+
 .content:focus {
   outline: none;
+}
+
+.content[data-state="open"] {
+  animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.content[data-state="closed"] {
+  animation: contentHide 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .header {
@@ -72,7 +86,7 @@ input {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--bg-body);
+  background-color: var(--white);
   color: var(--text-secondary);
   cursor: pointer;
   transition: var(--transition);
@@ -91,6 +105,15 @@ input {
   }
 }
 
+@keyframes overlayHide {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 @keyframes contentShow {
   from {
     opacity: 0;
@@ -99,6 +122,17 @@ input {
   to {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes contentHide {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.96);
   }
 }
 

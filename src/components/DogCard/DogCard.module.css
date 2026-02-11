@@ -47,13 +47,8 @@
 
 /* media query */
 @media (max-width: 768px) {
+  .badgeContent,
   .badgeContainer {
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .badgeContent {
-    width: 100%;
     justify-content: center;
   }
 }

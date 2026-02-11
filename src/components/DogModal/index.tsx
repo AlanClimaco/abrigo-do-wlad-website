@@ -12,6 +12,7 @@ import {
 import { Badge } from "../ui/Badge";
 import { ExternalLink } from "../common/ExternalLink";
 import { useMediaQuery } from "@uidotdev/usehooks";
+import * as CardComponent from "../ui/Card";
 import { Link } from "react-router";
 
 interface ModalProps {
@@ -80,7 +81,6 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
               alt={dog.nome}
               className={styles.mainImage}
             />
-
             <div className={styles.carouselButtons}>
               <div>
                 <Button
@@ -93,16 +93,17 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
                 </Button>
               </div>
               {hasMultipleImages && (
-                <div className={styles.carouselNav}>
-                  <div className={styles.carouselNavButtons}>
-                    <Button variant="outline" size="icon" onClick={prevImage}>
-                      <Lucide.ChevronLeft size={24} />
-                    </Button>
-                    <Button variant="outline" size="icon" onClick={nextImage}>
-                      <Lucide.ChevronRight size={24} />
-                    </Button>
+                <div className={styles.carouselNavContainer}>
+                  <div className={styles.carouselNav}>
+                    <div className={styles.carouselNavButtons}>
+                      <Button variant="outline" size="icon" onClick={prevImage}>
+                        <Lucide.ChevronLeft size={24} />
+                      </Button>
+                      <Button variant="outline" size="icon" onClick={nextImage}>
+                        <Lucide.ChevronRight size={24} />
+                      </Button>
+                    </div>
                   </div>
-
                   <div className={styles.carouselNavDots}>
                     {dog.fotos.map((_, index) => (
                       <button
@@ -119,51 +120,75 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
               )}
             </div>
           </div>
-
           {/* --- DETALHES DO DOG --- */}
           <div className={styles.details}>
-            <div>
-              <Badge>{CORES_MAP[dog.cor] || dog.cor}</Badge>
-            </div>
+            <div className={styles.detailsHeader}>
+              <div>
+                <Badge>{CORES_MAP[dog.cor] || dog.cor}</Badge>
+              </div>
 
-            <h2 className={styles.title}>{dog.nome}</h2>
+              <h2 className={styles.title}>{dog.nome}</h2>
 
-            <div className={styles.badges}>
-              <Badge
-                className={styles.badgeContent}
-                variant="secondary"
-                leftIcon={<Lucide.Calendar size={14} />}
-              >
-                {dog.idade}
-              </Badge>
+              <div className={styles.badges}>
+                <Badge
+                  className={styles.badgeContent}
+                  variant="secondary"
+                  leftIcon={<Lucide.Calendar size={14} />}
+                >
+                  {dog.idade}
+                </Badge>
 
-              <Badge
-                className={styles.badgeContent}
-                variant="secondary"
-                leftIcon={
-                  dog.sexo === "Macho" ? (
-                    <Lucide.Mars size={14} />
-                  ) : (
-                    <Lucide.Venus size={14} />
-                  )
-                }
-              >
-                {dog.sexo}
-              </Badge>
+                <Badge
+                  className={styles.badgeContent}
+                  variant="secondary"
+                  leftIcon={
+                    dog.sexo === "Macho" ? (
+                      <Lucide.Mars size={14} />
+                    ) : (
+                      <Lucide.Venus size={14} />
+                    )
+                  }
+                >
+                  {dog.sexo}
+                </Badge>
 
-              <Badge
-                className={styles.badgeContent}
-                variant="secondary"
-                leftIcon={<Lucide.BriefcaseMedical size={14} />}
-              >
-                {dog.status}
-              </Badge>
+                <Badge
+                  className={styles.badgeContent}
+                  variant="secondary"
+                  leftIcon={<Lucide.BriefcaseMedical size={14} />}
+                >
+                  {dog.status}
+                </Badge>
+              </div>
             </div>
 
             <p className={styles.description}>
               {dog.descricaoCompleta ||
                 `O ${dog.nome} é um cãozinho incrível que está esperando por um lar. ${dog.temperamento}.`}
             </p>
+
+            <div>
+              <CardComponent.Card size="sm" color="secondary" variant="quote">
+                <CardComponent.CardBody>
+                  <CardComponent.CardHeader>
+                    <CardComponent.CardIcon>
+                      <Lucide.PawPrint size={22} />
+                    </CardComponent.CardIcon>
+                    <CardComponent.CardTitle>
+                      Temperamento
+                    </CardComponent.CardTitle>
+                  </CardComponent.CardHeader>
+                  <CardComponent.CardContent>
+                    <p>
+                      {dog.nome} tem um temperamento{" "}
+                      <strong>{dog.temperamento?.toLowerCase()}</strong>. Para
+                      uma convivência harmoniosa, é ideal que o tutor tenha um
+                      estilo de vida compatível com essa energia.
+                    </p>
+                  </CardComponent.CardContent>
+                </CardComponent.CardBody>
+              </CardComponent.Card>
+            </div>
 
             <div className={styles.footer}>
               <div className={styles.footerBtn}>
@@ -172,7 +197,7 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
                     <Button
                       leftIcon={<Lucide.Instagram />}
                       size={`${isDesktop ? "md" : "lg"}`}
-                      variant="instagram"
+                      variant="secondary"
                     >
                       Ver vídeo no Instagram
                     </Button>

@@ -103,7 +103,7 @@
 }
 
 .sm .cardHeader {
-  gap: 1rem
+  gap: 1rem;
 }
 
 .sm .cardTitle {
@@ -193,6 +193,14 @@
   background-color: var(--accent-secondary);
 }
 
+.quote.colorRed {
+  background-color: var(--accent-red);
+}
+
+.quote.colorGreen {
+  background-color: var(--accent-green);
+}
+
 .quote .cardHeader {
   text-transform: uppercase;
   flex-direction: row;
@@ -208,6 +216,18 @@
   color: var(--secondary);
 }
 
+.quote.colorGreen .cardTitle {
+  color: green;
+}
+
+.quote.colorRed .cardTitle {
+  color: red;
+}
+
+.quote.colorOutline .cardTitle {
+  color: var(--text-primary);
+}
+
 .quote:hover {
   transform: none;
   box-shadow: none;
@@ -219,7 +239,7 @@
   .card {
     text-align: center !important;
   }
-  
+
   .quote .cardHeader {
     flex-direction: column;
   }

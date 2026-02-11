@@ -147,7 +147,7 @@ function DogFiltersComponent({
                 size="sm"
                 style={{ cursor: "help" }}
               >
-                Lista Rotativa
+                Ordem Rotativa
               </Badge>
             </TooltipComponent.TooltipTrigger>
             <TooltipComponent.TooltipContent>

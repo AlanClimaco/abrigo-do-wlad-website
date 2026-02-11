@@ -1,4 +1,4 @@
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import * as Lucide from "lucide-react";
 import styles from "./Footer.module.css";
 
@@ -61,7 +61,7 @@ export function Footer() {
             <span>@abrigodowlad</span>
           </a>
 
-          <ExternalLink
+          <a
             href="mailto:abrigodowlad@gmail.com"
             className={styles.contactItem}
           >
@@ -69,7 +69,7 @@ export function Footer() {
               <Lucide.Mail size={20} />
             </div>
             <span>abrigodowlad@gmail.com</span>
-          </ExternalLink>
+          </a>
         </div>
       </div>
 
@@ -81,8 +81,8 @@ export function Footer() {
           </p>
         </div>
         <div className={styles.footerBottomGroup}>
-          <ExternalLink href="#">Política de Privacidade</ExternalLink>
-          <ExternalLink href="#">Termos de Responsabilidade</ExternalLink>
+          <Link to="/">Política de Privacidade</Link>
+          <Link to="/">Termos de Responsabilidade</Link>
           <p className={styles.credits}>
             Por{" "}
             <ExternalLink href="https://github.com/AlanClimaco">
