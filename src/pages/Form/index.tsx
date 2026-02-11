@@ -24,6 +24,7 @@ import {
 import * as SelectComponent from "../../components/ui/Select";
 import * as RadioComponent from "../../components/ui/RadioGroup";
 import { Label } from "../../components/ui/Label";
+import { getThirdPartyImage } from "../../utils/common";
 
 export default function Form() {
   const [state, handleSubmit] = useForm(import.meta.env.VITE_FORMSPREE_ID);
@@ -35,6 +36,8 @@ export default function Form() {
 
   // Estado para o Captcha
   const [captchaToken, setCaptchaToken] = useState("");
+
+  const heroImage = getThirdPartyImage("form")?.url;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -58,7 +61,7 @@ export default function Form() {
     return (
       <main>
         <HeroSmall
-          image="https://www.loverpets.com.br/cdn/shop/articles/Cachorrinho.jpg?v=1579380726"
+          image={heroImage as string}
           badge="Sucesso"
           title="Formulário Enviado!"
           description="Obrigado por responder com honestidade."
@@ -93,8 +96,8 @@ export default function Form() {
   return (
     <main>
       <HeroSmall
-        image="https://www.loverpets.com.br/cdn/shop/articles/Cachorrinho.jpg?v=1579380726"
-        badge="Entrevista"
+        image={heroImage as string}
+        badge="Questionário"
         title="Intenção de Adoção"
         description="Por favor, responda com sinceridade. Adoção é um ato de amor e responsabilidade."
       />
@@ -1122,7 +1125,7 @@ export default function Form() {
               <textarea name="49_devolucao" required rows={2}></textarea>
             </div>
 
-            <Card style={{margin: "1.5rem 0"}} variant="quote" size="sm">
+            <Card style={{ margin: "1.5rem 0" }} variant="quote" size="sm">
               <CardBody>
                 <CardHeader>
                   <CardTitle>IMPORTANTE!</CardTitle>

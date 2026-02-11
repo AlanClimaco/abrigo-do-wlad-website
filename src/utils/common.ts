@@ -11,7 +11,19 @@ const imagesData: ThirdPartyImagesData = thirdPartyImages;
  */
 export const getThirdPartyImage = (
   name: string,
-  options: { w?: number; q?: number } = { w: 1920, q: 80 },
+  options: {
+    w?: number;
+    h?: number;
+    q?: number;
+    crop?:
+      | "top"
+      | "bottom"
+      | "left"
+      | "right"
+      | "center"
+      | "faces"
+      | "focalpoint";
+  } = { w: 1920, q: 80 },
 ) => {
   const imageInfo = imagesData[name];
 
@@ -20,8 +32,9 @@ export const getThirdPartyImage = (
     return null;
   }
 
-  const imageUrl = `https://images.unsplash.com/photo-${imageInfo.photoId}?auto=format&fit=crop&w=${options.w}&q=${options.q}`;
-
+  const cropParam = options.crop ? `&crop=${options.crop}` : "";
+  const imageUrl = `https://images.unsplash.com/photo-${imageInfo.photoId}?auto=format&fit=crop&w=${options.w}&h=${options.h}&q=${options.q}${cropParam}`;
+  
   return {
     url: imageUrl,
     ...imageInfo,

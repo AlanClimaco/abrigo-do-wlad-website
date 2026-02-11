@@ -1,7 +1,7 @@
 .headerContainer {
   backdrop-filter: var(--blur);
   -webkit-backdrop-filter: var(--blur);
-  background: #fceae3ce;
+  background-color: #fceae3ce;
   position: fixed;
   top: 1rem;
   left: 50%;
@@ -49,7 +49,7 @@
 
 .navLink {
   font-weight: 500;
-  color: var(--text-secondary);
+  color: var(--text-primary);
   position: relative;
   font-size: 1rem;
   cursor: pointer;

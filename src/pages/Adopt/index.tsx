@@ -19,7 +19,7 @@ import { Button } from "../../components/ui/Button";
 import * as TooltipComponent from "../../components/ui/Tooltip";
 import { useDogSearch } from "../../hooks/useDogSearch";
 import { getOptimizedImageUrl } from "../../utils/cdn";
-import { preloadDogImages } from "../../utils/common";
+import { getThirdPartyImage, preloadDogImages } from "../../utils/common";
 
 interface DogFiltersProps {
   filters: DogFilters;
@@ -182,6 +182,8 @@ export default function Adopt() {
   const [selectedDog, setSelectedDog] = React.useState<Dog | null>(null);
   const [loadingDogId, setLoadingDogId] = React.useState<string | null>(null);
 
+  const heroImage = getThirdPartyImage("adopt", { w: 1920, h: 800, q: 80, crop: "top" })?.url;
+
   // Pré-carregamento de imagens da página atual
   React.useEffect(() => {
     const imagesToPreload = dogs
@@ -226,7 +228,7 @@ export default function Adopt() {
   return (
     <main>
       <HeroSmall
-        image="https://www.petz.com.br/blog/wp-content/uploads/2025/11/vira-lata1.jpg"
+        image={heroImage as string}
         title="Nossos Doguinhos"
         badge="Amigos Fiéis"
         description="Cada um tem uma história e uma personalidade única. Utilize os filtros abaixo para encontrar quem combina com seu estilo de vida."
