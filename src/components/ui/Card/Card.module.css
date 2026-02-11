@@ -102,6 +102,10 @@
   padding: 1.5rem;
 }
 
+.sm .cardHeader {
+  gap: 1rem
+}
+
 .sm .cardTitle {
   font-size: 1rem !important;
 }
@@ -190,6 +194,7 @@
 }
 
 .quote .cardHeader {
+  text-transform: uppercase;
   flex-direction: row;
   align-items: top;
 }

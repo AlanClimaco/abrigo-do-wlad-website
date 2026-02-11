@@ -20,6 +20,7 @@ const TooltipContent = React.forwardRef<
       {...props}
     >
       {props.children}
+      <Tooltip.Arrow className={styles.TooltipArrow} />
     </Tooltip.Content>
   </Tooltip.Portal>
 ));

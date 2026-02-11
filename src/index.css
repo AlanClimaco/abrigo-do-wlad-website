@@ -8,8 +8,8 @@
   /* main colors */
   --bg-body: #fceae3;
   --white: #ffffff;
-  --primary: #ff6b35;
-  --secondary: #004e89;
+  --primary: #ff6c37;
+  --secondary: #006ec2;
   --border: #b7b7b7;
   --skeleton: #dbdbdb;
 
@@ -19,7 +19,7 @@
   --accent-green: #e1fde0;
   --accent-red: #fbe0e0;
 
-  /* button & tooltip colors */
+  /* button & badge colors */
   --btn-primary: #fe9e7b46;
   --btn-primary-hover: #e85d2a;
   --btn-secondary: #006ec2;
@@ -28,8 +28,6 @@
 
   --badge-primary: #ff6c37;
   --badge-secondary: #038bf3;
-
-  --tooltip: #fbc5b4;
 
   /* shadow & etc */
   --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);

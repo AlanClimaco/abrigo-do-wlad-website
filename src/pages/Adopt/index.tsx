@@ -31,6 +31,32 @@ function DogCardSkeleton() {
   return <Skeleton style={{ height: "500px", width: "100%" }} />;
 }
 
+function DogFiltersSkeleton() {
+  return (
+    <div className={styles.filterContainer}>
+      <div className={styles.filterItemContainer}>
+        <Skeleton
+          style={{ height: "40px", width: "200px", borderRadius: "8px" }}
+        />
+        <Skeleton
+          style={{ height: "40px", width: "200px", borderRadius: "8px" }}
+        />
+        <Skeleton
+          style={{ height: "40px", width: "200px", borderRadius: "8px" }}
+        />
+      </div>
+      <div className={styles.filterItemContainer}>
+        <Skeleton
+          style={{ height: "28px", width: "120px", borderRadius: "16px" }}
+        />
+        <Skeleton
+          style={{ height: "28px", width: "100px", borderRadius: "16px" }}
+        />
+      </div>
+    </div>
+  );
+}
+
 function DogFiltersComponent({
   filters,
   onFilterChange,
@@ -119,8 +145,9 @@ function DogFiltersComponent({
                 leftIcon={<Lucide.CircleQuestionMark size={16} />}
                 variant="outline"
                 size="sm"
+                style={{ cursor: "help" }}
               >
-                Classificação
+                Lista Rotativa
               </Badge>
             </TooltipComponent.TooltipTrigger>
             <TooltipComponent.TooltipContent>
@@ -206,11 +233,15 @@ export default function Adopt() {
       />
 
       <div className="container">
-        <DogFiltersComponent
-          filters={filters}
-          onFilterChange={setFilters}
-          totalItems={totalItems}
-        />
+        {loading ? (
+          <DogFiltersSkeleton />
+        ) : (
+          <DogFiltersComponent
+            filters={filters}
+            onFilterChange={setFilters}
+            totalItems={totalItems}
+          />
+        )}
 
         {loading ? (
           <div className={styles.dogGrid}>
