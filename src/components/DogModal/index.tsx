@@ -11,9 +11,11 @@ import {
 } from "../ui/Dialog";
 import { Badge } from "../ui/Badge";
 import { ExternalLink } from "../common/ExternalLink";
-import { useMediaQuery } from "@uidotdev/usehooks";
+import { useCopyToClipboard, useMediaQuery } from "@uidotdev/usehooks";
 import * as CardComponent from "../ui/Card";
 import { Link } from "react-router";
+
+import { AnimatePresence, motion } from "motion/react";
 
 interface ModalProps {
   dog: Dog | null;
@@ -21,13 +23,30 @@ interface ModalProps {
   onClose: () => void;
 }
 
+const variants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? "100%" : "-100%",
+  }),
+  center: {
+    zIndex: 1,
+    x: 0,
+  },
+  exit: (direction: number) => ({
+    zIndex: 0,
+    x: direction < 0 ? "100%" : "-100%",
+  }),
+};
+
 export function DogModal({ dog, isOpen, onClose }: ModalProps) {
-  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
+  const [[page, direction], setPage] = useState([0, 0]);
   const isDesktop = useMediaQuery("(min-width: 768px)");
+
+  const [, copyToClipboard] = useCopyToClipboard();
+  const [isCopied, setIsCopied] = useState(false);
 
   useEffect(() => {
     if (!isOpen) {
-      const timer = setTimeout(() => setCurrentImageIndex(0), 150);
+      const timer = setTimeout(() => setPage([0, 0]), 150);
       return () => clearTimeout(timer);
     }
   }, [isOpen]);
@@ -36,19 +55,24 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
 
   const photos = dog.fotos || [];
   const hasMultipleImages = photos.length > 1;
+  const currentImageIndex =
+    ((page % photos.length) + photos.length) % photos.length;
 
-  const nextImage = () => {
+  const paginate = (newDirection: number) => {
     if (!hasMultipleImages) return;
-    setCurrentImageIndex((prev) => (prev + 1) % photos.length);
-  };
-
-  const prevImage = () => {
-    if (!hasMultipleImages) return;
-    setCurrentImageIndex((prev) => (prev - 1 + photos.length) % photos.length);
+    setPage([page + newDirection, newDirection]);
   };
 
   const handleClose = () => {
     onClose();
+  };
+
+  const handleCopyClick = (toCopy: string) => {
+    copyToClipboard(toCopy);
+    setIsCopied(true);
+    setTimeout(() => {
+      setIsCopied(false);
+    }, 2000);
   };
 
   return (
@@ -76,30 +100,51 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
         <div className={styles.contentGrid}>
           {/* --- CARROSSEL DE IMAGENS --- */}
           <div className={styles.carousel}>
-            <img
-              src={dog.fotos[currentImageIndex]}
-              alt={dog.nome}
-              className={styles.mainImage}
-            />
+            <AnimatePresence initial={false} custom={direction}>
+              <motion.img
+                key={page}
+                src={dog.fotos[currentImageIndex]}
+                alt={dog.nome}
+                className={styles.mainImage}
+                custom={direction}
+                variants={variants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{
+                  x: { type: "spring", stiffness: 300, damping: 30 },
+                }}
+              />
+            </AnimatePresence>
             <div className={styles.carouselButtons}>
-              <div>
-                <Button
-                  blur={true}
-                  variant="outline"
-                  size="icon"
-                  onClick={handleClose}
-                >
-                  <Lucide.X size={24} />
-                </Button>
-              </div>
+              {!isDesktop && (
+                <div>
+                  <Button
+                    blur={true}
+                    variant="outline"
+                    onClick={handleClose}
+                    size="icon"
+                  >
+                    <Lucide.X size={22} />
+                  </Button>
+                </div>
+              )}
               {hasMultipleImages && (
                 <div className={styles.carouselNavContainer}>
                   <div className={styles.carouselNav}>
                     <div className={styles.carouselNavButtons}>
-                      <Button variant="outline" size="icon" onClick={prevImage}>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={() => paginate(-1)}
+                      >
                         <Lucide.ChevronLeft size={24} />
                       </Button>
-                      <Button variant="outline" size="icon" onClick={nextImage}>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={() => paginate(1)}
+                      >
                         <Lucide.ChevronRight size={24} />
                       </Button>
                     </div>
@@ -111,7 +156,9 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
                         className={`${styles.dot} ${
                           currentImageIndex === index ? styles.dotActive : ""
                         }`}
-                        onClick={() => setCurrentImageIndex(index)}
+                        onClick={() =>
+                          setPage([index, index > currentImageIndex ? 1 : -1])
+                        }
                         aria-label={`Ir para imagem ${index + 1}`}
                       />
                     ))}
@@ -123,15 +170,26 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
           {/* --- DETALHES DO DOG --- */}
           <div className={styles.details}>
             <div className={styles.detailsHeader}>
+              {isDesktop && (
+                <div className={styles.closeButton}>
+                  <Button variant="ghost" onClick={handleClose} size="icon">
+                    <Lucide.X size={22} />
+                  </Button>
+                </div>
+              )}
               <div>
                 <Badge>{CORES_MAP[dog.cor] || dog.cor}</Badge>
               </div>
 
               <h2 className={styles.title}>{dog.nome}</h2>
 
+              <p className={styles.description}>
+                {dog.descricaoCompleta ||
+                  `O ${dog.nome} é um cãozinho incrível que está esperando por um lar. ${dog.temperamento}.`}
+              </p>
+
               <div className={styles.badges}>
                 <Badge
-                  className={styles.badgeContent}
                   variant="secondary"
                   leftIcon={<Lucide.Calendar size={14} />}
                 >
@@ -139,7 +197,6 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
                 </Badge>
 
                 <Badge
-                  className={styles.badgeContent}
                   variant="secondary"
                   leftIcon={
                     dog.sexo === "Macho" ? (
@@ -153,19 +210,26 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
                 </Badge>
 
                 <Badge
-                  className={styles.badgeContent}
                   variant="secondary"
                   leftIcon={<Lucide.BriefcaseMedical size={14} />}
                 >
                   {dog.status}
                 </Badge>
+
+                {dog.instaLink && (
+                  <ExternalLink href={dog.instaLink as string}>
+                    <Badge
+                      className={styles.badgeInstagram}
+                      variant="secondary"
+                      leftIcon={<Lucide.Instagram size={14} />}
+                      rightIcon={<Lucide.ArrowRight size={14} />}
+                    >
+                      Ver Vídeo
+                    </Badge>
+                  </ExternalLink>
+                )}
               </div>
             </div>
-
-            <p className={styles.description}>
-              {dog.descricaoCompleta ||
-                `O ${dog.nome} é um cãozinho incrível que está esperando por um lar. ${dog.temperamento}.`}
-            </p>
 
             <div>
               <CardComponent.Card size="sm" color="secondary" variant="quote">
@@ -192,18 +256,19 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
 
             <div className={styles.footer}>
               <div className={styles.footerBtn}>
-                {dog.instaLink && (
-                  <ExternalLink href={dog.instaLink as string}>
-                    <Button
-                      leftIcon={<Lucide.Instagram />}
-                      size={`${isDesktop ? "md" : "lg"}`}
-                      variant="secondary"
-                    >
-                      Ver vídeo no Instagram
-                    </Button>
-                  </ExternalLink>
-                )}
-
+                <Button
+                  disabled
+                  onClick={() =>
+                    handleCopyClick(
+                      `${window.location.href}?dog=${encodeURIComponent(dog.nome)}`,
+                    )
+                  }
+                  size={`${isDesktop ? "icon" : "lg"}`}
+                  variant={isCopied ? "primary" : "outline"}
+                >
+                  <Lucide.Copy />
+                  {!isDesktop ? "Compartilhar" : ""}
+                </Button>
                 <Link to={`/formulario?pet=${encodeURIComponent(dog.nome)}`}>
                   <Button
                     leftIcon={<Lucide.Heart />}

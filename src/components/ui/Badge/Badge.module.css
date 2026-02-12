@@ -9,6 +9,11 @@
   user-select: none;
 }
 
+.badge svg {
+  width: 15px;
+  height: 15px;
+}
+
 .content {
   line-height: 1;
 }

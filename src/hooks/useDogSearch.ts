@@ -50,7 +50,7 @@ export function useDogSearch() {
       setDogs([]);
       return;
     }
-    
+
     async function fetchPageData() {
       if (shuffledIds.length === 0) {
         setDogs([]);

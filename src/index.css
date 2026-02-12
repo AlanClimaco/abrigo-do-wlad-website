@@ -9,7 +9,7 @@
   --bg-body: #fceae3;
   --white: #ffffff;
   --primary: #ff6c37;
-  --secondary: #006ec2;
+  --secondary: #0060aa;
   --border: #b7b7b7;
   --skeleton: #dbdbdb;
 
@@ -18,13 +18,13 @@
   --accent-secondary: #d5e1e9;
   --accent-green: #e1fde0;
   --accent-red: #fbe0e0;
+  --accent-instagram: #ce579a;
 
   /* button & badge colors */
-  --btn-primary: #fe9e7b46;
+  --btn-primary: #ffd2c2;
   --btn-primary-hover: #e85d2a;
-  --btn-secondary: #006ec2;
-  --btn-secondary-hover: #004d87;
-  --btn-instagram: #ce579a;
+  --btn-secondary: #d5e1e9;
+  --btn-secondary-hover: #006ec2;
 
   --badge-primary: #ff6c37;
   --badge-secondary: #038bf3;
