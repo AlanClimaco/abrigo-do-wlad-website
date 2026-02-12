@@ -107,7 +107,6 @@ export function Header() {
               className={styles.mainBtn}
               size="md"
               variant="secondary"
-              style={{ borderRadius: "var(--radius-xl)" }}
             >
               <Lucide.HeartHandshake size={20} />
               <span>Quero Ajudar</span>
