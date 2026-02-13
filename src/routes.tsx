@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import Home from "./pages/Home";
@@ -21,6 +21,7 @@ export function AppRoutes() {
         <Route path="/tampinhas" element={<Recycle />} />
         <Route path="/adotar" element={<Adopt />} />
         <Route path="/formulario" element={<Form />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
 
       <Footer />

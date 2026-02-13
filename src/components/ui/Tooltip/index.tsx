@@ -4,7 +4,13 @@ import styles from "./Tooltip.module.css";
 
 const TooltipProvider = Tooltip.Provider;
 
-const TooltipRoot = Tooltip.Root;
+interface TooltipRootProps extends Tooltip.TooltipProps {
+  alwaysOpen?: boolean;
+}
+
+const TooltipRoot: React.FC<TooltipRootProps> = ({ alwaysOpen, ...props }) => {
+  return <Tooltip.Root {...props} open={alwaysOpen} />;
+};
 
 const TooltipTrigger = Tooltip.Trigger;
 

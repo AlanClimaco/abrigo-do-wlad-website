@@ -26,13 +26,54 @@
 .TooltipContent::after {
   content: "";
   position: absolute;
-  bottom: -6px;
-  left: 50%;
-  transform: translateX(-50%) rotate(45deg);
   width: 12px;
   height: 12px;
   background-color: var(--secondary);
+  transform: rotate(45deg);
+}
+
+.TooltipContent[data-side="top"] {
+  margin-bottom: 10px;
+}
+
+.TooltipContent[data-side="bottom"] {
+  margin-top: 10px;
+}
+
+.TooltipContent[data-side="left"] {
+  margin-right: 10px;
+}
+
+.TooltipContent[data-side="right"] {
+  margin-left: 10px;
+}
+
+.TooltipContent[data-side="top"]::after {
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
   border-radius: 0 0 5px 0;
+}
+
+.TooltipContent[data-side="bottom"]::after {
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  border-radius: 5px 0 0 0;
+}
+
+.TooltipContent[data-side="left"]::after {
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  border-radius: 0 5px 0 0;
+}
+
+.TooltipContent[data-side="right"]::after {
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  border-radius: 0 0 0 5px;
 }
 
 .TooltipContent[data-state="delayed-open"] {
