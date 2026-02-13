@@ -87,18 +87,20 @@ export function FaqSection() {
                     </CardComponent.CardTitle>
                   </CardComponent.CardHeader>
                   <CardComponent.CardContent>
-                    <div className={styles.visitasBadges}>
+                    <div className={styles.faqCardBadges}>
                       <Badge className={styles.faqBadge} variant="outline">
-                        Segunda à Sábado (exceto feriados)
+                        Segunda à Sábado
                       </Badge>
                       <Badge className={styles.faqBadge} variant="outline">
                         14h às 17h
                       </Badge>
+                      <Badge className={styles.faqBadge} variant="danger">
+                        Exceto em Feriados
+                      </Badge>
                     </div>
                     <p>
-                      As visitas são abertas para{" "}
-                      <strong>conhecer o espaço</strong> e{" "}
-                      <strong>trazer doações</strong>. Para adoção, é necessário{" "}
+                      As visitas são abertas para conhecer o espaço e trazer
+                      doações. Para adoção, é necessário{" "}
                       <ExternalLink href={"/formulario"}>
                         preencher o questionário
                       </ExternalLink>{" "}
@@ -108,7 +110,7 @@ export function FaqSection() {
                   </CardComponent.CardContent>
                 </CardComponent.CardBody>
                 <CardComponent.CardFooter>
-                  <div style={{ display: "flex", gap: "0.5rem" }}>
+                  <div className={styles.faqCardFooter}>
                     <ExternalLink href="mailto:abrigodowlad@gmail.com">
                       <Button
                         size="sm"

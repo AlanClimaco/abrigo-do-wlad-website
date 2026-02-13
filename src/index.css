@@ -28,6 +28,7 @@
 
   --badge-primary: #ff6c37;
   --badge-secondary: #038bf3;
+  --badge-danger: #fd6767;
 
   /* shadow & etc */
   --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);

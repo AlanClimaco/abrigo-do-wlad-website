@@ -31,7 +31,7 @@ input {
   transform: translate(-50%, -50%);
   max-width: 90vw;
   max-height: 85vh;
-  padding: 25px;
+  padding: 40px;
   display: flex;
   flex-direction: column;
 }

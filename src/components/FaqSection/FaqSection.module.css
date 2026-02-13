@@ -32,11 +32,16 @@
   gap: 1rem;
 }
 
-.visitasBadges {
+.faqCardBadges {
   display: flex;
   gap: 0.5rem;
   margin-top: -0.5rem;
   margin-bottom: 1rem;
+}
+
+.faqCardFooter {
+  display: flex;
+  gap: 0.5rem;
 }
 
 /* reveal */
@@ -67,9 +72,14 @@
 }
 
 @media (max-width: 768px) {
-  .visitasBadges {
+  .faqCardFooter,
+  .faqCardBadges {
     flex-direction: column;
     justify-content: center;
+  }
+
+  .faqCardFooter {
+    gap: 1rem;
   }
 
   .faqBadge {

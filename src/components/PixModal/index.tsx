@@ -45,7 +45,7 @@ export default function PixModal() {
           </div>
           <Button
             size="sm"
-            variant="primary"
+            variant="outline"
             onClick={handleCopyClick}
             disabled={isCopied}
           >

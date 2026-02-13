@@ -40,6 +40,11 @@
   border-color: var(--border);
 }
 
+.danger {
+  background-color: var(--badge-danger);
+  color: var(--white);
+}
+
 /* sizes */
 .sm {
   padding: 0.2rem 0.4rem;
