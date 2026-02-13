@@ -147,6 +147,7 @@
   color: var(--text-secondary);
   line-height: 1.6;
   font-size: medium;
+  text-align: justify;
 }
 
 .badges {

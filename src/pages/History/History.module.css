@@ -43,6 +43,8 @@ h3 {
   justify-content: center;
   align-items: center;
   position: sticky;
+  margin-top: 3.5rem;
+  margin-bottom: 6rem;
   top: 120px;
 }
 
@@ -53,24 +55,6 @@ h3 {
   height: clamp(350px, 25vw, 600px);
   object-fit: cover;
   display: block;
-}
-
-.historyImageDescription {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  padding: 20px;
-  border-radius: var(--radius);
-  margin-top: 20px;
-  text-align: center;
-}
-
-.historyImageDescription h4 {
-  color: var(--primary);
-}
-
-.historyImageDescription p {
-  font-size: 0.9rem;
 }
 
 @media (max-width: 768px) {
