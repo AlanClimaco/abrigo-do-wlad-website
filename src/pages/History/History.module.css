@@ -50,7 +50,6 @@ h3 {
 
 .historyImage {
   border-radius: var(--radius);
-  box-shadow: var(--shadow-lg);
   width: 100%;
   height: clamp(350px, 25vw, 600px);
   object-fit: cover;
