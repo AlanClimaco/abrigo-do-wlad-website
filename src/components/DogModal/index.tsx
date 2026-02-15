@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import * as Lucide from "lucide-react";
 import { type Dog, CORES_MAP } from "../../types/dogs";
 import styles from "./DogModal.module.css";
@@ -14,8 +14,7 @@ import { ExternalLink } from "../common/ExternalLink";
 import { useCopyToClipboard, useMediaQuery } from "@uidotdev/usehooks";
 import * as CardComponent from "../ui/Card";
 import { Link } from "react-router";
-
-import { AnimatePresence, motion } from "motion/react";
+import { Carousel, type CarouselAPI } from "../ui/Carousel";
 
 interface ModalProps {
   dog: Dog | null;
@@ -23,45 +22,16 @@ interface ModalProps {
   onClose: () => void;
 }
 
-const variants = {
-  enter: (direction: number) => ({
-    x: direction > 0 ? "100%" : "-100%",
-  }),
-  center: {
-    zIndex: 1,
-    x: 0,
-  },
-  exit: (direction: number) => ({
-    zIndex: 0,
-    x: direction < 0 ? "100%" : "-100%",
-  }),
-};
-
 export function DogModal({ dog, isOpen, onClose }: ModalProps) {
-  const [[page, direction], setPage] = useState([0, 0]);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   const [, copyToClipboard] = useCopyToClipboard();
   const [isCopied, setIsCopied] = useState(false);
 
-  useEffect(() => {
-    if (!isOpen) {
-      const timer = setTimeout(() => setPage([0, 0]), 150);
-      return () => clearTimeout(timer);
-    }
-  }, [isOpen]);
-
   if (!dog) return null;
 
   const photos = dog.fotos || [];
   const hasMultipleImages = photos.length > 1;
-  const currentImageIndex =
-    ((page % photos.length) + photos.length) % photos.length;
-
-  const paginate = (newDirection: number) => {
-    if (!hasMultipleImages) return;
-    setPage([page + newDirection, newDirection]);
-  };
 
   const handleClose = () => {
     onClose();
@@ -99,73 +69,68 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
 
         <div className={styles.contentGrid}>
           {/* --- CARROSSEL DE IMAGENS --- */}
-          <div className={styles.carousel}>
-            <AnimatePresence initial={false} custom={direction}>
-              <motion.img
-                key={page}
-                src={dog.fotos[currentImageIndex]}
-                alt={dog.nome}
-                className={styles.mainImage}
-                custom={direction}
-                variants={variants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{
-                  x: { type: "spring", stiffness: 300, damping: 30 },
-                }}
-              />
-            </AnimatePresence>
-            <div className={styles.carouselButtons}>
-              {!isDesktop && (
-                <div>
-                  <Button
-                    blur={true}
-                    variant="outline"
-                    onClick={handleClose}
-                    size="icon"
-                  >
-                    <Lucide.X size={22} />
-                  </Button>
-                </div>
-              )}
-              {hasMultipleImages && (
-                <div className={styles.carouselNavContainer}>
-                  <div className={styles.carouselNav}>
-                    <div className={styles.carouselNavButtons}>
+          <div className={styles.carouselContainer}>
+            <Carousel
+              render={(api: CarouselAPI) => (
+                <div className={styles.carouselButtons}>
+                  {!isDesktop && (
+                    <div>
                       <Button
+                        blur={true}
                         variant="outline"
+                        onClick={handleClose}
                         size="icon"
-                        onClick={() => paginate(-1)}
                       >
-                        <Lucide.ChevronLeft size={24} />
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        onClick={() => paginate(1)}
-                      >
-                        <Lucide.ChevronRight size={24} />
+                        <Lucide.X size={22} />
                       </Button>
                     </div>
-                  </div>
-                  <div className={styles.carouselNavDots}>
-                    {dog.fotos.map((_, index) => (
-                      <button
-                        key={index}
-                        className={`${styles.dot} ${
-                          currentImageIndex === index ? styles.dotActive : ""
-                        }`}
-                        onClick={() =>
-                          setPage([index, index > currentImageIndex ? 1 : -1])
-                        }
-                        aria-label={`Ir para imagem ${index + 1}`}
-                      />
-                    ))}
-                  </div>
+                  )}
+                  {hasMultipleImages && (
+                    <div className={styles.carouselNavContainer}>
+                      <div className={styles.carouselNav}>
+                        <div className={styles.carouselNavButtons}>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={api.goPrev}
+                          >
+                            <Lucide.ChevronLeft size={24} />
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={api.goNext}
+                          >
+                            <Lucide.ChevronRight size={24} />
+                          </Button>
+                        </div>
+                      </div>
+                      <div className={styles.carouselNavDots}>
+                        {photos.map((_, index) => (
+                          <button
+                            key={index}
+                            className={`${styles.dot} ${
+                              api.page === index ? styles.dotActive : ""
+                            }`}
+                            onClick={() => api.goTo(index)}
+                            aria-label={`Ir para imagem ${index + 1}`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
-            </div>
+            >
+              {photos.map((photo, index) => (
+                <img
+                  key={index}
+                  src={photo}
+                  alt={`${dog.nome} - foto ${index + 1}`}
+                  className={styles.carouselImage}
+                />
+              ))}
+            </Carousel>
           </div>
           {/* --- DETALHES DO DOG --- */}
           <div className={styles.details}>
