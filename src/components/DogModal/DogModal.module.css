@@ -192,9 +192,12 @@
     overflow: visible;
   }
 
-  .carousel {
+  .carouselContainer {
     height: 450px;
     min-height: auto;
+  }
+
+  .carouselImage {
     border-radius: 0;
   }
 
