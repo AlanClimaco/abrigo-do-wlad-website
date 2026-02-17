@@ -23,7 +23,7 @@
 }
 
 .faqList svg {
-  color: green;
+  color: var(--success);
 }
 
 .faqContainer {

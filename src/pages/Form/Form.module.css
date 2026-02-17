@@ -102,12 +102,12 @@ input[type="radio"] {
 }
 
 .warningBox {
-  background-color: #fff3cd;
-  color: #856404;
+  background-color: var(--warning-bg);
+  color: var(--warning-text);
   padding: 1rem;
   border-radius: 6px;
   margin-bottom: 1rem;
-  border: 1px solid #ffeeba;
+  border: 1px solid var(--warning-border);
 }
 
 .formFooter {
@@ -130,7 +130,7 @@ input[type="radio"] {
   padding: 4rem 2rem;
   max-width: 600px;
   margin: 0 auto 6rem;
-  background: white;
+  background: var(--white);
   border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
 }

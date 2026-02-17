@@ -28,7 +28,7 @@ export default function HeroSmall({
           size="lg"
           variant="outline"
           blur={true}
-          style={{ color: "var(--white)", textTransform: "uppercase" }}
+          style={{ color: "var(--always-white)", textTransform: "uppercase" }}
         >
           {badge}
         </Badge>

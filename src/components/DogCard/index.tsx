@@ -79,7 +79,7 @@ export function DogCard({ data, onClick, isLoading }: DogCardProps) {
                 blur={true}
                 leftIcon={<Lucide.Calendar size={14} />}
                 variant="outline"
-                style={{ color: "var(--white)" }}
+                style={{ color: "var(--always-white)" }}
                 className={styles.badgeContent}
               >
                 {data.idade}
@@ -90,7 +90,7 @@ export function DogCard({ data, onClick, isLoading }: DogCardProps) {
                 blur={true}
                 leftIcon={<Lucide.BriefcaseMedical size={14} />}
                 variant="outline"
-                style={{ color: "var(--white)" }}
+                style={{ color: "var(--always-white)" }}
                 className={styles.badgeContent}
               >
                 {data.status}

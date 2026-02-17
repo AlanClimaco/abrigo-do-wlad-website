@@ -1,11 +1,11 @@
 :root {
-  /* typography */
+  /* Typography */
   --font-sans: "Poppins", sans-serif;
   --text-primary: #111827;
   --text-secondary: #374151;
   --text-muted: #6b7280;
 
-  /* main colors */
+  /* Main Colors */
   --bg-body: #fceae3;
   --white: #ffffff;
   --primary: #ff6c37;
@@ -13,14 +13,14 @@
   --border: #b7b7b7;
   --skeleton: #dbdbdb;
 
-  /* accent colors (used in quote cards, accordions, etc) */
+  /* Accent Colors */
   --accent-primary: #ffddd3;
   --accent-secondary: #d5e1e9;
   --accent-green: #e1fde0;
   --accent-red: #fbe0e0;
   --accent-instagram: #ce579a;
 
-  /* button & badge colors */
+  /* Button & Badge Colors */
   --btn-primary: #ffd2c2;
   --btn-primary-hover: #e85d2a;
   --btn-secondary: #d5e1e9;
@@ -30,7 +30,7 @@
   --badge-secondary: #038bf3;
   --badge-danger: #fd6767;
 
-  /* shadow & etc */
+  /* Shadow & Radius */
   --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
@@ -40,11 +40,51 @@
   --radius-lg: 25px;
   --radius-xl: 38px;
 
+  /* Effects */
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
   --blur: blur(6px);
+  
+  /* Feedback & Status */
+  --success: #16a34a;
+  --error: #ef4444;
+  --warning-bg: #fff3cd;
+  --warning-text: #856404;
+  --warning-border: #ffeeba;
+
+  /* Overlays & Transparency */
+  --overlay-dark: rgba(0, 0, 0, 0.6);
+  --carousel-bg: rgba(0, 0, 0, 0.435);
+  --glass-white: rgba(255, 255, 255, 0.223);
+  --header-bg-scrolled: #fceae3d4;
+  
+  /* Hero Gradient */
+  --hero-gradient-start: rgba(3, 39, 67, 0.7);
+  --hero-gradient-end: rgba(0, 0, 0, 0.6);
+
+  /* UI Elements */
+  --dot-inactive: rgb(169, 169, 169);
+  --dot-hover: rgba(255, 255, 255, 0.8);
+  
+  --btn-ghost-bg: rgba(255, 255, 255, 0.109);
+  --btn-outline-bg: rgba(255, 255, 255, 0.691);
+  --btn-hover-gray: rgb(232, 232, 232);
+
+  --border-light: rgb(221, 221, 221);
+
+  /* Scrollbar */
+  --scroll-track: #f1f1f1;
+  --scroll-thumb: #c1c1c1;
+  --scroll-corner: #e0e0e0;
+
+  /* Card Gradients */
+  --card-gradient-blue: rgba(0, 78, 137, 0.181);
+  --card-gradient-blue-hover: rgba(0, 78, 137, 0.066);
+
+  /* Constant Colors */
+  --always-white: #ffffff;
 }
 
+/* --- Base Styles --- */
 * {
   margin: 0;
   padding: 0;
@@ -63,15 +103,18 @@ body {
 ul {
   list-style: none;
 }
+
 a {
   text-decoration: none;
   color: inherit;
 }
+
 img {
   max-width: 100%;
   display: block;
 }
 
+/* --- Global Classes --- */
 .text-muted {
   color: var(--text-muted);
 }
@@ -85,17 +128,6 @@ img {
   letter-spacing: -0.8px;
 }
 
-/* .section-title::after {
-  content: "";
-  display: block;
-  width: 60%;
-  height: 4px;
-  background: var(--primary);
-  margin-top: 5px;
-  border-radius: 2px;
-} */
-
-/* CLASSES UTILITÁRIAS */
 .container {
   max-width: 1200px;
   margin-left: auto;
@@ -103,12 +135,13 @@ img {
   padding: 0 2rem;
 }
 
-/* Animação Reveal */
+/* --- Animations --- */
 .reveal {
   opacity: 0;
   transform: translateY(30px);
   transition: all 0.8s ease-out;
 }
+
 .reveal.active {
   opacity: 1;
   transform: translateY(0);
@@ -122,4 +155,52 @@ html {
   .section-title::after {
     display: none;
   }
+}
+
+/* --- Dark Mode --- */
+body.dark-mode {
+  /* Main Colors */
+  --bg-body: #121212;
+  --white: #1e1e1e;
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+  --border: #374151;
+  --skeleton: #374151;
+
+  /* Accent Colors */
+  --primary: #e7b3a1;
+  --secondary: #60a5fa;
+  --accent-primary: #0f172a;
+  --accent-secondary: #172554;
+  --accent-green: #064e3b;
+  --accent-red: #450a0a;
+  --accent-instagram: #831843;
+
+  /* Buttons */
+  --btn-primary: #c2410c;
+  --btn-primary-hover: #ea580c;
+  --btn-secondary: #1f2937;
+  --btn-secondary-hover: #374151;
+
+  /* Status */
+  --success: #4ade80;
+  --error: #f87171;
+  --warning-bg: #422006;
+  --warning-text: #fde047;
+  --warning-border: #713f12;
+
+  /* Header & UI */
+  --header-bg-scrolled: rgba(18, 18, 18, 0.9);
+  --glass-white: rgba(255, 255, 255, 0.05);
+  --btn-ghost-bg: rgba(255, 255, 255, 0.05);
+  
+  /* Scrollbar */
+  --scroll-track: #121212;
+  --scroll-thumb: #4b5563;
+  --scroll-corner: #1f2937;
+
+  /* Shadow Effects */
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.6);
 }

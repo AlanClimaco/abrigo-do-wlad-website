@@ -3,6 +3,8 @@ import * as Lucide from "lucide-react";
 import styles from "./Footer.module.css";
 
 import logo from "../../assets/logo.png";
+import logoDark from "../../assets/logo-dark-mode.png"
+
 import { ExternalLink } from "../common/ExternalLink";
 
 export function Footer() {
@@ -12,7 +14,19 @@ export function Footer() {
         {/* Info */}
         <div className={styles.footerInfo}>
           <div className={styles.footerBrand}>
-            <img src={logo} alt="logotipo do Abrigo do Wlad" />
+            
+            {/* logos */}
+            <img 
+              src={logo} 
+              alt="logotipo do Abrigo do Wlad" 
+              className={styles.logoLight}
+            />
+            <img 
+              src={logoDark} 
+              alt="logotipo do Abrigo do Wlad" 
+              className={styles.logoDark}
+            />
+
             <span>ABRIGO DO WLAD</span>
           </div>
           <p>
