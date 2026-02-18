@@ -63,14 +63,14 @@
 }
 
 .TooltipContent[data-side="left"]::after {
-  right: -6px;
+  right: -5px;
   top: 50%;
   transform: translateY(-50%) rotate(45deg);
   border-radius: 0 5px 0 0;
 }
 
 .TooltipContent[data-side="right"]::after {
-  left: -6px;
+  left: -5px;
   top: 50%;
   transform: translateY(-50%) rotate(45deg);
   border-radius: 0 0 0 5px;

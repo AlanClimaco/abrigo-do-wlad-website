@@ -28,7 +28,7 @@
   
   --btn-ghost-bg: rgba(255, 255, 255, 0.15);
   --btn-outline-bg: rgba(255, 255, 255, 0.7);
-  --btn-hover-gray: #e8e8e8;
+  --btn-hover-gray: #f1e5e1;
 
   /* Badge Colors */
   --badge-primary: #ff6c37;
@@ -59,11 +59,11 @@
   /* Overlays & Transparency */
   --overlay-dark: rgba(0, 0, 0, 0.6);
   --carousel-bg: rgba(0, 0, 0, 0.4);
-  --glass: rgba(255, 255, 255, 0.25);
+  --glass: rgba(176, 176, 176, 0.16);
   --header-bg-scrolled: rgba(252, 234, 227, 0.95);
 
   /* Hero Gradient */
-  --hero-gradient-start: rgba(26, 60, 86, 0.75);
+  --hero-gradient-start: rgba(25, 77, 116, 0.707);
   --hero-gradient-end: rgba(0, 0, 0, 0.6);
 
   /* UI Elements */

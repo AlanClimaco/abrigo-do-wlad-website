@@ -26,8 +26,8 @@ export default function HeroSmall({
       <div className={`${styles.heroSmallContent}`}>
         <Badge
           size="lg"
-          variant="outline"
           blur={true}
+          variant="outline"
           style={{ color: "var(--always-white)", textTransform: "uppercase" }}
         >
           {badge}

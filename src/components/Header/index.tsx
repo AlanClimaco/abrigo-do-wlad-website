@@ -50,11 +50,11 @@ export function Header() {
     // Apenas coloca o texto se nenhum texto alternativo estiver visível ainda
     const parent = e.currentTarget.parentElement;
     if (parent && !parent.innerText.includes("ABRIGO")) {
-        const span = document.createElement("span");
-        span.innerText = "ABRIGO DO WLAD";
-        span.style.fontWeight = "800";
-        span.style.color = "var(--secondary)";
-        parent.appendChild(span);
+      const span = document.createElement("span");
+      span.innerText = "ABRIGO DO WLAD";
+      span.style.fontWeight = "800";
+      span.style.color = "var(--secondary)";
+      parent.appendChild(span);
     }
   };
 
@@ -62,12 +62,11 @@ export function Header() {
     <header className={headerClasses}>
       <div className={styles.logo}>
         <NavLink to="/" onClick={closeMenu}>
-          
           {/* OGO MODO CLARO */}
           <img
             src={logo}
             alt="Abrigo do Wlad"
-            className={styles.logoLight} 
+            className={styles.logoLight}
             onError={handleImageError}
           />
 
@@ -78,7 +77,6 @@ export function Header() {
             className={styles.logoDark}
             onError={handleImageError}
           />
-
         </NavLink>
       </div>
 
@@ -115,11 +113,7 @@ export function Header() {
         {/* Botão de Doação */}
         <Dialog.Dialog>
           <Dialog.DialogTrigger asChild>
-            <Button
-              className={styles.mainBtn}
-              size="md"
-              variant="secondary"
-            >
+            <Button className={styles.mainBtn} size="md" variant="secondary">
               <Lucide.HeartHandshake size={20} />
               <span>Quero Ajudar</span>
             </Button>

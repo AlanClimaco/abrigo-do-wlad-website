@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
-import { Button } from "../ui/Button";
+import styles from "./ThemeToggle.module.css";
+import {
+  TooltipProvider,
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from "../ui/Tooltip";
+import { motion } from "motion/react";
 
 export function ThemeToggle() {
   const [isDark, setIsDark] = useState(false);
@@ -8,7 +15,9 @@ export function ThemeToggle() {
   useEffect(() => {
     // Verifica preferência salva no storage ou padrão do sistema ao iniciar
     const savedTheme = localStorage.getItem("theme");
-    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const systemPrefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)",
+    ).matches;
 
     if (savedTheme === "dark" || (!savedTheme && systemPrefersDark)) {
       setIsDark(true);
@@ -31,18 +40,44 @@ export function ThemeToggle() {
   };
 
   return (
-    <Button
-      variant="ghost"
-      size="icon"
-      onClick={toggleTheme}
-      title={isDark ? "Mudar para modo claro" : "Mudar para modo escuro"}
-      aria-label="Alternar tema"
-    >
-      {isDark ? (
-        <Sun size={24} color="var(--text-primary)" />
-      ) : (
-        <Moon size={24} color="var(--text-primary)" />
-      )}
-    </Button>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div className={styles.switchContainer}>
+            <button
+              className={`${styles.switch} ${isDark ? styles.dark : ""}`}
+              onClick={toggleTheme}
+              role="switch"
+              aria-checked={isDark}
+              aria-label={
+                isDark ? "Mudar para modo claro" : "Mudar para modo escuro"
+              }
+            >
+              <motion.div
+                className={styles.thumb}
+                layout
+                transition={{
+                  type: "spring",
+                  stiffness: 700,
+                  damping: 30,
+                }}
+              >
+                {isDark ? (
+                  <Moon className={styles.icon} />
+                ) : (
+                  <Sun className={styles.icon} />
+                )}
+              </motion.div>
+            </button>
+          </div>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>
+            Alterar para{" "}
+            <strong>{isDark ? "modo claro" : "modo escuro"}</strong>
+          </p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }
