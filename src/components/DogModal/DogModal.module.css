@@ -56,7 +56,7 @@
   padding: 0.5rem 0.5rem;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  background-color: var(--glass-white);
+  background-color: var(--glass);
   -webkit-backdrop-filter: var(--blur);
   backdrop-filter: var(--blur);
   pointer-events: none;
