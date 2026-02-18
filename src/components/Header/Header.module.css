@@ -78,37 +78,26 @@
 }
 
 .navLink {
+  border-radius: var(--radius);
   font-weight: 500;
   color: var(--text-primary);
   position: relative;
   font-size: 1rem;
   cursor: pointer;
   text-decoration: none;
-  transition: color 0.3s;
+  transition: all 0.3s;
 }
 
 .navLink:hover {
+  padding: 3px 10px;
   color: var(--primary);
-}
-
-.navLink::after {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: -4px;
-  left: 0;
-  background: var(--primary);
-  transition: width 0.3s ease-in-out;
+  background-color: var(--btn-hover-gray);
 }
 
 .activeLink {
+  padding: 3px 10px;
   color: var(--primary);
-}
-
-.navLink:hover::after,
-.activeLink::after {
-  width: 100%;
+  background-color: var(--accent-primary);
 }
 
 .mainBtn {
@@ -168,6 +157,8 @@
   .headerScrolled {
     height: 80px;
     border-radius: 0;
+    border: none;
+    border-bottom: 1px solid var(--border);
   }
 
   .navMenu {

@@ -3,7 +3,7 @@ import * as Lucide from "lucide-react";
 import styles from "./Footer.module.css";
 
 import logo from "../../assets/logo.png";
-import logoDark from "../../assets/logo-dark-mode.png"
+import logoDark from "../../assets/logo-dark-mode.png";
 
 import { ExternalLink } from "../common/ExternalLink";
 
@@ -14,16 +14,15 @@ export function Footer() {
         {/* Info */}
         <div className={styles.footerInfo}>
           <div className={styles.footerBrand}>
-            
             {/* logos */}
-            <img 
-              src={logo} 
-              alt="logotipo do Abrigo do Wlad" 
+            <img
+              src={logo}
+              alt="logotipo do Abrigo do Wlad"
               className={styles.logoLight}
             />
-            <img 
-              src={logoDark} 
-              alt="logotipo do Abrigo do Wlad" 
+            <img
+              src={logoDark}
+              alt="logotipo do Abrigo do Wlad"
               className={styles.logoDark}
             />
 
@@ -43,19 +42,19 @@ export function Footer() {
         <div className={styles.footerLinks}>
           <h4 className={styles.columnTitle}>Navegação</h4>
           <NavLink to="/" className={styles.linkItem}>
-            <Lucide.ChevronRight /> Início
+            Início
           </NavLink>
           <NavLink to="/adotar" className={styles.linkItem}>
-            <Lucide.ChevronRight /> Nossos Cães
+            Nossos Cães
           </NavLink>
           <NavLink to="/sobre" className={styles.linkItem}>
-            <Lucide.ChevronRight /> Sobre Nós
+            Sobre Nós
           </NavLink>
           <NavLink to="/tampinhas" className={styles.linkItem}>
-            <Lucide.ChevronRight /> Projeto Tampinhas
+            Projeto Tampinhas
           </NavLink>
           <NavLink to="/formulario" className={styles.linkItem}>
-            <Lucide.ChevronRight /> Formulário de Interesse
+            Formulário de Interesse
           </NavLink>
         </div>
 
@@ -89,10 +88,13 @@ export function Footer() {
 
       <div className={`container ${styles.footerBottom}`}>
         <div className={styles.footerBottomGroup}>
-          <p style={{ opacity: 0.8 }}>
-            &copy; {new Date().getFullYear()} Abrigo do Wlad. Todos os Direitos
-            Reservados
-          </p>
+          <div style={{ display: "flex", gap: "0.5rem" }}>
+            <p style={{ opacity: 0.8 }}>
+              &copy; {new Date().getFullYear()} Abrigo do Wlad
+            </p>
+            <span style={{ opacity: 0.5 }}>•</span>
+            <p>Todos os Direitos Reservados</p>
+          </div>
         </div>
         <div className={styles.footerBottomGroup}>
           <Link to="/">Política de Privacidade</Link>
