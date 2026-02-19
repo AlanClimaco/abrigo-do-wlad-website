@@ -13,8 +13,9 @@ import PixModal from "@/components/PixModal";
 import styles from "./Header.module.css";
 
 export function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const [logoError, setLogoError] = useState<boolean>(false);
   const location = useLocation();
 
   // scroll detect
@@ -45,39 +46,33 @@ export function Header() {
     isScrolled && !menuOpen ? styles.headerScrolled : ""
   }`;
 
-  // Função auxiliar de erro para não repetir código
-  const handleImageError = (e: any) => {
-    e.currentTarget.style.display = "none";
-    // Apenas coloca o texto se nenhum texto alternativo estiver visível ainda
-    const parent = e.currentTarget.parentElement;
-    if (parent && !parent.innerText.includes("ABRIGO")) {
-      const span = document.createElement("span");
-      span.innerText = "ABRIGO DO WLAD";
-      span.style.fontWeight = "800";
-      span.style.color = "var(--secondary)";
-      parent.appendChild(span);
-    }
-  };
-
   return (
     <header className={headerClasses}>
       <div className={styles.logo}>
         <NavLink to="/" onClick={closeMenu}>
-          {/* OGO MODO CLARO */}
-          <img
-            src={logo}
-            alt="Abrigo do Wlad"
-            className={styles.logoLight}
-            onError={handleImageError}
-          />
+          {logoError ? (
+            <span style={{ fontWeight: 800, color: "var(--primary)" }}>
+              ABRIGO DO WLAD
+            </span>
+          ) : (
+            <>
+              {/* LOGO MODO CLARO */}
+              <img
+                src={logo}
+                alt="Abrigo do Wlad"
+                className={styles.logoLight}
+                onError={() => setLogoError(true)}
+              />
 
-          {/* LOGO MODO ESCURO */}
-          <img
-            src={logoDark}
-            alt="Abrigo do Wlad"
-            className={styles.logoDark}
-            onError={handleImageError}
-          />
+              {/* LOGO MODO ESCURO */}
+              <img
+                src={logoDark}
+                alt="Abrigo do Wlad"
+                className={styles.logoDark}
+                onError={() => setLogoError(true)}
+              />
+            </>
+          )}
         </NavLink>
       </div>
 

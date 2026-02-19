@@ -9,9 +9,10 @@ Projeto construído com foco em performance e componentização, facilitando a e
 - **React** e **TypeScript**
 - **Vite** (Build tool)
 - **CSS Modules** (Estilização escopada)
-- **React Router DOM** (Roteamento)
+- **React Router** (Roteamento)
 - **Lucide React** (Ícones)
 - **Radix UI** (Componentes acessíveis)
+- **Motion** (Animações)
 
 ## Estrutura e Componentes
 
