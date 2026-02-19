@@ -6,8 +6,12 @@ import logo from "../../assets/logo.png";
 import logoDark from "../../assets/logo-dark-mode.png";
 
 import { ExternalLink } from "../common/ExternalLink";
+import { Badge } from "../ui/Badge";
+import { useIsDesktop } from "../../hooks/useIsDesktop";
 
 export function Footer() {
+  const isDesktop = useIsDesktop();
+
   return (
     <footer id="footer" className={styles.footer}>
       <div className={`container ${styles.footerGrid}`}>
@@ -33,8 +37,9 @@ export function Footer() {
             organização sem fins lucrativos dedicada ao amor e respeito animal.
           </p>
           <div className={styles.footerPlace}>
-            <Lucide.MapPin size={16} />
-            <span>Atuamos em Morumbi, SP</span>
+            <Badge variant="success" leftIcon={<Lucide.MapPin />}>
+              Atuamos em Morumbi, SP
+            </Badge>
           </div>
         </div>
 
@@ -88,11 +93,11 @@ export function Footer() {
 
       <div className={`container ${styles.footerBottom}`}>
         <div className={styles.footerBottomGroup}>
-          <div style={{ display: "flex", gap: "0.5rem" }}>
+          <div className={styles.footerBottomCopyright}>
             <p style={{ opacity: 0.8 }}>
               &copy; {new Date().getFullYear()} Abrigo do Wlad
             </p>
-            <span style={{ opacity: 0.5 }}>•</span>
+            {isDesktop && <span style={{ opacity: 0.5 }}>•</span>}
             <p>Todos os Direitos Reservados</p>
           </div>
         </div>

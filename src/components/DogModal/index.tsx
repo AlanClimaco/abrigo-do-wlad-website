@@ -11,10 +11,11 @@ import {
 } from "../ui/Dialog";
 import { Badge } from "../ui/Badge";
 import { ExternalLink } from "../common/ExternalLink";
-import { useCopyToClipboard, useMediaQuery } from "@uidotdev/usehooks";
+import { useCopyToClipboard } from "@uidotdev/usehooks";
 import * as CardComponent from "../ui/Card";
 import { Link } from "react-router";
 import { Carousel, type CarouselAPI } from "../ui/Carousel";
+import { useIsDesktop } from "../../hooks/useIsDesktop";
 
 interface ModalProps {
   dog: Dog | null;
@@ -23,7 +24,7 @@ interface ModalProps {
 }
 
 export function DogModal({ dog, isOpen, onClose }: ModalProps) {
-  const isDesktop = useMediaQuery("(min-width: 768px)");
+  const isDesktop = useIsDesktop();
 
   const [, copyToClipboard] = useCopyToClipboard();
   const [isCopied, setIsCopied] = useState(false);

@@ -14,6 +14,16 @@
   height: 15px;
 }
 
+.badge.sm svg {
+  width: 12px;
+  height: 12px;
+}
+
+.badge.lg svg {
+  width: 20px;
+  height: 20px;
+}
+
 .content {
   line-height: 1;
 }
@@ -42,6 +52,11 @@
 
 .danger {
   background-color: var(--badge-danger);
+  color: var(--white);
+}
+
+.success {
+  background-color: var(--badge-success);
   color: var(--white);
 }
 

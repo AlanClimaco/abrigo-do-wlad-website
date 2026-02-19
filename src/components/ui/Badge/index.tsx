@@ -4,7 +4,7 @@ import { cn } from "../../../lib/utils";
 
 type BadgeProps = {
   children: ReactNode;
-  variant?: "primary" | "secondary" | "outline" | "danger";
+  variant?: "primary" | "secondary" | "outline" | "danger" | "success";
   size?: "sm" | "md" | "lg";
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;

@@ -34,6 +34,7 @@
   --badge-primary: #ff6c37;
   --badge-secondary: #0060aa;
   --badge-danger: #ef4444;
+  --badge-success: #5c9e3f;
 
   /* Shadow & Radius */
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.08);
@@ -115,6 +116,7 @@ body.dark-mode {
   --badge-primary: #ff8c5f;
   --badge-secondary: #3d9ce8;
   --badge-danger: #ff7b7b;
+  --badge-success: #7cb85d;
 
   /* Status */
   --success: #4ade80;

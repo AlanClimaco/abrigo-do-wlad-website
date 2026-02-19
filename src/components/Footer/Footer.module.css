@@ -148,6 +148,11 @@
   gap: 25px;
 }
 
+.footerBottomCopyright {
+  display: flex;
+  gap: 0.5rem;
+}
+
 .credits {
   display: inline-flex;
   align-items: center;
@@ -219,7 +224,13 @@
     justify-content: center;
   }
 
+  .footerBottomCopyright {
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+
   .credits {
+    margin-top: 1rem;
     justify-content: center;
   }
 
