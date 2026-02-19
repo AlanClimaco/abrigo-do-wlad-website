@@ -3,9 +3,9 @@ import * as Lucide from "lucide-react";
 import styles from "./ActionCards.module.css";
 import { Link } from "react-router";
 
-import * as Card from "../ui/Card";
-import * as Dialog from "../ui/Dialog";
-import PixModal from "../PixModal";
+import * as Card from "@/components/ui/Card";
+import * as Dialog from "@/components/ui/Dialog";
+import PixModal from "@/components/PixModal";
 
 
 export function ActionCards() {

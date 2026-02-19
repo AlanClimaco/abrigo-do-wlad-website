@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router";
-import styles from "./Header.module.css";
-
-import logo from "../../assets/logo.png";
-import logoDark from "../../assets/logo-dark-mode.png";
-
-import { Button } from "../ui/Button";
 import * as Lucide from "lucide-react";
-import * as Dialog from "../ui/Dialog";
-import PixModal from "../PixModal";
+
+import logo from "@/assets/images/logo.png";
+import logoDark from "@/assets/images/logo-dark-mode.png";
+
+import { Button } from "@/components/ui/Button";
+import * as Dialog from "@/components/ui/Dialog";
 import { ThemeToggle } from "../ThemeToggle";
+
+import PixModal from "@/components/PixModal";
+import styles from "./Header.module.css";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);

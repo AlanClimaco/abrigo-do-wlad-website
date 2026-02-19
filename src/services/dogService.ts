@@ -10,10 +10,10 @@ import {
   where,
 } from "firebase/firestore";
 
-import { db } from "./firebase";
+import { db } from "./_lib/firebase";
 
-import type { Dog, DogFilters } from "../types/dogs";
-import { shuffleArray } from "../utils/common";
+import type { Dog, DogFilters } from "@/types/dogs";
+import { shuffleArray } from "@/utils/common";
 
 const DOGS_COLLECTION = "dogs";
 

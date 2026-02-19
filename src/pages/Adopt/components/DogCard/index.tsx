@@ -7,10 +7,10 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../ui/Card";
-import { Badge } from "../ui/Badge";
-import { getOptimizedImageUrl } from "../../utils/cdn";
-import { type Dog } from "../../types/dogs";
+} from "@/components/ui/Card";
+import { Badge } from "@/components/ui/Badge";
+import { getOptimizedImageUrl } from "@/utils/cdn";
+import { type Dog } from "@/types/dogs";
 import styles from "./DogCard.module.css";
 
 interface DogCardProps {

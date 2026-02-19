@@ -1,8 +1,9 @@
-import * as CardComponent from "../../components/ui/Card";
-import HeroSmall from "../../components/HeroSmall";
-import { Button } from "../../components/ui/Button";
-import { ScrollArea } from "../../components/ui/ScrollArea";
-import { getThirdPartyImage } from "../../utils/common";
+import * as CardComponent from "@/components/ui/Card";
+import HeroSmall from "@/components/HeroSmall";
+import { Button } from "@/components/ui/Button";
+import { ScrollArea } from "@/components/ui/ScrollArea";
+
+import { getThirdPartyImage } from "@/utils/common";
 
 import * as Lucide from "lucide-react";
 import styles from "./Recycle.module.css";

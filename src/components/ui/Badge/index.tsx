@@ -1,6 +1,6 @@
 import type { ComponentProps, ReactNode } from "react";
 import styles from "./Badge.module.css";
-import { cn } from "../../../lib/utils";
+import { cn } from "@/lib/utils";
 
 type BadgeProps = {
   children: ReactNode;

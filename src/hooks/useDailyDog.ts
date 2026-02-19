@@ -1,5 +1,5 @@
 import * as React from "react";
-import { type Dog } from "../types/dogs";
+import { type Dog } from "@/types/dogs";
 
 export function useDailyDog() {
   const [dog, setDog] = React.useState<Dog | null>(null);

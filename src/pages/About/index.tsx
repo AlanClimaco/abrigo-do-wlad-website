@@ -8,13 +8,13 @@ import { Skeleton } from "../../components/ui/Skeleton";
 import { getOptimizedImageUrl } from "../../utils/cdn";
 import { useDailyDog } from "../../hooks/useDailyDog";
 
-import styles from "./History.module.css";
+import styles from "./About.module.css";
 import * as TooltipComponent from "../../components/ui/Tooltip";
 import { Badge } from "../../components/ui/Badge";
 
 import { useMediaQuery } from "@uidotdev/usehooks";
 
-export default function History() {
+export default function About() {
   const dog = useDailyDog();
 
   const image = dog?.fotos?.[0] ?? null;

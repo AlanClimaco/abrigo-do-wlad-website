@@ -1,21 +1,21 @@
 import { useState } from "react";
 import * as Lucide from "lucide-react";
-import { type Dog, CORES_MAP } from "../../types/dogs";
+import { Link } from "react-router";
+import { type Dog, CORES_MAP } from "@/types/dogs";
 import styles from "./DogModal.module.css";
-import { Button } from "../ui/Button";
+import { Button } from "@/components/ui/Button";
 import {
   Dialog,
   DialogContent,
   DialogTitle,
   DialogDescription,
-} from "../ui/Dialog";
-import { Badge } from "../ui/Badge";
-import { ExternalLink } from "../common/ExternalLink";
+} from "@/components/ui/Dialog";
+import { Badge } from "@/components/ui/Badge";
+import { ExternalLink } from "@/components/common/ExternalLink";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
-import * as CardComponent from "../ui/Card";
-import { Link } from "react-router";
-import { Carousel, type CarouselAPI } from "../ui/Carousel";
-import { useIsDesktop } from "../../hooks/useIsDesktop";
+import * as CardComponent from "@/components/ui/Card";
+import { Carousel, type CarouselAPI } from "@/components/ui/Carousel";
+import { useIsDesktop } from "@/hooks/useIsDesktop";
 
 interface ModalProps {
   dog: Dog | null;

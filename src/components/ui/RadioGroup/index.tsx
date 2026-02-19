@@ -2,7 +2,7 @@ import * as React from "react";
 import * as RadioPrimitives from "@radix-ui/react-radio-group";
 import * as Lucide from "lucide-react";
 
-import { cn } from "../../../lib/utils";
+import { cn } from "@/lib/utils";
 import styles from "./RadioGroup.module.css";
 
 const RadioGroup = React.forwardRef<

@@ -1,6 +1,6 @@
 import * as React from "react";
-import { getDogsByIds, getShuffledDogIds } from "../services/dogService";
-import type { Dog, DogFilters } from "../types/dogs";
+import { getDogsByIds, getShuffledDogIds } from "@/services/dogService";
+import type { Dog, DogFilters } from "@/types/dogs";
 
 const ITEMS_PER_PAGE: number = 6;
 

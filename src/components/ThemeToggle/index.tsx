@@ -6,7 +6,7 @@ import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
-} from "../ui/Tooltip";
+} from "@/components/ui/Tooltip";
 import { motion } from "motion/react";
 
 export function ThemeToggle() {
