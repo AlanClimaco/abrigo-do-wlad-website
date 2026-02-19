@@ -55,7 +55,7 @@ export function ThemeToggle() {
             >
               <motion.div
                 className={styles.thumb}
-                layout
+                animate={{ x: isDark ? 20 : 0 }}
                 transition={{
                   type: "spring",
                   stiffness: 700,

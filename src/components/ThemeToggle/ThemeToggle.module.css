@@ -15,16 +15,11 @@
   border: 2px solid var(--border);
   display: flex;
   align-items: center;
-  justify-content: flex-start;
 }
 
 .switch:hover {
   opacity: 0.9;
   background-color: var(--btn-outline-bg);
-}
-
-.switch.dark {
-  justify-content: flex-end;
 }
 
 .thumb {
@@ -33,13 +28,14 @@
   color: var(--white);
   background-color: var(--secondary);
   border-radius: var(--radius-xl);
-  border: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
+  transform: translateX(0);
 }
 
 .switch.dark .thumb {
+  transform: translateX(20px);
   background-color: var(--primary);
 }
 
