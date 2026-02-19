@@ -1,4 +1,4 @@
-import { Badge } from "../ui/Badge";
+import { Badge } from "@/components/ui/Badge";
 import styles from "./HeroSmall.module.css";
 
 type HeroSmallProps = {

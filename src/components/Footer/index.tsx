@@ -2,12 +2,12 @@ import { Link, NavLink } from "react-router";
 import * as Lucide from "lucide-react";
 import styles from "./Footer.module.css";
 
-import logo from "../../assets/logo.png";
-import logoDark from "../../assets/logo-dark-mode.png";
+import logo from "@/assets/images/logo.png";
+import logoDark from "@/assets/images/logo-dark-mode.png";
 
-import { ExternalLink } from "../common/ExternalLink";
-import { Badge } from "../ui/Badge";
-import { useIsDesktop } from "../../hooks/useIsDesktop";
+import { ExternalLink } from "@/components/common/ExternalLink";
+import { Badge } from "@/components/ui/Badge";
+import { useIsDesktop } from "@/hooks/useIsDesktop";
 
 export function Footer() {
   const isDesktop = useIsDesktop();

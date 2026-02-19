@@ -1,18 +1,19 @@
+import * as React from "react";
+import * as Lucide from "lucide-react";
+
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "../ui/Accordion";
+} from "@/components/ui/Accordion";
 
-import * as Lucide from "lucide-react";
 import styles from "./FaqSection.module.css";
-import { ExternalLink } from "../common/ExternalLink";
-import { Button } from "../ui/Button";
-import { Badge } from "../ui/Badge";
+import { Button } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/Badge";
+import * as CardComponent from "@/components/ui/Card";
 
-import * as CardComponent from "../ui/Card";
-import * as React from "react";
+import { ExternalLink } from "@/components/common/ExternalLink";
 
 export function FaqSection() {
   const [isVisible, setIsVisible] = React.useState(false);

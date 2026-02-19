@@ -6,24 +6,27 @@ import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
-} from "../ui/Tooltip";
+} from "@/components/ui/Tooltip";
 import { motion } from "motion/react";
 
+function getInitialTheme(): boolean {
+  const savedTheme = localStorage.getItem("theme");
+  const systemPrefersDark = window.matchMedia(
+    "(prefers-color-scheme: dark)",
+  ).matches;
+  return savedTheme === "dark" || (!savedTheme && systemPrefersDark);
+}
+
 export function ThemeToggle() {
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState<boolean>(getInitialTheme);
 
   useEffect(() => {
-    // Verifica preferência salva no storage ou padrão do sistema ao iniciar
-    const savedTheme = localStorage.getItem("theme");
-    const systemPrefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)",
-    ).matches;
-
-    if (savedTheme === "dark" || (!savedTheme && systemPrefersDark)) {
-      setIsDark(true);
+    if (isDark) {
       document.body.classList.add("dark-mode");
+    } else {
+      document.body.classList.remove("dark-mode");
     }
-  }, []);
+  }, [isDark]);
 
   const toggleTheme = () => {
     const newTheme = !isDark;

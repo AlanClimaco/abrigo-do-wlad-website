@@ -1,12 +1,12 @@
 import { Link } from "react-router";
-
-import { Button } from "../ui/Button";
 import * as Lucide from "lucide-react";
-import { Badge } from "../ui/Badge";
-import { Skeleton } from "../ui/Skeleton";
 
-import type { Dog } from "../../types/dogs";
-import { getOptimizedImageUrl, getThumbnaillUrl } from "../../utils/cdn";
+import { Button } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/Badge";
+import { Skeleton } from "@/components/ui/Skeleton";
+
+import type { Dog } from "@/types/dogs";
+import { getOptimizedImageUrl, getThumbnaillUrl } from "@/utils/cdn";
 
 import styles from "./Hero.module.css";
 

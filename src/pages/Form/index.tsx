@@ -1,17 +1,11 @@
-/**
- * TODO:
- * preencher automaticamente o nome do cachorro se houver parâmetro
- * refatorar inputs, textArea, select, etc
- * revisar perguntas
- */
-
 import { useEffect, useState } from "react";
 import { useForm, ValidationError } from "@formspree/react";
 import { useSearchParams, Link } from "react-router";
 import { ArrowLeft, CheckCircle, Send, AlertTriangle } from "lucide-react";
+
 import ReCAPTCHA from "react-google-recaptcha";
-import HeroSmall from "../../components/HeroSmall";
-import { Button } from "../../components/ui/Button";
+import HeroSmall from "@/components/HeroSmall";
+import { Button } from "@/components/ui/Button";
 import styles from "./Form.module.css";
 import {
   Card,
@@ -20,11 +14,11 @@ import {
   CardHeader,
   CardIcon,
   CardTitle,
-} from "../../components/ui/Card";
-import * as SelectComponent from "../../components/ui/Select";
-import * as RadioComponent from "../../components/ui/RadioGroup";
-import { Label } from "../../components/ui/Label";
-import { getThirdPartyImage } from "../../utils/common";
+} from "@/components/ui/Card";
+import * as SelectComponent from "@/components/ui/Select";
+import * as RadioComponent from "@/components/ui/RadioGroup";
+import { Label } from "@/components/ui/Label";
+import { getThirdPartyImage } from "@/utils/common";
 
 export default function Form() {
   const [state, handleSubmit] = useForm(import.meta.env.VITE_FORMSPREE_ID);

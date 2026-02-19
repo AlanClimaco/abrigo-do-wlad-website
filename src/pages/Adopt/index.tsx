@@ -1,25 +1,28 @@
 import * as React from "react";
 import * as Lucide from "lucide-react";
-import * as SelectComponent from "../../components/ui/Select";
-import { DogCard } from "../../components/DogCard";
-import HeroSmall from "../../components/HeroSmall";
-import { DogModal } from "../../components/DogModal";
-import styles from "./Adopt.module.css";
+
+import { DogModal } from "./components/DogModal";
+import { DogCard } from "./components/DogCard";
 
 import {
   CORES_MAP,
   TAGS_MAP,
   type Dog,
   type DogFilters,
-} from "../../types/dogs";
+} from "@/types/dogs";
+import { useDogSearch } from "@/hooks/useDogSearch";
+import { getOptimizedImageUrl } from "@/utils/cdn";
+import { getThirdPartyImage, preloadDogImages } from "@/utils/common";
 
-import { Badge } from "../../components/ui/Badge";
-import { Skeleton } from "../../components/ui/Skeleton";
-import { Button } from "../../components/ui/Button";
-import * as TooltipComponent from "../../components/ui/Tooltip";
-import { useDogSearch } from "../../hooks/useDogSearch";
-import { getOptimizedImageUrl } from "../../utils/cdn";
-import { getThirdPartyImage, preloadDogImages } from "../../utils/common";
+import HeroSmall from "@/components/HeroSmall";
+import { Badge } from "@/components/ui/Badge";
+import { Skeleton } from "@/components/ui/Skeleton";
+import { Button } from "@/components/ui/Button";
+
+import * as TooltipComponent from "@/components/ui/Tooltip";
+import * as SelectComponent from "@/components/ui/Select";
+
+import styles from "./Adopt.module.css";
 
 interface DogFiltersProps {
   filters: DogFilters;

@@ -1,8 +1,9 @@
-import { Hero } from "../../components/Hero";
-import { ActionCards } from "../../components/ActionCards";
-import { HistorySection } from "../../components/HistorySection";
-import { FaqSection } from "../../components/FaqSection";
-import { useDailyDog } from "../../hooks/useDailyDog";
+import { Hero } from "@/components/Hero";
+import { useDailyDog } from "@/hooks/useDailyDog";
+
+import { ActionCards } from "./components/ActionCards";
+import { HistorySection } from "./components/HistorySection";
+import { FaqSection } from "./components/FaqSection";
 
 import styles from "./Home.module.css";
 

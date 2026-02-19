@@ -1,6 +1,6 @@
 import type { ComponentProps, ReactNode } from "react";
 import style from "./Button.module.css";
-import { cn } from "../../../lib/utils";
+import { cn } from "@/lib/utils";
 
 type ButtonProps = {
   children: ReactNode;

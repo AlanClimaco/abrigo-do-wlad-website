@@ -1,12 +1,12 @@
 import * as React from "react";
-import * as Dialog from "../ui/Dialog";
 import * as Lucide from "lucide-react";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
 
-import styles from "./PixModal.module.css";
-import { Button } from "../ui/Button";
+import * as Dialog from "@/components//ui/Dialog";
+import { Button } from "@/components/ui/Button";
 
-import qrCodePix from "../../assets/qr-code-example.png";
+import qrCodePix from "@/assets/images/qr-code-example.png";
+import styles from "./PixModal.module.css";
 
 export default function PixModal() {
   const [, copyToClipboard] = useCopyToClipboard();

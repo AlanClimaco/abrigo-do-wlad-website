@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
-import { ArrowRight } from "lucide-react";
-import styles from "./HistorySection.module.css";
-import { Button } from "../ui/Button";
-import { Badge } from "../ui/Badge";
 import * as Lucide from "lucide-react";
 
-import dogImage from "../../assets/simba.jpg";
+import { Button } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/Badge";
+
+import styles from "./HistorySection.module.css";
+import dogImage from "@/assets/images/simba.jpg";
 
 export function HistorySection() {
   const [isVisible, setIsVisible] = useState(false);
@@ -87,7 +87,7 @@ export function HistorySection() {
           <div className={styles.buttonWrapper}>
             <Link to="/sobre">
               <Button variant="text">
-                Ler história completa <ArrowRight size={20} />
+                Ler história completa <Lucide.ArrowRight size={20} />
               </Button>
             </Link>
           </div>
