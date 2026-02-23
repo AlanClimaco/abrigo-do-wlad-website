@@ -82,7 +82,7 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
                         onClick={handleClose}
                         size="icon"
                       >
-                        <Lucide.X size={22} />
+                        <Lucide.X size={20} />
                       </Button>
                     </div>
                   )}

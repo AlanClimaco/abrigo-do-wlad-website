@@ -7,7 +7,7 @@ input {
 
 .overlay {
   z-index: 9998;
-  background-color: rgba(0, 0, 0, 0.525);
+  background-color: var(--overlay-dark);
   position: fixed;
   inset: 0;
 }
@@ -24,6 +24,7 @@ input {
   z-index: 9999;
   background-color: var(--white);
   border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
   box-shadow: var(--shadow-lg);
   position: fixed;
   top: 50%;
@@ -31,7 +32,7 @@ input {
   transform: translate(-50%, -50%);
   max-width: 90vw;
   max-height: 85vh;
-  padding: 40px;
+  padding: 25px;
   display: flex;
   flex-direction: column;
 }
@@ -57,7 +58,7 @@ input {
 
 .headerContent {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-grow: 1;
 }
 

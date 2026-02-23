@@ -24,7 +24,13 @@ export interface Dog {
   sexo: string;
   temperamento: string;
   tags: string[];
-  status: string;
+  status:
+    | "Vacinado e Castrado"
+    | "Apenas Vacinado"
+    | "Apenas Castrado"
+    | "Em Tratamento"
+    | "Disponível para Adoção"
+    | "Adotado";
   fotos: string[];
   cor: string;
   instaLink?: string;

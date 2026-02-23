@@ -55,13 +55,12 @@
   max-width: 350px;
 }
 
-.footerPlace {
+.footerBadges {
   display: flex;
+  flex-direction: column;
   gap: 10px;
-  font-size: 0.85rem;
-  align-items: center;
+  align-items: start;
   margin-top: 25px;
-  color: var(--text-muted);
 }
 
 /* titles */

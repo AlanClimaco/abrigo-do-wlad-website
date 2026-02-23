@@ -37,6 +37,28 @@ export default function PixModal() {
         <div className={styles.qrCodeWrapper}>
           <img src={qrCodePix} alt="Código QR para doação via PIX" />
         </div>
+
+        {/* beneficiary data */}
+        <div>
+          <ul className={styles.beneficiaryData}>
+            <li>
+              <strong>Beneficiário:</strong> WLADMIR MARTINS DA CRUZ
+            </li>
+            <li>
+              <strong>CPF:</strong> 137.451.868-93
+            </li>
+            <li>
+              <strong>Banco:</strong> 237 - Bradesco
+            </li>
+            <li>
+              <strong>Agência:</strong> 0118
+            </li>
+            <li>
+              <strong>Conta Corrente:</strong> 0136878-8
+            </li>
+          </ul>
+        </div>
+
         {/* clipboard pix key */}
         <div className={styles.pixCard}>
           <div>
@@ -61,27 +83,6 @@ export default function PixModal() {
               </>
             )}
           </Button>
-        </div>
-
-        {/* beneficiary data */}
-        <div>
-          <ul className={styles.beneficiaryData}>
-            <li>
-              <strong>Beneficiário:</strong> WLADMIR MARTINS DA CRUZ
-            </li>
-            <li>
-              <strong>CPF:</strong> 137.451.868-93
-            </li>
-            <li>
-              <strong>Banco:</strong> 237 - Bradesco
-            </li>
-            <li>
-              <strong>Agência:</strong> 0118
-            </li>
-            <li>
-              <strong>Conta Corrente:</strong> 0136878-8
-            </li>
-          </ul>
         </div>
       </div>
     </Dialog.DialogContent>

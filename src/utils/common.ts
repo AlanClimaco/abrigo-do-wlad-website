@@ -34,7 +34,7 @@ export const getThirdPartyImage = (
 
   const cropParam = options.crop ? `&crop=${options.crop}` : "";
   const imageUrl = `https://images.unsplash.com/photo-${imageInfo.photoId}?auto=format&fit=crop&w=${options.w}&h=${options.h}&q=${options.q}${cropParam}`;
-  
+
   return {
     url: imageUrl,
     ...imageInfo,
@@ -72,4 +72,10 @@ export function shuffleArray<T>(array: T[]): T[] {
     [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
   }
   return shuffledArray;
+}
+
+export function isAgentMobile() {
+  return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(
+    navigator.userAgent,
+  );
 }
