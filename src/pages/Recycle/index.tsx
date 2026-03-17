@@ -1,86 +1,71 @@
+import { useState, useEffect } from "react";
 import * as CardComponent from "@/components/ui/Card";
 import HeroSmall from "@/components/HeroSmall";
 import { Button } from "@/components/ui/Button";
 import { ScrollArea } from "@/components/ui/ScrollArea";
 
 import { getThirdPartyImage } from "@/utils/common";
-
 import * as Lucide from "lucide-react";
+
+// Adicionamos as importações do Firebase e do Tipo
+import { getRecyclePoints } from "../../services/recycleService";
+import type { RecyclePoint } from "../../types/recycle";
+
 import styles from "./Recycle.module.css";
 
-const collectionPoints = [
-  {
-    zone: "ZONA SUL",
-    locations: [
-      {
-        neighborhood: "Campo Belo",
-        name: "PetShop Latmia",
-        address: "Rua Antônio de Macedo Soares, 1350",
-      },
-      {
-        neighborhood: "Moema",
-        name: "29º Tabelionado",
-        address: "Av. Açocê, 308",
-      },
-      {
-        neighborhood: "Brooklin",
-        address: "Av. Portugal, 1351 (Seg a Sex das 8h às 20h)",
-      },
-      {
-        neighborhood: "Morumbi",
-        name: "Crazy for Pet",
-        address: "Rua Dr Fonseca Brasil, 320",
-      },
-      {
-        neighborhood: "Morumbi",
-        name: "Au Life",
-        address: "R Nelson da Gama de Oliveira, 918",
-      },
-      {
-        neighborhood: "Vila Mascote",
-        name: "PetShop Puppies & Cia",
-        address: "Av. Damaceno Vieira, 823",
-      },
-      {
-        neighborhood: "Planalto Paulista",
-        name: "Padaria Pães e Doces Sol",
-        address: "Al dos Guainumbis, 50",
-      },
-      {
-        neighborhood: "Ipiranga",
-        name: "MV Pet",
-        address: "Rua Antônio Marcondes, 211",
-      },
-    ],
-  },
-  {
-    zone: "ZONA OESTE",
-    locations: [
-      {
-        neighborhood: "Butantã",
-        address: "Av. Nossa Senhora da Assunção, 317",
-      },
-      {
-        neighborhood: "Vila Sônia",
-        name: "Silvano Festas",
-        address: "Av Guilherme Dummont Vilares, 888 (Seg a Sáb 8h-17h)",
-      },
-      {
-        neighborhood: "Jardim Bonfiglioli",
-        name: "Associação Brasil Tupinambá",
-        address: "Av. Comendador Alberto Bonfiglioli, 726",
-      },
-      {
-        neighborhood: "Vila Madalena",
-        name: "AnimAU Station",
-        address: "Rua Mourato Coelho, 1326",
-      },
-    ],
-  },
-];
+/* ARRAY ORIGINAL APAGADO/COMENTADO 
+  A gente vai construir isso dinamicamente agora!
+*/
+
+// Precisamos dessa interface para tipar como a sua tela agrupa os dados
+interface GroupedPoints {
+  zone: string;
+  locations: RecyclePoint[];
+}
 
 export default function Recycle() {
   const heroImage = getThirdPartyImage("recycle")?.url;
+  
+  // Nossos novos estados
+  const [collectionPoints, setCollectionPoints] = useState<GroupedPoints[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Busca os dados do Firebase quando a página carrega
+  useEffect(() => {
+    async function fetchPoints() {
+      try {
+        const rawPoints = await getRecyclePoints();
+
+        // Agrupa a lista que vem reta do banco pelo campo "zone"
+        const grouped = rawPoints.reduce((acc, point) => {
+          const existingZone = acc.find(item => item.zone === point.zone);
+          if (existingZone) {
+            existingZone.locations.push(point);
+          } else {
+            acc.push({ zone: point.zone, locations: [point] });
+          }
+          return acc;
+        }, [] as GroupedPoints[]);
+
+        // Ordena as zonas em ordem alfabética
+        grouped.sort((a, b) => a.zone.localeCompare(b.zone));
+        
+        // Ordena os bairros dentro de cada zona em ordem alfabética
+        grouped.forEach(group => {
+          group.locations.sort((a, b) => a.neighborhood.localeCompare(b.neighborhood));
+        });
+
+        setCollectionPoints(grouped);
+      } catch (error) {
+        console.error("Erro ao buscar pontos do Firebase", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchPoints();
+  }, []);
+
   return (
     <>
       <HeroSmall
@@ -157,36 +142,48 @@ export default function Recycle() {
                   <p>Encontre o local mais próximo de você</p>
                 </div>
                 <ScrollArea style={{ height: "300px", padding: "10px" }}>
-                  {collectionPoints.map((point) => (
-                    <div
-                      key={point.zone}
-                      className={styles.collectionContainer}
-                    >
-                      <h4>{point.zone}</h4>
-                      {point.locations.map(
-                        (location, index, locationsArray) => {
-                          const showNeighborhood =
-                            index === 0 ||
-                            location.neighborhood !==
-                              locationsArray[index - 1].neighborhood;
+                  
+                  {loading ? (
+                    <p style={{ textAlign: "center", padding: "2rem", color: "#6b7280" }}>
+                      Carregando pontos...
+                    </p>
+                  ) : collectionPoints.length === 0 ? (
+                    <p style={{ textAlign: "center", padding: "2rem", color: "#6b7280" }}>
+                      Nenhum ponto de coleta cadastrado no momento.
+                    </p>
+                  ) : (
+                    collectionPoints.map((point) => (
+                      <div
+                        key={point.zone}
+                        className={styles.collectionContainer}
+                      >
+                        <h4>{point.zone}</h4>
+                        {point.locations.map(
+                          (location, index, locationsArray) => {
+                            const showNeighborhood =
+                              index === 0 ||
+                              location.neighborhood !==
+                                locationsArray[index - 1].neighborhood;
 
-                          return (
-                            <div key={index}>
-                              {showNeighborhood && (
-                                <h5>{location.neighborhood}</h5>
-                              )}
-                              {location.name && (
-                                <p>
-                                  <strong>{location.name}</strong>
-                                </p>
-                              )}
-                              <p>{location.address}</p>
-                            </div>
-                          );
-                        },
-                      )}
-                    </div>
-                  ))}
+                            return (
+                              <div key={location.id || index}>
+                                {showNeighborhood && (
+                                  <h5>{location.neighborhood}</h5>
+                                )}
+                                {location.name && (
+                                  <p>
+                                    <strong>{location.name}</strong>
+                                  </p>
+                                )}
+                                <p>{location.address}</p>
+                              </div>
+                            );
+                          },
+                        )}
+                      </div>
+                    ))
+                  )}
+
                 </ScrollArea>
               </CardComponent.CardContent>
             </CardComponent.CardBody>

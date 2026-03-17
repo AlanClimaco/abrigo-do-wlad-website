@@ -106,7 +106,7 @@ export function Footer() {
           <Link to="/">Termos de Responsabilidade</Link>
           <p className={styles.credits}>
             Por{" "}
-            <ExternalLink href="https://github.com/AlanClimaco">
+            <ExternalLink href="https://alanclimaco.github.io/Portfolio/">
               Alan
             </ExternalLink>
             &{" "}
