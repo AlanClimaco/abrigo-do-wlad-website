@@ -58,7 +58,7 @@ export function Footer() {
           <NavLink to="/tampinhas" className={styles.linkItem}>
             Projeto Tampinhas
           </NavLink>
-          <NavLink to="/formulario" className={styles.linkItem}>
+          <NavLink to="/beta/formulario" className={styles.linkItem}>
             Formulário de Interesse
           </NavLink>
         </div>

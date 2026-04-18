@@ -79,8 +79,8 @@ export function Hero({ dog }: HeroProps) {
         {dog && dog.nome && (
           <Badge
             variant="primary"
-            size="sm"
-            leftIcon={<Lucide.Dog size={16} />}
+            size="md"
+            leftIcon={<Lucide.Dog />}
             style={{
               position: "absolute",
               bottom: "-0.5rem",

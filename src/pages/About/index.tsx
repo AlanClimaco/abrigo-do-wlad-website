@@ -14,6 +14,8 @@ import { Badge } from "../../components/ui/Badge";
 
 import { useMediaQuery } from "@uidotdev/usehooks";
 
+import heroImage from "@/assets/images/wlad.jpg"
+
 export default function About() {
   const dog = useDailyDog();
 
@@ -33,7 +35,7 @@ export default function About() {
   return (
     <>
       <HeroSmall
-        image="/images/hero-dog.jpg"
+        image={heroImage}
         badge="Nossa Trajetória"
         title="Uma história de amor e renúncia"
         description="Conheça os passos que transformaram um quintal em um refúgio de esperança."
@@ -131,9 +133,9 @@ export default function About() {
                       />
                       {dog && dog.nome && (
                         <Badge
-                          variant="secondary"
+                          variant="primary"
                           size="sm"
-                          leftIcon={<Lucide.Dog size={16} />}
+                          leftIcon={<Lucide.Dog />}
                           style={{
                             position: "absolute",
                             bottom: "-0.5rem",

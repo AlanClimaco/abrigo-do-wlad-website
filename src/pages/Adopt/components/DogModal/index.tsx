@@ -235,7 +235,7 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
                   <Lucide.Copy />
                   {!isDesktop ? "Compartilhar" : ""}
                 </Button>
-                <Link to={`/formulario?pet=${encodeURIComponent(dog.nome)}`}>
+                <Link to={`/beta/formulario?pet=${encodeURIComponent(dog.nome)}`}>
                   <Button
                     leftIcon={<Lucide.Heart />}
                     size={`${isDesktop ? "md" : "lg"}`}

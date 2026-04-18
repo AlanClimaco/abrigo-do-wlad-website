@@ -64,7 +64,6 @@
   min-height: 350px;
 }
 
-
 .card.imageVariant:hover .cardBody::before {
   background: linear-gradient(
     180deg,
@@ -241,5 +240,13 @@
 
   .quote .cardHeader {
     flex-direction: column;
+  }
+
+  .sm .cardBody {
+    padding: 0.8rem;
+  }
+
+  .lg .cardBody {
+    padding: 1.5rem;
   }
 }

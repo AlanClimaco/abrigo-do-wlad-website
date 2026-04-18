@@ -30,7 +30,7 @@ input {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  max-width: 90vw;
+  width: 30vw;
   max-height: 85vh;
   padding: 25px;
   display: flex;
@@ -63,6 +63,9 @@ input {
 }
 
 .title {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
   margin: 0;
   font-weight: 700;
   color: var(--title-primary);
@@ -95,6 +98,15 @@ input {
 }
 .closeButton:hover {
   color: var(--text-primary);
+}
+
+.footer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 2rem;
+  margin-top: auto;
 }
 
 @keyframes overlayShow {
@@ -153,5 +165,9 @@ input {
   .title,
   .description {
     text-align: center;
+  }
+
+  .content {
+    width: 90%;
   }
 }
