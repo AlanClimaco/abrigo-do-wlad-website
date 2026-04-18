@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as Lucide from "lucide-react";
 
-import { useForm } from "@formspree/react";
 import { useSearchParams } from "react-router";
 import {
   Card,
@@ -29,20 +28,14 @@ import { useIsDesktop } from "@/hooks/useIsDesktop";
 
 import styles from "./WizardForm.module.css";
 
-/**
- * TODO:
- * feedback de erro
- * descartar formspree
- * guardar na db e enviar umm trigger ao email
- */
-
 export function WizardForm() {
-  const [state, handleSubmit] = useForm(import.meta.env.VITE_FORMSPREE_ID);
   const [searchParams] = useSearchParams();
   const petName = searchParams.get("pet") || "";
   const isDesktop = useIsDesktop();
 
   const [captchaToken, setCaptchaToken] = React.useState<string>("");
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [, setSubmitError] = React.useState<string | null>(null);
   const [showWarning, setShowWarning] = React.useState<boolean>(() => {
     try {
       const saved = sessionStorage.getItem("wizardShowWarning");
@@ -98,94 +91,43 @@ export function WizardForm() {
     if (!validateCurrentStep()) return;
     if (!captchaToken) return;
 
-    // montar FormData para envio
-    const formDataToSend = new FormData();
-    formDataToSend.append(
-      "_subject",
-      `Nova Entrevista de Adoção: ${formData.animal_especifico || "Geral"}`,
-    );
+    setIsSubmitting(true);
+    setSubmitError(null);
 
-    const fieldMapping: Record<string, string> = {
-      nome_adotante: "1.1_nome_adotante",
-      idade: "1.2_idade",
-      estado_civil: "1.3_estado_civil",
-      profissao: "1.4_profissao",
-      empresa: "1.5_empresa",
-      endereco: "1.6_endereco",
-      telefone: "1.7_telefone",
-      email: "1.8_email_contato",
-      redes_sociais: "1.9_redes_sociais",
-      qtd_adultos: "2.1_qtd_adultos",
-      criancas: "2.2_criancas",
-      renda_mensal: "2.3_renda_mensal",
-      acordo: "2.4_acordo",
-      alergia: "2.5_alergia",
-      motivo: "3.1_motivo",
-      animal_especifico: "3.2_animal_especifico",
-      porte: "3.3.1_porte",
-      sexo: "3.3.2_sexo",
-      idade_animal: "3.3.3_idade",
-      personalidade: "3.3.4_personalidade",
-      atividade: "3.3.5_atividade",
-      responsavel: "4.1_responsavel",
-      horas_sozinho: "4.2_horas_sozinho",
-      passeios: "4.3_passeios",
-      tipo_moradia: "4.4_tipo_moradia",
-      proprietario_permite: "4.5_proprietario",
-      detalhes_moradia: "4.6_detalhes_moradia",
-      moradores: "4.7_moradores",
-      areas_frequentar: "4.8_areas_frequentar",
-      periodos: "4.9_periodos",
-      dormir: "4.10_dormir",
-      acesso: "4.11_acesso",
-      outros_animais: "5.1_outros_animais",
-      castrados: "5.2_castrados",
-      ja_teve: "5.3_ja_teve",
-      destino_antigos: "5.4_destino_antigos",
-      veterinario: "5.5_veterinario",
-      racao: "5.6_racao",
-      coleira: "6.1_coleira",
-      ciencia_adaptacao: "6.2_ciencia_adaptacao",
-      tempo_adaptacao: "6.3_tempo_adaptacao",
-      adestrador: "6.4_adestrador",
-      motivo_nao_adestrar: "6.5_motivo_nao_adestrar",
-      carro: "6.6_carro",
-      financeiro_vet: "6.7_financeiro_vet",
-      vacinas: "6.8_vacinas",
-      gasto_mensal: "6.9_gasto_mensal",
-      divulgacao: "7.1_divulgacao",
-      noticias: "7.2_noticias",
-      visitas: "7.3_visitas",
-      fotos_adocao: "7.4_fotos_adocao",
-      contribuicao: "7.5_contribuicao",
-      compromisso_vida: "7.6_compromisso_vida",
-      gravidez: "8.1_gravidez",
-      viagem: "8.2_viagem",
-      mudanca_menor: "8.3_mudanca_menor",
-      mudanca_longe: "8.4_mudanca_longe",
-      separacao: "8.5_separacao",
-      falecimento: "8.6_falecimento",
-      perder: "9.1_perder",
-      doenca: "9.2_doenca",
-      morder: "9.3_morder",
-      destruicao: "9.4_destruicao",
-      xixi_errado: "9.5_xixi_errado",
-      enxoval: "10.1_enxoval",
-      devolucao: "10.2_devolucao",
-      termo_nao_repassar: "10.3_termo_nao_repassar",
-      obs: "10.4_obs",
-    };
+    try {
+      const response = await fetch("/api/create-adoption-application", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...formData,
+          captchaToken,
+        }),
+      });
 
-    Object.entries(formData).forEach(([key, value]) => {
-      const mappedKey = fieldMapping[key] || key;
-      if (value !== undefined && value !== null) {
-        formDataToSend.append(mappedKey, String(value));
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Erro ao enviar formulário");
       }
-    });
 
-    formDataToSend.append("g-recaptcha-response", captchaToken);
+      const result = await response.json();
 
-    await handleSubmit(formDataToSend);
+      // em caso de sucesso
+      alert(`Obrigado! Sua candidatura foi recebida com ID: ${result.id}`);
+      
+      // redirecionar ou limpar formulário
+      window.location.href = "/";
+    } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Erro ao enviar formulário. Tente novamente.";
+      setSubmitError(message);
+      console.error("Error submitting application:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const stepProps = {
@@ -389,10 +331,10 @@ export function WizardForm() {
             <Button
               type="submit"
               size={isDesktop ? "lg" : "md"}
-              disabled={state.submitting || !captchaToken}
+              disabled={isSubmitting || !captchaToken}
               rightIcon={<Lucide.Send size={22} />}
             >
-              {state.submitting ? "Enviando..." : "Enviar Respostas"}
+              {isSubmitting ? "Enviando..." : "Enviar Respostas"}
             </Button>
           )}
         </div>

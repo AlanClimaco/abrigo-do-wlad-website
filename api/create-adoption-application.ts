@@ -1,0 +1,112 @@
+import { db } from "./_lib/firebase";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
+import type { IncomingMessage, ServerResponse } from "http";
+
+interface AdoptionApplicationData {
+  nome_adotante: string;
+  idade: number;
+  estado_civil: string;
+  email: string;
+  telefone: string;
+  [key: string]: unknown;
+}
+
+async function verifyRecaptcha(token: string): Promise<boolean> {
+  try {
+    const response = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: `secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`,
+    });
+
+    const data = await response.json();
+    return data.success && data.score > 0.5;
+  } catch (err) {
+    console.error("Error verifying reCAPTCHA:", err);
+    return false;
+  }
+}
+
+export default async function handler(
+  req: IncomingMessage,
+  res: ServerResponse,
+) {
+  // Apenas POST é permitido
+  if (req.method !== "POST") {
+    res.statusCode = 405;
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify({ message: "Method not allowed" }));
+    return;
+  }
+
+  let body = "";
+
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+
+  req.on("end", async () => {
+    try {
+      const data = JSON.parse(body) as AdoptionApplicationData & {
+        captchaToken: string;
+      };
+
+      // Validar reCAPTCHA
+      const captchaValid = await verifyRecaptcha(data.captchaToken);
+      if (!captchaValid) {
+        res.statusCode = 400;
+        res.setHeader("Content-Type", "application/json");
+        res.end(
+          JSON.stringify({
+            message: "reCAPTCHA validation failed",
+          }),
+        );
+        return;
+      }
+
+      // Remover token do documento antes de salvar
+      const { captchaToken, ...applicationData } = data;
+
+      // (14 dias)
+      const expiresAt = new Date();
+      expiresAt.setDate(expiresAt.getDate() + 14);
+
+      // Adicionar timestamp e dados de submissão
+      const documentData = {
+        ...applicationData,
+        submittedAt: Timestamp.now(),
+        expiresAt: Timestamp.fromDate(expiresAt),
+        status: "pending",
+      };
+
+      // Salvar na collection adoption_application
+      const docRef = await addDoc(
+        collection(db, "adoption_application"),
+        documentData,
+      );
+
+      // Enviar email de notificação (opcional - comentado por enquanto)
+      // await sendAdoptionApplicationEmail(documentData);
+
+      res.statusCode = 201;
+      res.setHeader("Content-Type", "application/json");
+      res.end(
+        JSON.stringify({
+          message: "Application submitted successfully",
+          id: docRef.id,
+        }),
+      );
+    } catch (err) {
+      console.error("Error creating adoption application:", err);
+      res.statusCode = 500;
+      res.setHeader("Content-Type", "application/json");
+      res.end(
+        JSON.stringify({
+          message: "Error creating adoption application",
+        }),
+      );
+    }
+  });
+}
