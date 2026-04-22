@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+// maior segurança para os voluntários autorizados
 const ALLOWED_SOCIAL_DOMAINS = [
   "instagram.com",
   "tiktok.com",

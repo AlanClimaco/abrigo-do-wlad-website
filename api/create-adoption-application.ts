@@ -1,7 +1,11 @@
 import { db } from "./_lib/firebase";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { sendEmail, generateAdoptionApplicationEmail } from "./_lib/email";
+import { kv } from "@vercel/kv";
+
 import type { IncomingMessage, ServerResponse } from "http";
+import { fullFormSchema } from "../src/pages/BetaForm/components/WizardForm/schema";
+import { z } from "zod";
 
 interface AdoptionApplicationData {
   nome_adotante: string;
@@ -12,7 +16,57 @@ interface AdoptionApplicationData {
   [key: string]: unknown;
 }
 
-const DEBUG_EMAIL_RECIPIENT = ""
+const DEBUG_EMAIL_RECIPIENT = "";
+const MAX_REQUEST_SIZE = 50 * 1024; // 50KB
+const RATE_LIMIT_WINDOW = 60 * 1000; // 1 min
+const MAX_REQUESTS_PER_WINDOW = 5;
+
+function getClientIp(req: IncomingMessage): string {
+  return (
+    (req.headers["x-forwarded-for"] as string)?.split(",")[0].trim() ||
+    req.socket.remoteAddress ||
+    "unknown"
+  );
+}
+
+async function checkRateLimit(clientIp: string): Promise<boolean> {
+  const key = `rate-limit:${clientIp}`;
+
+  try {
+    const current = await kv.incr(key);
+
+    if (current === 1) {
+      await kv.expire(key, RATE_LIMIT_WINDOW);
+    }
+
+    return current <= MAX_REQUESTS_PER_WINDOW;
+  } catch (err) {
+    console.error("Error checking rate limit:", err);
+    // Em caso de erro, permitir a requisição (fail-open)
+    return true;
+  }
+}
+
+function validateOrigin(req: IncomingMessage): boolean {
+  const origin = req.headers.origin || req.headers.referer;
+  const allowedOrigins = [
+    process.env.ALLOWED_ORIGIN || "http://localhost:5173",
+  ];
+
+  if (!origin) return false;
+
+  return allowedOrigins.some((allowed) => origin.startsWith(allowed));
+}
+
+function validateContentType(req: IncomingMessage): boolean {
+  const contentType = req.headers["content-type"];
+  return contentType?.includes("application/json") ?? false;
+}
+
+function validateRequestSize(contentLength: string | undefined): boolean {
+  if (!contentLength) return false;
+  return parseInt(contentLength, 10) <= MAX_REQUEST_SIZE;
+}
 
 async function sendAdoptionApplicationEmail(
   applicationData: Record<string, unknown>,
@@ -38,13 +92,16 @@ async function sendAdoptionApplicationEmail(
 
 async function verifyRecaptcha(token: string): Promise<boolean> {
   try {
-    const response = await fetch("https://www.google.com/recaptcha/api/siteverify", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+    const response = await fetch(
+      "https://www.google.com/recaptcha/api/siteverify",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: `secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`,
       },
-      body: `secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`,
-    });
+    );
 
     const data = await response.json();
     return data.success && data.score > 0.5;
@@ -58,10 +115,47 @@ export default async function handler(
   req: IncomingMessage,
   res: ServerResponse,
 ) {
+  // Validar método HTTP
   if (req.method !== "POST") {
     res.statusCode = 405;
     res.setHeader("Content-Type", "application/json");
     res.end(JSON.stringify({ message: "Method not allowed" }));
+    return;
+  }
+
+  const clientIp = getClientIp(req);
+
+  // Rate limiting
+  if (!checkRateLimit(clientIp)) {
+    res.statusCode = 429;
+    res.setHeader("Content-Type", "application/json");
+    res.end(
+      JSON.stringify({ message: "Too many requests. Please try again later." }),
+    );
+    return;
+  }
+
+  // Validar tamanho da requisição
+  if (!validateRequestSize(req.headers["content-length"])) {
+    res.statusCode = 413;
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify({ message: "Request entity too large" }));
+    return;
+  }
+
+  // Validar origem (CORS)
+  if (!validateOrigin(req)) {
+    res.statusCode = 403;
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify({ message: "Forbidden: Invalid origin" }));
+    return;
+  }
+
+  // Validar Content-Type
+  if (!validateContentType(req)) {
+    res.statusCode = 400;
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify({ message: "Invalid Content-Type" }));
     return;
   }
 
@@ -85,6 +179,20 @@ export default async function handler(
         res.end(
           JSON.stringify({
             message: "reCAPTCHA validation failed",
+          }),
+        );
+        return;
+      }
+
+      const validationResult = fullFormSchema.safeParse(data);
+
+      if (!validationResult.success) {
+        res.statusCode = 400;
+        res.setHeader("Content-Type", "application/json");
+        res.end(
+          JSON.stringify({
+            message: "Validation failed",
+            errors: z.treeifyError(validationResult.error),
           }),
         );
         return;
@@ -124,13 +232,24 @@ export default async function handler(
       );
     } catch (err) {
       console.error("Error creating adoption application:", err);
-      res.statusCode = 500;
-      res.setHeader("Content-Type", "application/json");
-      res.end(
-        JSON.stringify({
-          message: "Error creating adoption application",
-        }),
-      );
+
+      if (err instanceof SyntaxError) {
+        res.statusCode = 400;
+        res.setHeader("Content-Type", "application/json");
+        res.end(
+          JSON.stringify({
+            message: "Invalid JSON",
+          }),
+        );
+      } else {
+        res.statusCode = 500;
+        res.setHeader("Content-Type", "application/json");
+        res.end(
+          JSON.stringify({
+            message: "Error creating adoption application",
+          }),
+        );
+      }
     }
   });
 }
