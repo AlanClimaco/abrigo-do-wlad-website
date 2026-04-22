@@ -29,7 +29,7 @@ import { useIsDesktop } from "@/hooks/useIsDesktop";
 import styles from "./WizardForm.module.css";
 
 interface WizardFormProps {
-  onSubmitSuccess?: () => void;
+  onSubmitSuccess?: (applicationId: string) => void;
 }
 
 export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
@@ -52,7 +52,9 @@ export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
   React.useEffect(() => {
     try {
       sessionStorage.setItem("wizardShowWarning", String(showWarning));
-    } catch { /* sem suporte a sessionStorage */ }
+    } catch {
+      /* sem suporte a sessionStorage */
+    }
   }, [showWarning]);
 
   const {
@@ -117,13 +119,9 @@ export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
 
       const result = await response.json();
 
-      // Sucesso - chamar callback
       if (onSubmitSuccess) {
-        onSubmitSuccess();
+        onSubmitSuccess(result.id);
       }
-      
-      // Mostrar alerta com ID
-      alert(`Obrigado! Sua candidatura foi recebida com ID: ${result.id}`);
     } catch (error) {
       const message =
         error instanceof Error

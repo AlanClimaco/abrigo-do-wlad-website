@@ -24,6 +24,7 @@ const FALLBACK_FORM =
 
 export default function BetaForm() {
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+  const [successId, setSuccessId] = useState<string>("");
   const heroImage = getThirdPartyImage("form")?.url;
   const navigate = useNavigate();
 
@@ -46,14 +47,22 @@ export default function BetaForm() {
               Formulário Enviado com Sucesso!
             </DialogTitle>
             <DialogDescription>
-              Obrigado por responder com honestidade.
+              {successId && (
+                <span
+                  style={{
+                    color: "var(--text-muted)",
+                    fontSize: "0.8em",
+                  }}
+                >
+                  ID da sua candidatura: {successId}
+                </span>
+              )}
             </DialogDescription>
           </DialogHeader>
           <div className={styles.modalContent}>
             <p>
               A equipe de voluntários do Abrigo do Wlad vai analisar seu perfil
-              com carinho. Entraremos em contato caso o perfil seja compatível
-              com o animal escolhido.
+              com carinho. Entraremos em contato caso o perfil seja compatível.
             </p>
           </div>
           <DialogFooter>
@@ -96,7 +105,12 @@ export default function BetaForm() {
         description="Por favor, responda com sinceridade. Adoção é um ato de amor e responsabilidade."
       />
       <div className="container">
-        <WizardForm onSubmitSuccess={() => setShowSuccessDialog(true)} />
+        <WizardForm
+          onSubmitSuccess={(applicationId) => {
+            setSuccessId(applicationId);
+            setShowSuccessDialog(true);
+          }}
+        />
       </div>
       <div className={styles.betaDisclaimer}>
         <div>
