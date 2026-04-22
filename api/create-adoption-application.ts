@@ -1,5 +1,6 @@
 import { db } from "./_lib/firebase";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { sendEmail, generateAdoptionApplicationEmail } from "./_lib/email";
 import type { IncomingMessage, ServerResponse } from "http";
 
 interface AdoptionApplicationData {
@@ -9,6 +10,30 @@ interface AdoptionApplicationData {
   email: string;
   telefone: string;
   [key: string]: unknown;
+}
+
+const DEBUG_EMAIL_RECIPIENT = ""
+
+async function sendAdoptionApplicationEmail(
+  applicationData: Record<string, unknown>,
+  applicationId: string,
+): Promise<void> {
+  try {
+    const { html, text } = generateAdoptionApplicationEmail(
+      applicationData,
+      applicationId,
+    );
+
+    await sendEmail({
+      to: process.env.ADOPTION_EMAIL_RECIPIENT || DEBUG_EMAIL_RECIPIENT,
+      subject: `Nova Candidatura de Adoção: ${applicationData.animal_especifico || "Geral"}`,
+      html,
+      text,
+    });
+  } catch (err) {
+    console.error("Error sending adoption application email:", err);
+    // Não lançar erro para não interromper o fluxo
+  }
 }
 
 async function verifyRecaptcha(token: string): Promise<boolean> {
@@ -33,7 +58,6 @@ export default async function handler(
   req: IncomingMessage,
   res: ServerResponse,
 ) {
-  // Apenas POST é permitido
   if (req.method !== "POST") {
     res.statusCode = 405;
     res.setHeader("Content-Type", "application/json");
@@ -66,10 +90,10 @@ export default async function handler(
         return;
       }
 
-      // Remover token do documento antes de salvar
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { captchaToken, ...applicationData } = data;
 
-      // (14 dias)
+      // Calcular data de expiração (14 dias)
       const expiresAt = new Date();
       expiresAt.setDate(expiresAt.getDate() + 14);
 
@@ -87,8 +111,8 @@ export default async function handler(
         documentData,
       );
 
-      // Enviar email de notificação (opcional - comentado por enquanto)
-      // await sendAdoptionApplicationEmail(documentData);
+      // Enviar email de notificação
+      await sendAdoptionApplicationEmail(applicationData, docRef.id);
 
       res.statusCode = 201;
       res.setHeader("Content-Type", "application/json");
