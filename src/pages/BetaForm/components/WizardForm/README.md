@@ -4,12 +4,12 @@
 
 ## Visão Geral
 
-O `WizardForm` é um formulário multi-step (wizard) para o **processo de entrevista de adoção** do Abrigo do Wlad. Ele guia o adotante por **10 etapas** com validação por step, barra de progresso visual e envio via [Formspree](https://formspree.io/).
+O `WizardForm` é um formulário multi-step (wizard) para o **processo de entrevista de adoção** do Abrigo do Wlad. Ele guia o adotante por **10 etapas** com validação por step, barra de progresso visual e envio via **API própria**.
 
 ### Fluxo do Usuário
 
 ```
-Tela de Aviso → Step 1 → Step 2 → ... → Step 10 → Envio (Formspree) → Tela de Sucesso
+Tela de Aviso → Step 1 → Step 2 → ... → Step 10 → Envio (API) → Tela de Sucesso
 ```
 
 1. O usuário lê um aviso sobre o processo de adoção e concorda em prosseguir.
@@ -49,13 +49,12 @@ Componente principal que orquestra todo o fluxo do wizard.
 - Renderiza a **tela de aviso** inicial.
 - Exibe a **barra de progresso** e os **indicadores de step** com tooltips.
 - Controla qual step é exibido via `renderStep()`.
-- Monta o `FormData` com mapeamento de campos e envia via Formspree.
+- Envia os dados para a API (`POST /api/create-adoption-application`).
 - Suporta **pré-preenchimento** do nome do pet via query param `?pet=Nome`.
 - Integra reCAPTCHA para evitar spam.
 
 **Integrações:**
 
-- `@formspree/react` — envio do formulário
 - `react-router` — leitura de search params (`?pet=`)
 - `lucide-react` — ícones
 - Componentes UI internos: `Card`, `Button`, `Badge`, `Tooltip`
@@ -293,12 +292,12 @@ Animação de transição entre steps:
 
 ## Dependências
 
-| Pacote             | Uso                                |
-| ------------------ | ---------------------------------- |
-| `zod`              | Validação de schemas por step      |
-| `@formspree/react` | Envio do formulário                |
-| `react-router`     | Leitura de query params (`?pet=`)  |
-| `lucide-react`     | Ícones (setas, check, alert, send) |
+| Pacote         | Uso                                             |
+| -------------- | ----------------------------------------------- |
+| `zod`          | Validação de schemas por step                   |
+| `react-router` | Leitura de query params (`?pet=`)               |
+| `lucide-react` | Ícones (setas, check, alert, send)              |
+| `fetch API`    | Envio de dados para API (`/api/create-adoption-application`) |
 
 ---
 

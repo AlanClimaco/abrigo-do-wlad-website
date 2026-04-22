@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { useForm } from "@formspree/react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { CheckCircle, Instagram, Mail, TestTube2 } from "lucide-react";
 
@@ -24,7 +23,7 @@ const FALLBACK_FORM =
   "https://docs.google.com/forms/d/e/1FAIpQLSdA_l2KNzT5NflkGgCCOik0wCoCxlVuLRsEStacvWDaV4_hMA/viewform";
 
 export default function BetaForm() {
-  const [state] = useForm(import.meta.env.VITE_FORMSPREE_ID);
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
   const heroImage = getThirdPartyImage("form")?.url;
   const navigate = useNavigate();
 
@@ -35,7 +34,7 @@ export default function BetaForm() {
   return (
     <main>
       <Dialog
-        open={state.succeeded}
+        open={showSuccessDialog}
         onOpenChange={(open) => {
           if (!open) navigate("/");
         }}
@@ -97,7 +96,7 @@ export default function BetaForm() {
         description="Por favor, responda com sinceridade. Adoção é um ato de amor e responsabilidade."
       />
       <div className="container">
-        <WizardForm />
+        <WizardForm onSubmitSuccess={() => setShowSuccessDialog(true)} />
       </div>
       <div className={styles.betaDisclaimer}>
         <div>

@@ -28,7 +28,11 @@ import { useIsDesktop } from "@/hooks/useIsDesktop";
 
 import styles from "./WizardForm.module.css";
 
-export function WizardForm() {
+interface WizardFormProps {
+  onSubmitSuccess?: () => void;
+}
+
+export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
   const [searchParams] = useSearchParams();
   const petName = searchParams.get("pet") || "";
   const isDesktop = useIsDesktop();
@@ -113,11 +117,13 @@ export function WizardForm() {
 
       const result = await response.json();
 
-      // em caso de sucesso
-      alert(`Obrigado! Sua candidatura foi recebida com ID: ${result.id}`);
+      // Sucesso - chamar callback
+      if (onSubmitSuccess) {
+        onSubmitSuccess();
+      }
       
-      // redirecionar ou limpar formulário
-      window.location.href = "/";
+      // Mostrar alerta com ID
+      alert(`Obrigado! Sua candidatura foi recebida com ID: ${result.id}`);
     } catch (error) {
       const message =
         error instanceof Error
