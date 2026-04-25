@@ -26,8 +26,13 @@ export function useWizardForm() {
   const { step } = useParams<{ step: string }>();
   const navigate = useNavigate();
 
+  const parsedStep = (() => {
+    const parsed = parseInt(step ?? "1", 10);
+    return Number.isNaN(parsed) ? 1 : parsed;
+  })();
+
   const currentStep = Math.min(
-    Math.max(parseInt(step ?? "1", 10) - 1, 0),
+    Math.max(parsedStep - 1, 0),
     stepSchemas.length - 1,
   );
 
@@ -51,15 +56,31 @@ export function useWizardForm() {
     });
 
   React.useEffect(() => {
+    const stepNumber = parsedStep;
+    const isValidStep =
+      !Number.isNaN(stepNumber) &&
+      stepNumber >= 1 &&
+      stepNumber <= stepSchemas.length;
+
+    if (!isValidStep || parseInt(step ?? "1", 10) !== stepNumber) {
+      navigate(`/beta/formulario/step/1`, { replace: true });
+    }
+  }, [step, navigate, parsedStep]);
+
+  React.useEffect(() => {
     try {
       sessionStorage.setItem("wizardFormData", JSON.stringify(formData));
-    } catch { /* sem suporte a sessionStorage */ }
+    } catch {
+      /* sem suporte a sessionStorage */
+    }
   }, [formData]);
 
   React.useEffect(() => {
     try {
       sessionStorage.setItem("wizardHighestStep", String(highestCompletedStep));
-    } catch { /* sem suporte a sessionStorage */ }
+    } catch {
+      /* sem suporte a sessionStorage */
+    }
   }, [highestCompletedStep]);
 
   const totalSteps = stepSchemas.length;

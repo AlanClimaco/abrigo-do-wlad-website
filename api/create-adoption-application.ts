@@ -103,8 +103,19 @@ async function verifyRecaptcha(token: string): Promise<boolean> {
       },
     );
 
-    const data = await response.json();
-    return data.success && data.score > 0.5;
+    const data = (await response.json()) as {
+      success: boolean;
+      score?: number;
+      action?: string;
+      challenge_ts?: string;
+      hostname?: string;
+    };
+
+    if (data.score !== undefined) {
+      return data.success && data.score > 0.5; // v3
+    }
+
+    return data.success; //v2
   } catch (err) {
     console.error("Error verifying reCAPTCHA:", err);
     return false;
@@ -126,7 +137,7 @@ export default async function handler(
   const clientIp = getClientIp(req);
 
   // Rate limiting
-  if (!checkRateLimit(clientIp)) {
+  if (!(await checkRateLimit(clientIp))) {
     res.statusCode = 429;
     res.setHeader("Content-Type", "application/json");
     res.end(
@@ -136,7 +147,12 @@ export default async function handler(
   }
 
   // Validar tamanho da requisição
-  if (!validateRequestSize(req.headers["content-length"])) {
+  const contentLengthHeader = req.headers["content-length"];
+  const contentLength = Array.isArray(contentLengthHeader)
+    ? contentLengthHeader[0]
+    : contentLengthHeader;
+
+  if (contentLength !== undefined && !validateRequestSize(contentLength)) {
     res.statusCode = 413;
     res.setHeader("Content-Type", "application/json");
     res.end(JSON.stringify({ message: "Request entity too large" }));
@@ -199,7 +215,7 @@ export default async function handler(
       }
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { captchaToken, ...applicationData } = data;
+      const { captchaToken, ...applicationData } = validationResult.data;
 
       // Calcular data de expiração (14 dias)
       const expiresAt = new Date();

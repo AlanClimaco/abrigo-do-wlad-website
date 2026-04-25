@@ -114,8 +114,8 @@ export const step1Schema = z.object({
             const input = s.startsWith("//")
               ? `https:${s}`
               : s.includes("://")
-              ? s
-              : `https://${s}`;
+                ? s
+                : `https://${s}`;
             const url = new URL(input);
             const host = url.hostname.toLowerCase().replace(/^www\./, "");
 
@@ -195,13 +195,16 @@ export const step3Schema = z.object({
         issue.input === undefined ? "Descreva o motivo." : "Valor inválido.",
     })
     .min(5, "Descreva o motivo"),
-  animal_especifico: z
-    .string({
-      error: (issue) =>
-        issue.input === undefined ? "Informe o animal." : "Valor inválido.",
-    })
-    .min(1, "Informe o animal")
-    .optional(),
+  animal_especifico: z.preprocess(
+    (value) => (value === "" ? undefined : value),
+    z
+      .string({
+        error: (issue) =>
+          issue.input === undefined ? "Informe o animal." : "Valor inválido.",
+      })
+      .min(1, "Informe o animal")
+      .optional(),
+  ),
   porte: z
     .string({
       error: (issue) =>
@@ -577,6 +580,7 @@ export const fullFormSchema = z.object({
   ...step8Schema.shape,
   ...step9Schema.shape,
   ...step10Schema.shape,
+  captchaToken: z.string(),
 });
 
 export type FormData = z.infer<typeof fullFormSchema>;

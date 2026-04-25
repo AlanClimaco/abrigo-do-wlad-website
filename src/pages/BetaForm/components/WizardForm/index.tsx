@@ -82,10 +82,11 @@ export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
     [updateField],
   );
 
-  // Inicializar o nome do pet
-  if (petName && !formData.animal_especifico) {
-    updateField("animal_especifico", petName);
-  }
+  React.useEffect(() => {
+    if (petName && !formData.animal_especifico) {
+      updateField("animal_especifico", petName);
+    }
+  }, [petName, formData.animal_especifico, updateField]);
 
   const handleCaptchaChange = (token: string | null) => {
     setCaptchaToken(token || "");
@@ -258,11 +259,10 @@ export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
         {/* Step Indicators */}
         <div className={styles.stepIndicators}>
           {STEP_TITLES.map((step, index) => (
-            <TooltipProvider>
+            <TooltipProvider key={index}>
               <Tooltip>
-                <TooltipTrigger>
+                <TooltipTrigger asChild>
                   <Button
-                    key={index}
                     type="button"
                     size="icon"
                     variant={
