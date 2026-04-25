@@ -219,9 +219,9 @@ export default async function handler(
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { captchaToken, ...applicationData } = validationResult.data;
 
-      // Calcular data de expiração (14 dias)
+      // Calcular data de expiração (30 dias)
       const expiresAt = new Date();
-      expiresAt.setDate(expiresAt.getDate() + 14);
+      expiresAt.setDate(expiresAt.getDate() + 30);
 
       // Adicionar timestamp e dados de submissão
       const documentData = {
