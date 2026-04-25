@@ -5,7 +5,6 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Recycle from "./pages/Recycle";
 import Adopt from "./pages/Adopt";
-// import Form from "./pages/Form";
 import ScrollToTop from "./components/common/ScrollToTop";
 import BetaForm from "./pages/BetaForm";
 

@@ -79,7 +79,9 @@ async function sendAdoptionApplicationEmail(
     );
 
     await sendEmail({
-      to: process.env.ADOPTION_EMAIL_RECIPIENT || DEBUG_EMAIL_RECIPIENT,
+      to:
+        DEBUG_EMAIL_RECIPIENT ||
+        (process.env.ADOPTION_EMAIL_RECIPIENT as string),
       subject: `Nova Candidatura de Adoção: ${applicationData.animal_especifico || "Geral"}`,
       html,
       text,
