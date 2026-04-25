@@ -11,6 +11,10 @@ import {
 import { IncomingMessage, ServerResponse } from "http";
 
 import { db } from "./_lib/firebase.js";
+import { validateRequest } from "./_lib/validation";
+import { validateAuthHeader } from "./_lib/security";
+import { sendError, sendSuccess } from "./_lib/response";
+import { HTTP_STATUS } from "./_lib/constants";
 
 const DOGS_COLLECTION = "dogs";
 
@@ -49,10 +53,21 @@ export default async function handler(
   req: IncomingMessage,
   res: ServerResponse,
 ) {
+  const isValid = await validateRequest(req, res, {
+    expectedMethod: "GET",
+    skipRateLimit: true,
+    validateOrigin: false,
+    validateContentType: false,
+    validateRequestSize: false,
+  });
+
+  if (!isValid) {
+    return;
+  }
+
   const authHeader = req.headers.authorization;
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-    res.statusCode = 401;
-    res.end(JSON.stringify({ message: "Unauthorized" }));
+  if (!validateAuthHeader(authHeader, process.env.CRON_SECRET || "")) {
+    sendError(res, HTTP_STATUS.UNAUTHORIZED, "Unauthorized");
     return;
   }
 
@@ -68,15 +83,16 @@ export default async function handler(
 
     if (newDog) {
       await kv.set("hero-dog", newDog);
-      res.statusCode = 200;
-      res.end(JSON.stringify({ message: "Hero dog updated!", dog: newDog }));
+      sendSuccess(res, "Hero dog updated!", { dog: newDog });
     } else {
-      res.statusCode = 404;
-      res.end(JSON.stringify({ message: "No dog found" }));
+      sendError(res, HTTP_STATUS.NOT_FOUND, "No dog found");
     }
   } catch (err) {
     console.error(err);
-    res.statusCode = 500;
-    res.end(JSON.stringify({ message: "Error updating hero dog" }));
+    sendError(
+      res,
+      HTTP_STATUS.INTERNAL_SERVER_ERROR,
+      "Error updating hero dog",
+    );
   }
 }

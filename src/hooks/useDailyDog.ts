@@ -9,8 +9,11 @@ export function useDailyDog() {
       try {
         const response = await fetch("/api/get-hero-dog");
         if (response.ok) {
-          const dailyDog = await response.json();
-          setDog(dailyDog);
+          const payload = (await response.json()) as {
+            data?: Dog;
+          } & Dog;
+
+          setDog(payload.data ?? (payload as Dog));
         }
       } catch (error) {
         console.error("Erro ao carregar o daily dog:", error);
