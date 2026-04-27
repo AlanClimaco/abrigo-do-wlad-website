@@ -4,3 +4,9 @@
   gap: 10rem;
   margin-top: 10rem;
 }
+
+@supports (scroll-behavior: smooth) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
