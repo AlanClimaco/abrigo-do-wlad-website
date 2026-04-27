@@ -1,0 +1,120 @@
+.indicators {
+  position: fixed;
+  left: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  pointer-events: auto;
+}
+
+.indicatorWrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dotsContainer {
+  background-color: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 8px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.rowsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.indicatorRow {
+  height: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background-color: var(--primary);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0;
+  border-radius: 100%;
+  flex-shrink: 0;
+  opacity: 0.4;
+}
+
+.dot:hover {
+  background-color: var(--primary);
+}
+
+.dot.active {
+  background-color: var(--primary);
+  opacity: 1;
+  box-shadow: 0 0 12px rgba(var(--primary-rgb), 0.6);
+}
+
+.label {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  transform: translateX(-10px);
+  pointer-events: none;
+  font-weight: 600;
+  text-align: left;
+  min-width: 70px;
+  letter-spacing: -0.3px;
+}
+
+.label.activeLabel {
+  color: var(--primary);
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Responsive: Ajusta tamanho em telas menores */
+@media (max-width: 768px) {
+  .indicators {
+    left: 1rem;
+  }
+
+  .indicatorWrapper {
+    gap: 0.75rem;
+  }
+
+  .dotsContainer {
+    padding: 6px 3px;
+    gap: 0.75rem;
+  }
+
+  .rowsContainer {
+    gap: 0.75rem;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .indicatorRow {
+    height: 8px;
+  }
+
+  .label {
+    font-size: 0.75rem;
+    min-width: 50px;
+    text-shadow: 2px 2px 4px rgba(4, 4, 4, 0.211);
+  }
+}
+
+@media (max-width: 480px) {
+  .indicators {
+    display: none;
+  }
+}
