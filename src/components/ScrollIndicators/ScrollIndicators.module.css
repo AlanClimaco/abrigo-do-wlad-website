@@ -14,7 +14,7 @@
 }
 
 .dotsContainer {
-  background-color: var(--white);
+  background-color: var(--glass);
   border-radius: var(--radius-lg);
   padding: 8px 4px;
   display: flex;

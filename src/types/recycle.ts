@@ -4,5 +4,7 @@ export interface RecyclePoint {
   neighborhood: string;
   name?: string;
   address: string;
+  latitude?: string;
+  longitude?: string;
 }
 
