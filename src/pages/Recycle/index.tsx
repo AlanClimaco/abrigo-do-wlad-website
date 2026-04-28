@@ -1,8 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import * as CardComponent from "@/components/ui/Card";
 import HeroSmall from "@/components/HeroSmall";
 import { Button } from "@/components/ui/Button";
-import { ScrollArea } from "@/components/ui/ScrollArea";
+import * as Dialog from "@/components/ui/Dialog";
+import { ScrollIndicators } from "@/components/ScrollIndicators";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/Accordion";
 
 import { getThirdPartyImage } from "@/utils/common";
 import * as Lucide from "lucide-react";
@@ -12,23 +19,37 @@ import { getRecyclePoints } from "../../services/recycleService";
 import type { RecyclePoint } from "../../types/recycle";
 
 import styles from "./Recycle.module.css";
+import { Badge } from "@/components/ui/Badge";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/Tooltip";
 
-/* ARRAY ORIGINAL APAGADO/COMENTADO 
-  A gente vai construir isso dinamicamente agora!
-*/
-
-// Precisamos dessa interface para tipar como a sua tela agrupa os dados
 interface GroupedPoints {
   zone: string;
   locations: RecyclePoint[];
 }
 
+interface MapModalState {
+  isOpen: boolean;
+  location: RecyclePoint | null;
+}
+
 export default function Recycle() {
   const heroImage = getThirdPartyImage("recycle")?.url;
-  
-  // Nossos novos estados
+  const containerRef = useRef<HTMLDivElement>(null!);
+  const section1Ref = useRef<HTMLElement>(null!);
+  const section2Ref = useRef<HTMLElement>(null!);
+  const sectionLabels = ["O que doar?", "Pontos de Coleta"];
+
   const [collectionPoints, setCollectionPoints] = useState<GroupedPoints[]>([]);
   const [loading, setLoading] = useState(true);
+  const [mapModal, setMapModal] = useState<MapModalState>({
+    isOpen: false,
+    location: null,
+  });
 
   // Busca os dados do Firebase quando a página carrega
   useEffect(() => {
@@ -38,7 +59,7 @@ export default function Recycle() {
 
         // Agrupa a lista que vem reta do banco pelo campo "zone"
         const grouped = rawPoints.reduce((acc, point) => {
-          const existingZone = acc.find(item => item.zone === point.zone);
+          const existingZone = acc.find((item) => item.zone === point.zone);
           if (existingZone) {
             existingZone.locations.push(point);
           } else {
@@ -49,10 +70,12 @@ export default function Recycle() {
 
         // Ordena as zonas em ordem alfabética
         grouped.sort((a, b) => a.zone.localeCompare(b.zone));
-        
+
         // Ordena os bairros dentro de cada zona em ordem alfabética
-        grouped.forEach(group => {
-          group.locations.sort((a, b) => a.neighborhood.localeCompare(b.neighborhood));
+        grouped.forEach((group) => {
+          group.locations.sort((a, b) =>
+            a.neighborhood.localeCompare(b.neighborhood),
+          );
         });
 
         setCollectionPoints(grouped);
@@ -68,14 +91,20 @@ export default function Recycle() {
 
   return (
     <>
+      <ScrollIndicators
+        containerRef={containerRef}
+        sectionCount={2}
+        labels={sectionLabels}
+      />
       <HeroSmall
         image={heroImage as string}
         badge="Reciclagem Solidária"
         title="Sua tampinha vale vidas"
         description="Transformamos plástico em ração e medicamentos. Descubra como um gesto simples pode salvar nossos animais."
       />
-      <section className="container">
-        <div className={styles.recycleContainer}>
+
+      <div className={styles.mainContainer} ref={containerRef}>
+        <section className="container" ref={section1Ref}>
           <div className={styles.recycleTextContainer}>
             <h2 className="section-title">O que doar?</h2>
             <p>
@@ -102,99 +131,363 @@ export default function Recycle() {
                 <span>Lacres de Latinha de Alumínio</span>
               </li>
             </ul>
-
-            <CardComponent.Card
-              style={{ marginTop: "25px" }}
-              color="primary"
-              size="sm"
-              variant="quote"
-            >
-              <CardComponent.CardBody>
-                <CardComponent.CardHeader>
-                  <CardComponent.CardIcon>
-                    <Lucide.CircleAlert />
-                  </CardComponent.CardIcon>
-                  <CardComponent.CardTitle>
-                    Dica Importante
-                  </CardComponent.CardTitle>
-                </CardComponent.CardHeader>
-                <CardComponent.CardContent>
-                  <p>
-                    Por favor, se possível, entregue as tampinhas lavadas e
-                    separadas por cor. Isso agiliza muito nosso trabalho!
-                  </p>
-                </CardComponent.CardContent>
-              </CardComponent.CardBody>
-            </CardComponent.Card>
           </div>
-          <CardComponent.Card>
-            <CardComponent.CardBody>
-              <CardComponent.CardHeader>
-                <CardComponent.CardIcon>
-                  <Lucide.MapPinned size={48} />
-                </CardComponent.CardIcon>
-                <CardComponent.CardTitle>
-                  Pontos de Coleta
-                </CardComponent.CardTitle>
-              </CardComponent.CardHeader>
-              <CardComponent.CardContent>
-                <div>
-                  <p>Encontre o local mais próximo de você</p>
-                </div>
-                <ScrollArea style={{ height: "300px", padding: "10px" }}>
-                  
-                  {loading ? (
-                    <p style={{ textAlign: "center", padding: "2rem", color: "#6b7280" }}>
-                      Carregando pontos...
-                    </p>
-                  ) : collectionPoints.length === 0 ? (
-                    <p style={{ textAlign: "center", padding: "2rem", color: "#6b7280" }}>
+        </section>
+
+        <section className="container" ref={section2Ref}>
+          <div style={{ width: "100%" }}>
+            <div style={{ marginBottom: "2rem" }}>
+              <h2 className="section-title" style={{ marginBottom: "0.5rem" }}>
+                Pontos de Coleta
+              </h2>
+              <p style={{ color: "var(--text-secondary)" }}>
+                Encontre o local mais próximo de você e saiba como contribuir.{" "}
+                <strong>
+                  {" "}
+                  Se possível, entregue as tampinhas lavadas e separadas por
+                  cor. Isso agiliza muito nosso trabalho!
+                </strong>
+              </p>
+            </div>
+
+            {loading ? (
+              <div
+                style={{
+                  textAlign: "center",
+                  padding: "3rem 2rem",
+                  color: "var(--text-muted)",
+                }}
+              >
+                <Lucide.Loader2
+                  size={32}
+                  className="animate-spin"
+                  style={{ margin: "0 auto 1rem" }}
+                />
+                <p>Carregando pontos de coleta...</p>
+              </div>
+            ) : collectionPoints.length === 0 ? (
+              <CardComponent.Card color="primary">
+                <CardComponent.CardBody>
+                  <CardComponent.CardContent>
+                    <p
+                      style={{
+                        textAlign: "center",
+                        color: "var(--text-secondary)",
+                      }}
+                    >
                       Nenhum ponto de coleta cadastrado no momento.
                     </p>
-                  ) : (
-                    collectionPoints.map((point) => (
+                  </CardComponent.CardContent>
+                </CardComponent.CardBody>
+              </CardComponent.Card>
+            ) : (
+              <Accordion type="single" collapsible>
+                {collectionPoints.map((zone) => (
+                  <AccordionItem key={zone.zone} value={zone.zone}>
+                    <AccordionTrigger>
                       <div
-                        key={point.zone}
-                        className={styles.collectionContainer}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "0.75rem",
+                        }}
                       >
-                        <h4>{point.zone}</h4>
-                        {point.locations.map(
-                          (location, index, locationsArray) => {
-                            const showNeighborhood =
-                              index === 0 ||
-                              location.neighborhood !==
-                                locationsArray[index - 1].neighborhood;
-
-                            return (
-                              <div key={location.id || index}>
-                                {showNeighborhood && (
-                                  <h5>{location.neighborhood}</h5>
-                                )}
-                                {location.name && (
-                                  <p>
-                                    <strong>{location.name}</strong>
-                                  </p>
-                                )}
-                                <p>{location.address}</p>
-                              </div>
-                            );
-                          },
-                        )}
+                        <Lucide.MapPin size={20} />
+                        <div style={{ textAlign: "left" }}>
+                          <p style={{ fontWeight: "600" }}>{zone.zone}</p>
+                          <p
+                            style={{
+                              fontSize: "0.875rem",
+                              color: "var(--text-muted)",
+                            }}
+                          >
+                            {zone.locations.length} ponto
+                            {zone.locations.length !== 1 ? "s" : ""} de coleta
+                          </p>
+                        </div>
                       </div>
-                    ))
-                  )}
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <div
+                        className={styles.pointsGrid}
+                        style={{
+                          display: "grid",
+                          gridTemplateColumns:
+                            "repeat(auto-fill, minmax(280px, 1fr))",
+                          gap: "1rem",
+                          marginTop: "1rem",
+                        }}
+                      >
+                        {zone.locations.map((location) => (
+                          <CardComponent.Card
+                            key={location.id}
+                            variant="default"
+                            color="secondary"
+                            size="sm"
+                          >
+                            <CardComponent.CardBody>
+                              <CardComponent.CardContent>
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    alignItems: "flex-start",
+                                    gap: "0.5rem",
+                                    marginBottom: "1.25rem",
+                                    paddingBottom: "1rem",
+                                  }}
+                                >
+                                  <Lucide.MapPin
+                                    size={18}
+                                    style={{
+                                      color: "var(--primary-color)",
+                                      flexShrink: 0,
+                                      marginTop: "2px",
+                                    }}
+                                  />
+                                  <div>
+                                    <p
+                                      style={{
+                                        fontSize: "0.75rem",
+                                        fontWeight: "600",
+                                        textTransform: "uppercase",
+                                        color: "var(--text-muted)",
+                                        marginBottom: "0.25rem",
+                                        letterSpacing: "0.5px",
+                                      }}
+                                    >
+                                      Bairro
+                                    </p>
+                                    <h4
+                                      style={{
+                                        fontWeight: "700",
+                                        fontSize: "1.1rem",
+                                        color: "var(--text-primary)",
+                                        margin: 0,
+                                      }}
+                                    >
+                                      {location.neighborhood}
+                                    </h4>
+                                  </div>
+                                </div>
 
-                </ScrollArea>
-              </CardComponent.CardContent>
-            </CardComponent.CardBody>
-            <CardComponent.CardFooter style={{ textAlign: "center" }}>
-              <Button size="lg">
+                                {location.name && (
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      alignItems: "flex-start",
+                                      gap: "0.5rem",
+                                      marginBottom: "1.25rem",
+                                    }}
+                                  >
+                                    <Lucide.Building2
+                                      size={18}
+                                      style={{
+                                        color: "var(--text-secondary)",
+                                        flexShrink: 0,
+                                        marginTop: "2px",
+                                      }}
+                                    />
+                                    <div>
+                                      <p
+                                        style={{
+                                          fontSize: "0.75rem",
+                                          fontWeight: "600",
+                                          textTransform: "uppercase",
+                                          color: "var(--text-muted)",
+                                          marginBottom: "0.25rem",
+                                          letterSpacing: "0.5px",
+                                        }}
+                                      >
+                                        Local
+                                      </p>
+                                      <p
+                                        style={{
+                                          fontWeight: "500",
+                                          fontSize: "0.95rem",
+                                          color: "var(--text-primary)",
+                                          margin: 0,
+                                        }}
+                                      >
+                                        {location.name}
+                                      </p>
+                                    </div>
+                                  </div>
+                                )}
+
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    alignItems: "flex-start",
+                                    gap: "0.5rem",
+                                    marginBottom: "1.5rem",
+                                  }}
+                                >
+                                  <Lucide.Navigation
+                                    size={18}
+                                    style={{
+                                      color: "var(--text-secondary)",
+                                      flexShrink: 0,
+                                      marginTop: "2px",
+                                    }}
+                                  />
+                                  <div>
+                                    <p
+                                      style={{
+                                        fontSize: "0.75rem",
+                                        fontWeight: "600",
+                                        textTransform: "uppercase",
+                                        color: "var(--text-muted)",
+                                        marginBottom: "0.25rem",
+                                        letterSpacing: "0.5px",
+                                      }}
+                                    >
+                                      Endereço
+                                    </p>
+                                    <p
+                                      style={{
+                                        fontSize: "0.9rem",
+                                        color: "var(--text-secondary)",
+                                        lineHeight: "1.5",
+                                        margin: 0,
+                                      }}
+                                    >
+                                      {location.address}
+                                    </p>
+                                  </div>
+                                </div>
+                              </CardComponent.CardContent>
+                            </CardComponent.CardBody>
+                            <CardComponent.CardFooter
+                              style={{
+                                display: "flex",
+                                gap: "0.5rem",
+                                justifyContent: "flex-end",
+                              }}
+                            >
+                              {location.latitude && location.longitude && (
+                                <Button
+                                  size="sm"
+                                  variant="secondary"
+                                  onClick={() =>
+                                    setMapModal({ isOpen: true, location })
+                                  }
+                                >
+                                  <Lucide.MapPlus size={16} /> Mapa
+                                </Button>
+                              )}
+                            </CardComponent.CardFooter>
+                          </CardComponent.Card>
+                        ))}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            )}
+
+            <div style={{ marginTop: "2rem" }}>
+              <Button size="md" rightIcon={<Lucide.ArrowUpRight />}>
                 <span>Combinar Entrega Grande</span>
               </Button>
-            </CardComponent.CardFooter>
-          </CardComponent.Card>
-        </div>
-      </section>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <Dialog.Dialog
+        open={mapModal.isOpen && !!(mapModal.location?.latitude && mapModal.location?.longitude)}
+        onOpenChange={(isOpen) => setMapModal((prev) => ({ ...prev, isOpen: isOpen && !!(mapModal.location?.latitude && mapModal.location?.longitude) }))}
+      >
+        <Dialog.DialogContent
+          style={{ width: "90vw", maxWidth: "600px", padding: "1.5rem" }}
+        >
+          <Dialog.DialogHeader>
+            <Dialog.DialogTitle>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "0.85rem",
+                  alignItems: "center",
+                }}
+              >
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Badge variant="danger">BETA</Badge>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <strong>Recurso Em Fase Experimental</strong>
+                      <p>
+                        A localização exibida pode apresentar imprecisões.
+                        Consulte-nos para mais informações.
+                      </p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+                {mapModal.location?.name || "Localização no Mapa"}
+              </div>
+            </Dialog.DialogTitle>
+            <Dialog.DialogDescription>
+              {mapModal.location?.address}
+            </Dialog.DialogDescription>
+          </Dialog.DialogHeader>
+          <div
+            style={{
+              marginTop: "1rem",
+              height: "400px",
+              width: "100%",
+              borderRadius: "8px",
+              overflow: "hidden",
+            }}
+          >
+            {mapModal.isOpen && mapModal.location?.latitude && mapModal.location?.longitude && (
+              <iframe
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                loading="lazy"
+                title="Google Maps"
+                allowFullScreen
+                src={`https://www.google.com/maps?q=${mapModal.location.latitude},${mapModal.location.longitude}&output=embed`}
+              />
+            )}
+          </div>
+          <Dialog.DialogFooter style={{ marginTop: "1rem" }}>
+            <div
+              style={{
+                display: "flex",
+                gap: "1rem",
+                justifyContent: "flex-end",
+                width: "100%",
+              }}
+            >
+              <Button
+                variant="outline"
+                size="md"
+                onClick={() =>
+                  setMapModal((prev) => ({ ...prev, isOpen: false }))
+                }
+              >
+                Fechar
+              </Button>
+              <Button
+                size="md"
+                rightIcon={<Lucide.ArrowUpRight size={18} />}
+                onClick={() => {
+                  if (mapModal.location?.address) {
+                    window.open(
+                      `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapModal.location.address)}`,
+                      "_blank",
+                    );
+                  }
+                }}
+              >
+                Ver no Google Maps
+              </Button>
+            </div>
+          </Dialog.DialogFooter>
+        </Dialog.DialogContent>
+      </Dialog.Dialog>
     </>
   );
 }
