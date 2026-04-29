@@ -1,12 +1,12 @@
 import * as React from "react";
-import * as Dialog from "../ui/Dialog";
 import * as Lucide from "lucide-react";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
 
-import styles from "./PixModal.module.css";
-import { Button } from "../ui/Button";
+import * as Dialog from "@/components//ui/Dialog";
+import { Button } from "@/components/ui/Button";
 
-import qrCodePix from "../../assets/qr-code-example.png";
+import qrCodePix from "@/assets/images/qr-code-example.png";
+import styles from "./PixModal.module.css";
 
 export default function PixModal() {
   const [, copyToClipboard] = useCopyToClipboard();
@@ -24,7 +24,9 @@ export default function PixModal() {
   return (
     <Dialog.DialogContent>
       <Dialog.DialogHeader>
-        <Dialog.DialogTitle>Faça uma doação via PIX</Dialog.DialogTitle>
+        <Dialog.DialogTitle>
+          Faça uma doação via PIX. Qualquer valor é bem-vindo! :{")"}
+        </Dialog.DialogTitle>
         <Dialog.DialogDescription>
           Para doar, escaneie o QR Code com o app do seu banco ou copie a chave
           PIX abaixo.
@@ -34,31 +36,6 @@ export default function PixModal() {
         {/* qr code image */}
         <div className={styles.qrCodeWrapper}>
           <img src={qrCodePix} alt="Código QR para doação via PIX" />
-        </div>
-        {/* clipboard pix key */}
-        <div className={styles.pixCard}>
-          <div>
-            <p>Copiar chave PIX</p>
-            <span>Clique para copiar</span>
-          </div>
-          <Button
-            size="sm"
-            variant="primary"
-            onClick={handleCopyClick}
-            disabled={isCopied}
-          >
-            {isCopied ? (
-              <>
-                <Lucide.Check size={20} />
-                Copiado!
-              </>
-            ) : (
-              <>
-                <Lucide.Copy size={20} />
-                {pixKey}
-              </>
-            )}
-          </Button>
         </div>
 
         {/* beneficiary data */}
@@ -80,6 +57,32 @@ export default function PixModal() {
               <strong>Conta Corrente:</strong> 0136878-8
             </li>
           </ul>
+        </div>
+
+        {/* clipboard pix key */}
+        <div className={styles.pixCard}>
+          <div>
+            <p>Copiar chave PIX</p>
+            <span>Clique para copiar</span>
+          </div>
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={handleCopyClick}
+            disabled={isCopied}
+          >
+            {isCopied ? (
+              <>
+                <Lucide.Check size={20} />
+                Copiado!
+              </>
+            ) : (
+              <>
+                <Lucide.Copy size={20} />
+                {pixKey}
+              </>
+            )}
+          </Button>
         </div>
       </div>
     </Dialog.DialogContent>

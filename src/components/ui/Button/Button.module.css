@@ -42,37 +42,23 @@
 
 .secondary {
   background-color: var(--btn-secondary);
-  color: var(--white);
+  color: var(--secondary);
 }
 
 .secondary:hover:not(:disabled) {
-  background-color: var(--btn-secondary-hover)
+  background-color: var(--btn-secondary-hover);
+  color: var(--white);
 }
 
 .outline {
   color: var(--text-primary);
   border-color: var(--border);
-  background-color: rgba(255, 255, 255, 0.691);
+  background-color: var(--btn-outline-bg);
 }
 
 .outline:hover:not(:disabled) {
   background-color: var(--white);
-  color: var(--text-secondary)
-}
-
-.instagram {
-  border-style: dotted;
-  border-color: var(--btn-instagram);
-  color: var(--btn-instagram);
-  border-width: 2px; 
-}
-
-.instagram:hover:not(:disabled) {
-  border-style: solid;
-  border-color: var(--btn-instagram);
-  
-  background-color: var(--btn-instagram);
-  color: var(--white);
+  color: var(--text-secondary);
 }
 
 .ghost {
@@ -80,7 +66,7 @@
 }
 
 .ghost:hover {
-  background-color: rgb(232, 232, 232);
+  background-color: var(--btn-ghost-bg);
 }
 
 .text {

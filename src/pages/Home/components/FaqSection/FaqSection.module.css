@@ -1,0 +1,88 @@
+.titleFaq {
+  display: flex;
+  margin-bottom: 2.5rem;
+  flex-direction: column;
+  text-align: center;
+}
+
+.titleFaq p {
+  font-size: medium;
+  color: var(--text-secondary);
+}
+
+.faqList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.faqList li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.faqList svg {
+  color: var(--success);
+}
+
+.faqContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.faqCardBadges {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+}
+
+.faqCardFooter {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* reveal */
+.titleFaq {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
+}
+
+.titleFaq.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.accordionWrapper {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.6s ease-out 0.2s,
+    transform 0.6s ease-out 0.2s;
+}
+
+.accordionWrapper.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .faqCardFooter,
+  .faqCardBadges {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .faqCardFooter {
+    gap: 1rem;
+  }
+
+  .faqBadge {
+    justify-content: center;
+  }
+}

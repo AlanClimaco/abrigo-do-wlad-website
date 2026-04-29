@@ -1,4 +1,4 @@
-import { Badge } from "../ui/Badge";
+import { Badge } from "@/components/ui/Badge";
 import styles from "./HeroSmall.module.css";
 
 type HeroSmallProps = {
@@ -26,9 +26,9 @@ export default function HeroSmall({
       <div className={`${styles.heroSmallContent}`}>
         <Badge
           size="lg"
-          variant="outline"
           blur={true}
-          style={{ color: "var(--white)", textTransform: "uppercase" }}
+          variant="outline"
+          style={{ color: "var(--always-white)", textTransform: "uppercase" }}
         >
           {badge}
         </Badge>

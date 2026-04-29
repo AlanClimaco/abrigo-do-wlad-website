@@ -1,10 +1,10 @@
 import type { ComponentProps, ReactNode } from "react";
 import styles from "./Badge.module.css";
-import { cn } from "../../../lib/utils";
+import { cn } from "@/lib/utils";
 
 type BadgeProps = {
   children: ReactNode;
-  variant?: "primary" | "secondary" | "outline";
+  variant?: "primary" | "secondary" | "outline" | "danger" | "success";
   size?: "sm" | "md" | "lg";
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;

@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 
-import { cn } from "../../../lib/utils";
+import { cn } from "@/lib/utils";
 import styles from "./Dialog.module.css";
 
 import { X } from "lucide-react";
@@ -47,9 +47,11 @@ const DialogHeader = ({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div className={cn(styles.header, className)} {...props}>
-    <div className={styles.headerContent}>{children}</div>
+    <div className={styles.headerContent}>
+      <div>{children}</div>
+    </div>
     <DialogPrimitive.Close className={styles.closeButton}>
-      <X />
+      <X size={20} />
     </DialogPrimitive.Close>
   </div>
 );

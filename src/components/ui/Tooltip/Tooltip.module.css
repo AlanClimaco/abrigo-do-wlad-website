@@ -1,0 +1,199 @@
+.TooltipContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 9999;
+  border-radius: var(--radius-lg);
+  padding: 15px;
+  font-size: 13px;
+  text-align: center;
+  line-height: 1;
+  max-width: 23rem;
+  color: var(--white);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+  user-select: none;
+  animation-duration: 400ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+  margin-bottom: 10px;
+}
+
+.TooltipArrow {
+  visibility: hidden;
+}
+
+.TooltipContent::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: var(--secondary);
+  transform: rotate(45deg);
+}
+
+.TooltipContent[data-side="top"] {
+  margin-bottom: 10px;
+}
+
+.TooltipContent[data-side="bottom"] {
+  margin-top: 10px;
+}
+
+.TooltipContent[data-side="left"] {
+  margin-right: 10px;
+}
+
+.TooltipContent[data-side="right"] {
+  margin-left: 10px;
+}
+
+.TooltipContent[data-side="top"]::after {
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  border-radius: 0 0 5px 0;
+}
+
+.TooltipContent[data-side="bottom"]::after {
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  border-radius: 5px 0 0 0;
+}
+
+.TooltipContent[data-side="left"]::after {
+  right: -5px;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  border-radius: 0 5px 0 0;
+}
+
+.TooltipContent[data-side="right"]::after {
+  left: -5px;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  border-radius: 0 0 0 5px;
+}
+
+.TooltipContent[data-state="delayed-open"] {
+  animation-name: fadeIn;
+}
+
+.TooltipContent[data-state="closed"] {
+  animation-name: fadeOut;
+}
+
+.TooltipContent[data-state="delayed-open"][data-side="top"] {
+  animation-name: slideDownAndFade;
+}
+.TooltipContent[data-state="delayed-open"][data-side="right"] {
+  animation-name: slideLeftAndFade;
+}
+.TooltipContent[data-state="delayed-open"][data-side="bottom"] {
+  animation-name: slideUpAndFade;
+}
+.TooltipContent[data-state="delayed-open"][data-side="left"] {
+  animation-name: slideRightAndFade;
+}
+
+.TooltipContent[data-state="closed"][data-side="top"] {
+  animation-name: fadeOutAndSlideDown;
+}
+.TooltipContent[data-state="closed"][data-side="right"] {
+  animation-name: fadeOutAndSlideLeft;
+}
+.TooltipContent[data-state="closed"][data-side="bottom"] {
+  animation-name: fadeOutAndSlideUp;
+}
+.TooltipContent[data-state="closed"][data-side="left"] {
+  animation-name: fadeOutAndSlideRight;
+}
+
+@keyframes slideUpAndFade {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes slideRightAndFade {
+  from {
+    opacity: 0;
+    transform: translateX(-8px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes slideDownAndFade {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes slideLeftAndFade {
+  from {
+    opacity: 0;
+    transform: translateX(8px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes fadeOutAndSlideUp {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(8px) scale(0.95);
+  }
+}
+
+@keyframes fadeOutAndSlideRight {
+  from {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-8px) scale(0.95);
+  }
+}
+
+@keyframes fadeOutAndSlideDown {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.95);
+  }
+}
+
+@keyframes fadeOutAndSlideLeft {
+  from {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(8px) scale(0.95);
+  }
+}

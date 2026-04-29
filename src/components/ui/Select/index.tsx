@@ -2,7 +2,7 @@ import * as React from "react";
 import * as Lucide from "lucide-react";
 import * as SelectPrimitive from "@radix-ui/react-select";
 
-import { cn } from "../../../lib/utils";
+import { cn } from "@/lib/utils";
 import styles from "./Select.module.css";
 
 const Select = SelectPrimitive.Root;

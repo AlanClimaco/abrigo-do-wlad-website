@@ -1,27 +1,45 @@
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import * as Lucide from "lucide-react";
 import styles from "./Footer.module.css";
 
-import logo from "../../assets/logo.png";
-import { TextLink } from "../common/Link";
+import logo from "@/assets/images/logo.png";
+import logoDark from "@/assets/images/logo-dark-mode.png";
+
+import { ExternalLink } from "@/components/common/ExternalLink";
+import { Badge } from "@/components/ui/Badge";
+import { useIsDesktop } from "@/hooks/useIsDesktop";
 
 export function Footer() {
+  const isDesktop = useIsDesktop();
+
   return (
     <footer id="footer" className={styles.footer}>
       <div className={`container ${styles.footerGrid}`}>
         {/* Info */}
         <div className={styles.footerInfo}>
           <div className={styles.footerBrand}>
-            <img src={logo} alt="logotipo do Abrigo do Wlad" />
+            {/* logos */}
+            <img
+              src={logo}
+              alt="logotipo do Abrigo do Wlad"
+              className={styles.logoLight}
+            />
+            <img
+              src={logoDark}
+              alt="logotipo do Abrigo do Wlad"
+              className={styles.logoDark}
+            />
+
             <span>ABRIGO DO WLAD</span>
           </div>
           <p>
             Resgatando vidas e transformando histórias desde 2012. Somos uma
             organização sem fins lucrativos dedicada ao amor e respeito animal.
           </p>
-          <div className={styles.footerPlace}>
-            <Lucide.MapPin size={16} />
-            <span>Atuamos em Morumbi, SP</span>
+          <div className={styles.footerBadges}>
+            <Badge variant="success" leftIcon={<Lucide.MapPin />}>
+              Atuamos em Morumbi, SP
+            </Badge>
           </div>
         </div>
 
@@ -29,19 +47,19 @@ export function Footer() {
         <div className={styles.footerLinks}>
           <h4 className={styles.columnTitle}>Navegação</h4>
           <NavLink to="/" className={styles.linkItem}>
-            <Lucide.ChevronRight /> Início
+            Início
           </NavLink>
           <NavLink to="/adotar" className={styles.linkItem}>
-            <Lucide.ChevronRight /> Quero Ajudar
+            Nossos Cães
           </NavLink>
           <NavLink to="/sobre" className={styles.linkItem}>
-            <Lucide.ChevronRight /> Sobre Nós
+            Sobre Nós
           </NavLink>
           <NavLink to="/tampinhas" className={styles.linkItem}>
-            <Lucide.ChevronRight /> Projeto Tampinhas
+            Projeto Tampinhas
           </NavLink>
           <NavLink to="/formulario" className={styles.linkItem}>
-            <Lucide.ChevronRight /> Formulário de Interesse
+            Formulário de Interesse
           </NavLink>
         </div>
 
@@ -75,17 +93,26 @@ export function Footer() {
 
       <div className={`container ${styles.footerBottom}`}>
         <div className={styles.footerBottomGroup}>
-          <p style={{ opacity: 0.8 }}>
-            &copy; {new Date().getFullYear()} Abrigo do Wlad. Todos os Direitos
-            Reservados
-          </p>
+          <div className={styles.footerBottomCopyright}>
+            <p style={{ opacity: 0.8 }}>
+              &copy; {new Date().getFullYear()} Abrigo do Wlad
+            </p>
+            {isDesktop && <span style={{ opacity: 0.5 }}>•</span>}
+            <p>Todos os Direitos Reservados</p>
+          </div>
         </div>
         <div className={styles.footerBottomGroup}>
-          <TextLink href="#">Política de Privacidade</TextLink>
-          <TextLink href="#">Termos de Responsabilidade</TextLink>
+          <Link to="/">Política de Privacidade</Link>
+          <Link to="/">Termos de Responsabilidade</Link>
           <p className={styles.credits}>
-            Por <TextLink href="https://github.com/AlanClimaco">Alan</TextLink>&{" "}
-            <TextLink href="https://github.com/spantalho">Luis</TextLink>
+            Por{" "}
+            <ExternalLink href="https://alanclimaco.github.io/Portfolio/">
+              Alan
+            </ExternalLink>
+            &{" "}
+            <ExternalLink href="https://github.com/spantalho">
+              Luis
+            </ExternalLink>
           </p>
         </div>
       </div>

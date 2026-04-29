@@ -1,7 +1,8 @@
-.recycleContainer {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  align-items: start;
+.mainContainer {
+  display: flex;
+  /* grid-template-columns: 1.5fr 1fr; */
+  flex-direction: column;
+  /* align-items: start; */
   gap: 50px;
 }
 
@@ -25,7 +26,7 @@
 }
 
 .checklistIcon {
-  color: green;
+  color: var(--success);
 }
 
 .collectionContainer {
@@ -47,6 +48,12 @@
 .collectionContainer p {
   font-size: 0.85rem;
   margin: 0;
+}
+
+.collectionLocation {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
 }
 
 @media (max-width: 768px) {

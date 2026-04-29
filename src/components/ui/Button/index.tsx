@@ -1,17 +1,11 @@
 import type { ComponentProps, ReactNode } from "react";
 import style from "./Button.module.css";
-import { cn } from "../../../lib/utils";
+import { cn } from "@/lib/utils";
 
 type ButtonProps = {
   children: ReactNode;
-  variant?:
-    | "primary"
-    | "secondary"
-    | "outline"
-    | "instagram"
-    | "text"
-    | "ghost";
-  size?: "sm" | "md" | "lg" | "icon"
+  variant?: "primary" | "secondary" | "outline" | "text" | "ghost";
+  size?: "sm" | "md" | "lg" | "icon";
   blur?: boolean;
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;

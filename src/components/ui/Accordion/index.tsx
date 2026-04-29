@@ -1,8 +1,8 @@
 import * as React from "react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
-import { ChevronDown } from "lucide-react";
+import { MinusCircle, PlusCircle } from "lucide-react";
 
-import { cn } from "../../../lib/utils";
+import { cn } from "@/lib/utils";
 import styles from "./Accordion.module.css";
 
 const Accordion = React.forwardRef<
@@ -40,7 +40,8 @@ const AccordionTrigger = React.forwardRef<
       {...props}
     >
       {children}
-      <ChevronDown className={styles.chevron} />
+      <PlusCircle className={cn(styles.chevron, styles.iconPlus)} />
+      <MinusCircle className={cn(styles.chevron, styles.iconMinus)} />{" "}
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
 ));

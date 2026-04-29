@@ -9,6 +9,21 @@
   user-select: none;
 }
 
+.badge svg {
+  width: 15px;
+  height: 15px;
+}
+
+.badge.sm svg {
+  width: 12px;
+  height: 12px;
+}
+
+.badge.lg svg {
+  width: 20px;
+  height: 20px;
+}
+
 .content {
   line-height: 1;
 }
@@ -30,9 +45,19 @@
 }
 
 .outline {
-  background-color: rgba(255, 255, 255, 0.109);
+  background-color: var(--btn-ghost-bg);
   color: var(--text-primary);
   border-color: var(--border);
+}
+
+.danger {
+  background-color: var(--badge-danger);
+  color: var(--white);
+}
+
+.success {
+  background-color: var(--badge-success);
+  color: var(--white);
 }
 
 /* sizes */

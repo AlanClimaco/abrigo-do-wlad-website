@@ -1,8 +1,0 @@
-.link {
-  color: var(--text-secondary);
-  transition: var(--transition);
-}
-
-.link:hover {
-  color: var(--text-primary);
-}

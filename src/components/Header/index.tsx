@@ -1,15 +1,21 @@
 import { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router";
-import styles from "./Header.module.css";
-import logo from "../../assets/logo.png";
-import { Button } from "../ui/Button";
 import * as Lucide from "lucide-react";
-import * as Dialog from "../ui/Dialog";
-import PixModal from "../PixModal";
+
+import logo from "@/assets/images/logo.png";
+import logoDark from "@/assets/images/logo-dark-mode.png";
+
+import { Button } from "@/components/ui/Button";
+import * as Dialog from "@/components/ui/Dialog";
+import { ThemeToggle } from "../ThemeToggle";
+
+import PixModal from "@/components/PixModal";
+import styles from "./Header.module.css";
 
 export function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const [logoError, setLogoError] = useState<boolean>(false);
   const location = useLocation();
 
   // scroll detect
@@ -22,12 +28,10 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Função para abrir/fechar o menu
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
-  // Função para fechar o menu ao clicar em um link (importante para UX mobile)
   const closeMenu = () => {
     setMenuOpen(false);
   };
@@ -41,35 +45,36 @@ export function Header() {
   const headerClasses = `${styles.headerContainer} ${
     isScrolled && !menuOpen ? styles.headerScrolled : ""
   }`;
+
   return (
     <header className={headerClasses}>
       <div className={styles.logo}>
         <NavLink to="/" onClick={closeMenu}>
-          <img
-            src={logo}
-            alt="Abrigo do Wlad"
-            onError={(e) => {
-              e.currentTarget.style.display = "none";
-              if (e.currentTarget.parentElement) {
-                e.currentTarget.parentElement.innerText = "ABRIGO DO WLAD";
-                e.currentTarget.parentElement.style.fontWeight = "800";
-                e.currentTarget.parentElement.style.color = "var(--secondary)";
-              }
-            }}
-          />
+          {logoError ? (
+            <span style={{ fontWeight: 800, color: "var(--primary)" }}>
+              ABRIGO DO WLAD
+            </span>
+          ) : (
+            <>
+              {/* LOGO MODO CLARO */}
+              <img
+                src={logo}
+                alt="Abrigo do Wlad"
+                className={styles.logoLight}
+                onError={() => setLogoError(true)}
+              />
+
+              {/* LOGO MODO ESCURO */}
+              <img
+                src={logoDark}
+                alt="Abrigo do Wlad"
+                className={styles.logoDark}
+                onError={() => setLogoError(true)}
+              />
+            </>
+          )}
         </NavLink>
       </div>
-
-      {/* BOTÃO HAMBURGER (MOBILE) */}
-      <button
-        className={`${styles.hamburger} ${menuOpen ? styles.active : ""}`}
-        onClick={toggleMenu}
-        aria-label="Menu"
-      >
-        <span className={styles.bar}></span>
-        <span className={styles.bar}></span>
-        <span className={styles.bar}></span>
-      </button>
 
       {/* NAVEGAÇÃO */}
       <nav className={`${styles.navMenu} ${menuOpen ? styles.active : ""}`}>
@@ -100,15 +105,11 @@ export function Header() {
         >
           Tampinhas
         </NavLink>
+
         {/* Botão de Doação */}
         <Dialog.Dialog>
           <Dialog.DialogTrigger asChild>
-            <Button
-              className={styles.mainBtn}
-              size="md"
-              variant="secondary"
-              style={{ borderRadius: "var(--radius-xl)" }}
-            >
+            <Button className={styles.mainBtn} size="md" variant="secondary">
               <Lucide.HeartHandshake size={20} />
               <span>Quero Ajudar</span>
             </Button>
@@ -116,6 +117,21 @@ export function Header() {
           <PixModal />
         </Dialog.Dialog>
       </nav>
+
+      {/* AÇÕES */}
+      <div className={styles.actionsContainer}>
+        <ThemeToggle />
+
+        <button
+          className={`${styles.hamburger} ${menuOpen ? styles.active : ""}`}
+          onClick={toggleMenu}
+          aria-label="Menu"
+        >
+          <span className={styles.bar}></span>
+          <span className={styles.bar}></span>
+          <span className={styles.bar}></span>
+        </button>
+      </div>
     </header>
   );
 }

@@ -3,7 +3,7 @@
   width: 100%;
   height: 100%;
   border-radius: var(--radius-sm);
-  /* border: 1px solid var(--border); */
+  border: 1px solid var(--border);
   /* background-color: var(--accent-primary); */
 }
 
@@ -18,11 +18,12 @@
   user-select: none;
   touch-action: none;
   padding: 2px;
-  background: #f1f1f1;
+  background: var(--scroll-track);
 }
 .ScrollAreaScrollbar:hover {
-  background: #e0e0e0;
+  background: var(--scroll-corner);
 }
+
 .ScrollAreaScrollbar[data-orientation="vertical"] {
   width: 10px;
 }
@@ -33,10 +34,11 @@
 
 .ScrollAreaThumb {
   flex: 1;
-  background: #c1c1c1;
+  background: var(--scroll-thumb);
   border-radius: 10px;
   position: relative;
 }
+
 .ScrollAreaThumb::before {
   content: "";
   position: absolute;
@@ -50,5 +52,5 @@
 }
 
 .ScrollAreaCorner {
-  background: #e0e0e0;
+  background: var(--scroll-corner);
 }

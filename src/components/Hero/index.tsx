@@ -1,25 +1,35 @@
 import { Link } from "react-router";
-import styles from "./Hero.module.css";
-import { Button } from "../ui/Button";
 import * as Lucide from "lucide-react";
-import { useState } from "react";
-import type { DogProps } from "../../data/dogs";
-import { getRandomDog } from "../../utils/getDog";
-import { Badge } from "../ui/Badge";
-import { getOptimizedImageUrl, getThumbnaillUrl } from "../../utils/cdn";
 
-export function Hero() {
-  const [dog] = useState<DogProps>(getRandomDog);
+import { Button } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/Badge";
+import { Skeleton } from "@/components/ui/Skeleton";
 
-  const mainImage = dog?.fotos[0] ?? null;
-  const secondaryImage = dog?.fotos[1] ?? null;
+import type { Dog } from "@/types/dogs";
+import { getOptimizedImageUrl, getThumbnaillUrl } from "@/utils/cdn";
 
-  const heroImageUrl = getOptimizedImageUrl(mainImage, {
-    crop: "fill",
-    width: 600,
-    height: 500,
-  });
-  const thumbnailImageUrl = getThumbnaillUrl(secondaryImage, 128, 200);
+import styles from "./Hero.module.css";
+
+interface HeroProps {
+  dog: Dog | null;
+}
+
+export function Hero({ dog }: HeroProps) {
+  const mainImage = dog?.fotos?.[0] ?? null;
+  const secondaryImage = dog?.fotos?.[1] ?? null;
+
+  const heroImageUrl = mainImage
+    ? getOptimizedImageUrl(mainImage, {
+        crop: "fill",
+        gravity: "auto",
+        width: 600,
+        height: 500,
+      })
+    : "";
+
+  const thumbnailImageUrl = secondaryImage
+    ? getThumbnaillUrl(secondaryImage, 128, 200)
+    : "";
 
   return (
     <section className={styles.heroContainer}>
@@ -49,12 +59,17 @@ export function Hero() {
 
       {/* image */}
       <div className={styles.heroOverlay}>
-        <img
-          className={styles.heroImage}
-          src={heroImageUrl}
-          alt={dog ? `Foto de ${dog.nome}` : "Cachorro para adoção"}
-        />
-        {mainImage && secondaryImage && thumbnailImageUrl && heroImageUrl && (
+        {heroImageUrl ? (
+          <img
+            className={styles.heroImage}
+            src={heroImageUrl}
+            alt={dog ? `Foto de ${dog.nome}` : "Cachorro para adoção"}
+          />
+        ) : (
+          <Skeleton className={styles.heroImage} />
+        )}
+
+        {mainImage && secondaryImage && thumbnailImageUrl && (
           <img
             className={styles.heroThumbnail}
             src={thumbnailImageUrl}
