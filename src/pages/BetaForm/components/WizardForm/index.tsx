@@ -70,6 +70,7 @@ export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
     prevStep,
     goToStep,
     validateCurrentStep,
+    highestCompletedStep,
   } = useWizardForm();
 
   const { label, icon: Icon } = STEP_TITLES[currentStep];
@@ -276,7 +277,7 @@ export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
                       index === currentStep ? styles.stepActive : ""
                     } ${index < currentStep ? styles.stepCompleted : ""}`}
                     onClick={() => goToStep(index)}
-                    disabled={index > currentStep}
+                    disabled={index > highestCompletedStep}
                   >
                     {index < currentStep ? (
                       <Lucide.Check size={18} />

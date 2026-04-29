@@ -145,12 +145,12 @@ export function useWizardForm() {
 
   const goToStep = React.useCallback(
     (step: number) => {
-      if (step >= 0 && step < totalSteps && step <= currentStep) {
+      if (step >= 0 && step < totalSteps && step <= highestCompletedStep) {
         setErrors({});
         navigate(`/beta/formulario/step/${step + 1}`);
       }
     },
-    [currentStep, totalSteps, navigate],
+    [highestCompletedStep, totalSteps, navigate],
   );
 
   return {
@@ -167,5 +167,6 @@ export function useWizardForm() {
     goToStep,
     validateCurrentStep,
     setErrors,
+    highestCompletedStep,
   };
 }
