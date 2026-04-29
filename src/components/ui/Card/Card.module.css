@@ -232,7 +232,7 @@
   .cardFooter,
   .cardContent p,
   .card {
-    text-align: center !important;
+    text-align: center;
   }
 
   .cardContent {
