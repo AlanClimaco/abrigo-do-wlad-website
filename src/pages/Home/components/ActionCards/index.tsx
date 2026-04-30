@@ -71,7 +71,7 @@ export function ActionCards() {
         <Card.CardBody>
           <Card.CardHeader>
             <Card.CardIcon>
-              <Lucide.QrCode size={38} strokeWidth={1.5} />
+              <Lucide.HeartHandshake size={38} strokeWidth={1.5} />
             </Card.CardIcon>
             <Card.CardTitle>Faça uma Doação</Card.CardTitle>
           </Card.CardHeader>
