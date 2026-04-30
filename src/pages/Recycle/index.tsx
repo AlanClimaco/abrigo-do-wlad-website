@@ -293,12 +293,6 @@ export default function Recycle() {
                 ))}
               </Accordion>
             )}
-
-            <div style={{ marginTop: "2rem" }}>
-              <Button size="md" rightIcon={<Lucide.ArrowUpRight />}>
-                <span>Combinar Entrega Grande</span>
-              </Button>
-            </div>
           </div>
         </section>
       </div>
