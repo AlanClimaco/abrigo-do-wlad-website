@@ -16,7 +16,9 @@ export function ScrollIndicators({
 }: ScrollIndicatorsProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [activeSubIndex, setActiveSubIndex] = useState(-1);
-  const [subSections, setSubSections] = useState<{ node: HTMLElement; label: string }[][]>([]);
+  const [subSections, setSubSections] = useState<
+    { node: HTMLElement; label: string }[][]
+  >([]);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -119,20 +121,29 @@ export function ScrollIndicators({
   };
 
   const visibleCount = Math.min(5, sectionCount);
-  const startIndex = Math.max(0, Math.min(activeIndex - Math.floor(visibleCount / 2), sectionCount - visibleCount));
-  const visibleIndices = Array.from({ length: visibleCount }).map((_, i) => startIndex + i);
+  const startIndex = Math.max(
+    0,
+    Math.min(
+      activeIndex - Math.floor(visibleCount / 2),
+      sectionCount - visibleCount,
+    ),
+  );
+  const visibleIndices = Array.from({ length: visibleCount }).map(
+    (_, i) => startIndex + i,
+  );
 
   const hasMoreTop = startIndex > 0;
   const hasMoreBottom = startIndex + visibleCount < sectionCount;
 
-  const { isVisible, isFadingOut, hideIndicator, showIndicator } = useIndicatorStorage();
+  const { isVisible, isFadingOut, hideIndicator, showIndicator } =
+    useIndicatorStorage();
 
   if (!isVisible && !isFadingOut) {
     return (
       <div className={styles.hiddenArea}>
-        <button 
-          className={styles.showButton} 
-          onClick={showIndicator} 
+        <button
+          className={styles.showButton}
+          onClick={showIndicator}
           title="Mostrar navegação"
           aria-label="Mostrar navegação"
         >
@@ -143,12 +154,14 @@ export function ScrollIndicators({
   }
 
   return (
-    <nav className={`${styles.indicators} ${isFadingOut ? styles.fadeOut : styles.fadeIn}`}>
+    <nav
+      className={`${styles.indicators} ${isFadingOut ? styles.fadeOut : styles.fadeIn}`}
+    >
       <div className={styles.indicatorWrapper}>
         <div className={styles.dotsContainer}>
-          <button 
-            className={styles.hideButton} 
-            onClick={hideIndicator} 
+          <button
+            className={styles.hideButton}
+            onClick={hideIndicator}
             title="Ocultar navegação"
             aria-label="Ocultar navegação"
           >
@@ -156,7 +169,8 @@ export function ScrollIndicators({
           </button>
           {visibleIndices.map((index, i) => {
             const isEdgeTop = i === 0 && hasMoreTop;
-            const isEdgeBottom = i === visibleIndices.length - 1 && hasMoreBottom;
+            const isEdgeBottom =
+              i === visibleIndices.length - 1 && hasMoreBottom;
             const edgeClass = isEdgeTop || isEdgeBottom ? styles.edgeDot : "";
             const isParentActive = index === activeIndex;
             const subs = subSections[index] || [];
@@ -167,9 +181,12 @@ export function ScrollIndicators({
                   className={`${styles.dot} ${isParentActive ? styles.active : ""} ${edgeClass}`}
                   onClick={() => handleDotClick(index)}
                   aria-label={`Ir para ${labels[index] || `seção ${index + 1}`}`}
+                  title={labels[index] || `Seção ${index + 1}`}
                 />
                 {subs.length > 0 && (
-                  <div className={`${styles.accordionWrapper} ${isParentActive ? styles.accordionOpen : ""}`}>
+                  <div
+                    className={`${styles.accordionWrapper} ${isParentActive ? styles.accordionOpen : ""}`}
+                  >
                     <div className={styles.accordionInner}>
                       <div className={styles.subDotsContainer}>
                         {subs.map((sub, subIdx) => (
@@ -202,18 +219,27 @@ export function ScrollIndicators({
                 <div className={styles.indicatorRow}>
                   <span
                     className={`${styles.label} ${isParentActive ? styles.activeLabel : ""}`}
+                    title={labels[index] || ""}
                   >
                     {labels[index] || ""}
                   </span>
                 </div>
                 {subs.length > 0 && (
-                  <div className={`${styles.accordionWrapper} ${isParentActive ? styles.accordionOpen : ""}`}>
-                    <div className={`${styles.accordionInner} ${styles.subRowInner}`}>
+                  <div
+                    className={`${styles.accordionWrapper} ${isParentActive ? styles.accordionOpen : ""}`}
+                  >
+                    <div
+                      className={`${styles.accordionInner} ${styles.subRowInner}`}
+                    >
                       <div className={styles.subRowsContainer}>
                         {subs.map((sub, subIdx) => (
-                          <div key={`sub-row-${subIdx}`} className={styles.subRow}>
+                          <div
+                            key={`sub-row-${subIdx}`}
+                            className={styles.subRow}
+                          >
                             <span
                               className={`${styles.subLabel} ${subIdx === activeSubIndex ? styles.activeSubLabel : ""}`}
+                              title={sub.label}
                             >
                               {sub.label}
                             </span>
