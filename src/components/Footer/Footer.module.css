@@ -134,6 +134,7 @@
 .footerBottom {
   display: flex;
   text-align: center;
+  align-items: center;
   justify-content: space-between;
   font-weight: 500;
   margin-top: 4rem;
@@ -155,7 +156,6 @@
 .credits {
   display: inline-flex;
   align-items: center;
-  opacity: 0.8;
 }
 
 .credits a {

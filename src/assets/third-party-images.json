@@ -1,4 +1,15 @@
 {
+  "privacy_policy": {
+    "photoId": "1649766850524-5e4e376e5f9b",
+    "author": {
+      "name": "Dasha Urvachova",
+      "profileUrl": "https://unsplash.com/@dashikka"
+    },
+    "license": {
+      "name": "unsplash",
+      "url": "https://unsplash.com/license"
+    }
+  },
   "recycle": {
     "photoId": "1642631171488-23d631eba638",
     "author": {
