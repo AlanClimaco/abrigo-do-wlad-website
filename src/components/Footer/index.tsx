@@ -102,8 +102,7 @@ export function Footer() {
           </div>
         </div>
         <div className={styles.footerBottomGroup}>
-          <Link to="/">Política de Privacidade</Link>
-          <Link to="/">Termos de Responsabilidade</Link>
+          <Link to="/politica-de-privacidade">Política de Privacidade</Link>
           <p className={styles.credits}>
             Por{" "}
             <ExternalLink href="https://alanclimaco.github.io/Portfolio/">

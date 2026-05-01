@@ -7,6 +7,7 @@ import About from "./pages/About";
 import Recycle from "./pages/Recycle";
 import Adopt from "./pages/Adopt";
 import Form from "./pages/Form";
+import PrivacyPolicy from "./pages/Legal";
 import ScrollToTop from "./components/common/ScrollToTop";
 
 export function AppRoutes() {
@@ -23,6 +24,7 @@ export function AppRoutes() {
         <Route path="/tampinhas" element={<Recycle />} />
         <Route path="/adotar" element={<Adopt />} />
         <Route path="/formulario" element={<Form />} />
+        <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
 
