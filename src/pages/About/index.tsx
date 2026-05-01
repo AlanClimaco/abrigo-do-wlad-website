@@ -36,8 +36,8 @@ export default function About() {
     <>
       <ScrollIndicators
         containerRef={containerRef}
-        sectionCount={2}
-        labels={["Trajetória", "Teste"]}
+        sectionCount={1}
+        labels={["Trajetória"]}
       />
       <HeroSmall
         image="/images/hero-dog.jpg"
@@ -51,7 +51,9 @@ export default function About() {
           style={{ gridTemplateColumns: "1.5fr 1fr", alignItems: "start" }}
         >
           <div className={styles.historyText}>
-            <h2 className="section-title" data-subsection="Como tudo começou">Como tudo começou</h2>
+            <h2 className="section-title" data-subsection="Como tudo começou">
+              Como tudo começou
+            </h2>
             <p>
               Há mais de 12 anos, Wladimir Cruz deixou emprego fixo e bem
               remunerado para seguir os passos de seu pai que era uma pessoa que
@@ -107,12 +109,13 @@ export default function About() {
                   </CardComponent.CardHeader>
                   <CardComponent.CardContent>
                     <p style={{ textAlign: "justify" }}>
-                      Um dos projetos implantado para arrecadação de recursos para
-                      financiar a obra foi a reciclagem de tampinhas plásticas.
-                      Consiste na coleta de tampas plásticas ou qualquer material
-                      que seja de polipropileno que é vendido para empresas que
-                      transformam esse material e revendem para a indústria de
-                      brinquedos, eletrodomésticos, automobilística e outras.
+                      Um dos projetos implantado para arrecadação de recursos
+                      para financiar a obra foi a reciclagem de tampinhas
+                      plásticas. Consiste na coleta de tampas plásticas ou
+                      qualquer material que seja de polipropileno que é vendido
+                      para empresas que transformam esse material e revendem
+                      para a indústria de brinquedos, eletrodomésticos,
+                      automobilística e outras.
                     </p>
                   </CardComponent.CardContent>
                 </CardComponent.CardBody>
@@ -126,59 +129,6 @@ export default function About() {
               </CardComponent.Card>
             </div>
           </div>
-
-          <div className={styles.historyImageContainer}>
-            {sectionImageUrl && isDesktop ? (
-              <TooltipComponent.TooltipProvider>
-                <TooltipComponent.Tooltip alwaysOpen={true}>
-                  <TooltipComponent.TooltipTrigger>
-                    <div style={{ position: "relative" }}>
-                      <img
-                        className={styles.historyImage}
-                        src={sectionImageUrl}
-                        alt={dog ? `Foto de ${dog.nome}` : "Cachorro do abrigo"}
-                      />
-                      {dog && dog.nome && (
-                        <Badge
-                          variant="secondary"
-                          size="sm"
-                          leftIcon={<Lucide.Dog size={16} />}
-                          style={{
-                            position: "absolute",
-                            bottom: "-0.5rem",
-                            right: "-0.5rem",
-                            zIndex: 10,
-                            pointerEvents: "none",
-                            border: "3px solid var(--bg-body)",
-                          }}
-                        >
-                          {dog.nome}
-                        </Badge>
-                      )}
-                    </div>
-                  </TooltipComponent.TooltipTrigger>
-                  <TooltipComponent.TooltipContent side="bottom">
-                    <p>
-                      <strong>12+ Anos de História</strong>
-                    </p>
-                    <p>
-                      Centenas de vidas transformadas pelo amor e dedicação de
-                      voluntários.
-                    </p>
-                  </TooltipComponent.TooltipContent>
-                </TooltipComponent.Tooltip>
-              </TooltipComponent.TooltipProvider>
-            ) : (
-              <Skeleton className={styles.historyImage} />
-            )}
-          </div>
-        </div>
-
-           <div
-          className={styles.historyContainer}
-          style={{ gridTemplateColumns: "1.5fr 1fr", alignItems: "start" }}
-        >
-         
 
           <div className={styles.historyImageContainer}>
             {sectionImageUrl && isDesktop ? (
