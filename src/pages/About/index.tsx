@@ -1,9 +1,10 @@
 import { Link } from "react-router";
-
+import { useRef } from "react";
 import * as Lucide from "lucide-react";
 import * as CardComponent from "../../components/ui/Card";
 import HeroSmall from "../../components/HeroSmall";
 import { Skeleton } from "../../components/ui/Skeleton";
+import { ScrollIndicators } from "../../components/ScrollIndicators";
 
 import { getOptimizedImageUrl } from "../../utils/cdn";
 import { useDailyDog } from "../../hooks/useDailyDog";
@@ -31,22 +32,30 @@ export default function About() {
     : "";
 
   const isDesktop = useMediaQuery("(min-width: 768px)");
+  const containerRef = useRef<HTMLDivElement>(null!);
 
   return (
     <>
+      <ScrollIndicators
+        containerRef={containerRef}
+        sectionCount={1}
+        labels={["Trajetória"]}
+      />
       <HeroSmall
         image={heroImage}
         badge="Nossa Trajetória"
         title="Uma história de amor e renúncia"
         description="Conheça os passos que transformaram um quintal em um refúgio de esperança."
       />
-      <div className="container">
+      <div className="container" ref={containerRef}>
         <div
           className={styles.historyContainer}
           style={{ gridTemplateColumns: "1.5fr 1fr", alignItems: "start" }}
         >
           <div className={styles.historyText}>
-            <h2 className="section-title">Como tudo começou</h2>
+            <h2 className="section-title" data-subsection="Como tudo começou">
+              Como tudo começou
+            </h2>
             <p>
               Há mais de 12 anos, Wladimir Cruz deixou emprego fixo e bem
               remunerado para seguir os passos de seu pai que era uma pessoa que
@@ -62,7 +71,7 @@ export default function About() {
               muitos cães abandonados e ai surgiu o Abrigo do Wlad.
             </p>
 
-            <h3>O Espaço</h3>
+            <h3 data-subsection="O Espaço">O Espaço</h3>
             <p>
               Apesar do Wladimir iniciar a prestação de serviços de lar
               temporário de forma mais consistente, os recursos sempre foram
@@ -89,35 +98,38 @@ export default function About() {
               segurança, telas e telhado novo.
             </p>
 
-            <CardComponent.Card color="secondary" variant="quote">
-              <CardComponent.CardBody>
-                <CardComponent.CardHeader>
-                  <CardComponent.CardIcon>
-                    <Lucide.Coins size={30} strokeWidth={1.5} />
-                  </CardComponent.CardIcon>
-                  <CardComponent.CardTitle>
-                    Captação de Recursos
-                  </CardComponent.CardTitle>
-                </CardComponent.CardHeader>
-                <CardComponent.CardContent>
-                  <p style={{ textAlign: "justify" }}>
-                    Um dos projetos implantado para arrecadação de recursos para
-                    financiar a obra foi a reciclagem de tampinhas plásticas.
-                    Consiste na coleta de tampas plásticas ou qualquer material
-                    que seja de polipropileno que é vendido para empresas que
-                    transformam esse material e revendem para a indústria de
-                    brinquedos, eletrodomésticos, automobilística e outras.
-                  </p>
-                </CardComponent.CardContent>
-              </CardComponent.CardBody>
-              <CardComponent.CardFooter>
-                <Link to="/tampinhas" className="btn-text">
-                  <CardComponent.CardButton>
-                    Saiba Mais <Lucide.ArrowRight size={20} />
-                  </CardComponent.CardButton>
-                </Link>
-              </CardComponent.CardFooter>
-            </CardComponent.Card>
+            <div data-subsection="Captação de Recursos">
+              <CardComponent.Card color="secondary" variant="quote">
+                <CardComponent.CardBody>
+                  <CardComponent.CardHeader>
+                    <CardComponent.CardIcon>
+                      <Lucide.HandCoins size={30} strokeWidth={1.5} />
+                    </CardComponent.CardIcon>
+                    <CardComponent.CardTitle>
+                      Captação de Recursos
+                    </CardComponent.CardTitle>
+                  </CardComponent.CardHeader>
+                  <CardComponent.CardContent>
+                    <p style={{ textAlign: "justify" }}>
+                      Um dos projetos implantado para arrecadação de recursos
+                      para financiar a obra foi a reciclagem de tampinhas
+                      plásticas. Consiste na coleta de tampas plásticas ou
+                      qualquer material que seja de polipropileno que é vendido
+                      para empresas que transformam esse material e revendem
+                      para a indústria de brinquedos, eletrodomésticos,
+                      automobilística e outras.
+                    </p>
+                  </CardComponent.CardContent>
+                </CardComponent.CardBody>
+                <CardComponent.CardFooter>
+                  <Link to="/tampinhas" className="btn-text">
+                    <CardComponent.CardButton>
+                      Saiba Mais <Lucide.ArrowRight size={20} />
+                    </CardComponent.CardButton>
+                  </Link>
+                </CardComponent.CardFooter>
+              </CardComponent.Card>
+            </div>
           </div>
 
           <div className={styles.historyImageContainer}>

@@ -185,6 +185,7 @@
   box-shadow: none;
   background-color: var(--accent-primary);
   color: var(--primary);
+  border-color: var(--accent-primary);
 }
 
 .quote .card {
@@ -193,14 +194,17 @@
 
 .quote.colorSecondary {
   background-color: var(--accent-secondary);
+  border-color: var(--accent-secondary);
 }
 
 .quote.colorRed {
   background-color: var(--accent-red);
+  border-color: var(--accent-red);
 }
 
 .quote.colorGreen {
   background-color: var(--accent-green);
+  border-color: var(--accent-green);
 }
 
 .quote .cardHeader {
@@ -231,7 +235,7 @@
   .cardFooter,
   .cardContent p,
   .card {
-    text-align: center !important;
+    text-align: center;
   }
 
   .cardContent {

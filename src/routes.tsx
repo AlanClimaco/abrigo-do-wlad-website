@@ -1,10 +1,13 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
+import { VLibrasWidget } from "./components/common/VLibrasWidget";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Recycle from "./pages/Recycle";
 import Adopt from "./pages/Adopt";
+import Form from "./pages/Form";
+import PrivacyPolicy from "./pages/Legal";
 import ScrollToTop from "./components/common/ScrollToTop";
 import BetaForm from "./pages/BetaForm";
 
@@ -12,6 +15,7 @@ export function AppRoutes() {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <VLibrasWidget />
 
       <Header />
 
@@ -25,6 +29,8 @@ export function AppRoutes() {
           element={<Navigate to="/beta/formulario/step/1" replace />}
         />
         <Route path="/beta/formulario/step/:step" element={<BetaForm />} />
+        <Route path="/formulario" element={<Form />} />
+        <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
 

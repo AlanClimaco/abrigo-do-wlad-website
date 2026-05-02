@@ -5,7 +5,7 @@ import { useCopyToClipboard } from "@uidotdev/usehooks";
 import * as Dialog from "@/components//ui/Dialog";
 import { Button } from "@/components/ui/Button";
 
-import qrCodePix from "@/assets/images/qr-code-example.png";
+import qrCodePix from "@/assets/images/pix-qr-code.png";
 import styles from "./PixModal.module.css";
 
 export default function PixModal() {

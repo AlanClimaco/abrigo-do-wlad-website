@@ -63,6 +63,7 @@
   --overlay-dark: rgba(0, 0, 0, 0.6);
   --carousel-bg: rgba(0, 0, 0, 0.4);
   --glass: rgba(176, 176, 176, 0.16);
+  --glass-secondary: rgba(110, 110, 110, 0.16);
   --header-bg-scrolled: rgba(252, 234, 227, 0.95);
 
   /* Hero Gradient */
@@ -132,6 +133,7 @@ body.dark-mode {
   /* Header & UI */
   --header-bg-scrolled: rgba(26, 14, 10, 0.95);
   --glass: rgba(42, 31, 27, 0.6);
+  --glass-secondary: rgba(13, 9, 8, 0.798);
   --overlay-dark: rgba(0, 0, 0, 0.75);
   --carousel-bg: rgba(0, 0, 0, 0.6);
 
