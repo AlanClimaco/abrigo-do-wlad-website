@@ -2,7 +2,7 @@
   "title": "Política de Privacidade",
   "badge": "Transparência",
   "description": "Como protegemos seus dados e informações pessoais.",
-  "lastUpdate": "1 de maio de 2026",
+  "lastUpdate": "2 de maio de 2026",
   "sections": [
     {
       "id": "base-legal",
@@ -27,23 +27,23 @@
     {
       "id": "retencao",
       "title": "Retenção e Deleção de Dados",
-      "content": "Tratamos os dados com responsabilidade e conforme as diretrizes da LGPD:",
+      "content": "Tratamos os dados com responsabilidade e conforme o princípio de minimização da LGPD. Realizamos processamento automatizado periódico para revisão da nossa base de dados. Informações relacionadas a processos de adoção que estejam inativas ou expiradas são automaticamente excluídas para garantir que não retemos dados por tempo superior ao necessário:",
       "items": [
         "Formulários aprovados: dados deletados após aprovação concluída",
         "Formulários rejeitados: dados deletados após rejeição",
-        "Formulários em análise: deletados automaticamente após 30 dias contados a partir da data de envio do formulário, caso não sejam processados até então"
+        "Formulários em análise: excluídos automaticamente da base de dados após 30 dias contados a partir da data de envio, caso não sejam processados até então"
       ]
     },
     {
       "id": "seguranca",
       "title": "Segurança dos Dados",
       "type": "card",
-      "content": "Seus dados são armazenados e protegidos pelo Firebase (Google) com criptografia em trânsito (HTTPS). Implementamos medidas técnicas para evitar acessos não autorizados. No entanto, nenhum sistema de segurança é 100% íntegro e não é possível garantir proteção absoluta contra todas as ameaças."
+      "content": "Seus dados são armazenados de forma segura em infraestrutura de banco de dados em nuvem com criptografia em trânsito (HTTPS). Implementamos medidas técnicas para evitar acessos não autorizados. No entanto, nenhum sistema de segurança é 100% íntegro e não é possível garantir proteção absoluta contra todas as ameaças."
     },
     {
       "id": "compartilhamento",
       "title": "Compartilhamento de Dados",
-      "content": "Seus dados de formulário não são compartilhados com terceiros, exceto pelo Firebase (Google), que é responsável pelo armazenamento seguro dos dados em sua infraestrutura na nuvem e, quando aplicável, pela Vercel, onde nosso site é hospedado e que processa dados básicos de conexão (como endereços IP) estritos à segurança e funcionamento da plataforma. Ambas atuam como processadoras de dados conforme definido pela LGPD."
+      "content": "Seus dados pessoais não são vendidos ou comercializados. Eles podem ser processados por provedores de infraestrutura em nuvem e serviços de hospedagem de software estritamente técnicos (nossos Operadores de Dados), que atuam apenas sob nossas diretrizes para armazenar os dados e manter o sistema operando de forma segura, incluindo rotinas automatizadas de manutenção da base de dados. Estas ferramentas de terceiros processam dados em conformidade com as exigências da LGPD apenas para fins de segurança, funcionamento estrutural da plataforma e limpeza periódica."
     },
     {
       "id": "menores",

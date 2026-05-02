@@ -83,7 +83,7 @@ export default function PrivacyPolicy() {
                   <h2 className="section-title">{section.title}</h2>
                 
                 {section.type === 'card' ? (
-                  <CardComponent.Card color="secondary" variant="quote">
+                  <CardComponent.Card color="green" variant="quote">
                     <CardComponent.CardBody>
                       <CardComponent.CardHeader>
                         <CardComponent.CardIcon>

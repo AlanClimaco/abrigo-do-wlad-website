@@ -101,7 +101,7 @@ export default function About() {
                 <CardComponent.CardBody>
                   <CardComponent.CardHeader>
                     <CardComponent.CardIcon>
-                      <Lucide.Coins size={30} strokeWidth={1.5} />
+                      <Lucide.HandCoins size={30} strokeWidth={1.5} />
                     </CardComponent.CardIcon>
                     <CardComponent.CardTitle>
                       Captação de Recursos

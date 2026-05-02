@@ -51,7 +51,7 @@ export default function Recycle() {
     location: null,
   });
 
-  // Busca os dados do Firebase quando a página carrega
+  // Busca na base de dados quando a página carrega
   useEffect(() => {
     async function fetchPoints() {
       try {
@@ -281,7 +281,7 @@ export default function Recycle() {
                                     setMapModal({ isOpen: true, location })
                                   }
                                 >
-                                  <Lucide.MapPlus size={16} /> Mapa
+                                  <Lucide.Map size={16} /> Mapa
                                 </Button>
                               </CardComponent.CardFooter>
                             )}
