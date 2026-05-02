@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { CheckCircle, Instagram, Mail, TestTube2 } from "lucide-react";
+import * as Lucide from "lucide-react";
 
 import HeroSmall from "@/components/HeroSmall";
 import { Badge } from "@/components/ui/Badge";
@@ -43,7 +43,7 @@ export default function BetaForm() {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>
-              <CheckCircle size={25} color="var(--success)" />
+              <Lucide.CheckCircle size={25} color="var(--success)" />
               Formulário Enviado com Sucesso!
             </DialogTitle>
             <DialogDescription>
@@ -80,7 +80,7 @@ export default function BetaForm() {
                 <Button
                   size="md"
                   variant="secondary"
-                  leftIcon={<Instagram size={16} />}
+                  leftIcon={<Lucide.Instagram size={16} />}
                 >
                   Instagram
                 </Button>
@@ -89,7 +89,7 @@ export default function BetaForm() {
                 <Button
                   size="md"
                   variant="secondary"
-                  leftIcon={<Mail size={16} />}
+                  leftIcon={<Lucide.Mail size={16} />}
                 >
                   E-mail
                 </Button>
@@ -114,7 +114,7 @@ export default function BetaForm() {
       </div>
       <div className={styles.betaDisclaimer}>
         <div>
-          <Badge variant="outline" size="sm" leftIcon={<TestTube2 />}>
+          <Badge variant="outline" size="sm" leftIcon={<Lucide.TestTube2 />}>
             Funcionalidade em Beta
           </Badge>
         </div>
@@ -122,6 +122,28 @@ export default function BetaForm() {
           Em caso de falha, utilize{" "}
           <ExternalLink href={FALLBACK_FORM}>este formulário</ExternalLink>
         </p>
+        
+        {import.meta.env.DEV && (
+          <div style={{ marginTop: "1rem" }}>
+            <Button 
+              size="sm" 
+              variant="success" 
+              leftIcon={<Lucide.TestTube size={18}/>}
+              onClick={async () => {
+                try {
+                  const res = await fetch('/api/tests/email');
+                  const body = await res.json();
+                  alert(res.ok ? `Sucesso: ${body.message}` : `Erro: ${body.message}`);
+                } catch(e) {
+                  alert('Falha na requisição. O servidor está rodando?');
+                  console.error(e);
+                }
+              }}
+            >
+              Testar Email de Notificação
+            </Button>
+          </div>
+        )}
       </div>
     </main>
   );

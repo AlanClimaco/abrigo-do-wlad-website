@@ -41,86 +41,149 @@ export function generateAdoptionApplicationEmail(
 
   const html = `
     <!DOCTYPE html>
-    <html>
+    <html lang="pt-BR">
       <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <style>
           body {
-            font-family: Arial, sans-serif;
-            color: #333;
-            line-height: 1.6;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #fceae3;
+            margin: 0;
+            padding: 40px 20px;
+            color: #1a1a1a;
+            -webkit-font-smoothing: antialiased;
           }
-          .container {
-            max-width: 600px;
+          .wrapper {
+            max-width: 540px;
             margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
+            background-color: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05); /* Sombra suave */
+            border: 1px solid #f1e5e1;
           }
           .header {
-            background-color: #f5f5f5;
-            padding: 20px;
-            border-radius: 4px;
-            margin-bottom: 20px;
+            padding: 40px 40px 20px;
             text-align: center;
           }
+          .logo-text {
+            font-size: 26px;
+            font-weight: 700;
+            color: #ff6c37;
+            margin: 0;
+            letter-spacing: -0.5px;
+          }
           .content {
-            margin-bottom: 20px;
-            padding: 15px;
+            padding: 0 40px 40px;
+          }
+          h1 {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0 0 15px;
+            color: #1a1a1a;
+            text-align: center;
+          }
+          p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #4a4a4a;
+            margin: 0 0 25px;
+            text-align: center;
+          }
+          .details-card {
             background-color: #fafafa;
-            border-left: 4px solid #3498db;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 35px;
+            border: 1px solid #ececec;
           }
-          .info-box {
-            background-color: #e8f4f8;
-            padding: 15px;
-            border-radius: 4px;
-            margin-bottom: 20px;
+          .detail-item {
+            margin-bottom: 12px;
+            font-size: 15px;
           }
-          .info-box strong {
-            color: #2c3e50;
+          .detail-item:last-child {
+            margin-bottom: 0;
           }
-          .cta-button {
+          .detail-item strong {
+            color: #1a1a1a;
+            font-weight: 600;
             display: inline-block;
-            padding: 12px 30px;
-            background-color: #3498db;
-            color: white;
+            width: 100px;
+          }
+          .detail-item span {
+            color: #4a4a4a;
+          }
+          .divider {
+            border-top: 1px dashed #dddddd;
+            margin-top: 16px;
+            padding-top: 16px;
+          }
+          .divider strong, .divider span {
+            color: #767676;
+            font-size: 13px;
+            font-weight: normal;
+          }
+          .btn-container {
+            text-align: center;
+          }
+          .btn {
+            display: inline-block;
+            background-color: #ff6c37;
+            color: #ffffff !important;
+            font-size: 16px;
+            font-weight: 600;
             text-decoration: none;
-            border-radius: 4px;
-            margin-top: 15px;
+            padding: 16px 36px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
           }
           .footer {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #ddd;
-            font-size: 12px;
-            color: #999;
+            background-color: #fafafa;
+            padding: 24px 40px;
+            text-align: center;
+            border-top: 1px solid #f1e5e1;
+          }
+          .footer p {
+            font-size: 13px;
+            color: #767676;
+            margin: 0 0 5px;
           }
         </style>
       </head>
       <body>
-        <div class="container">
+        <div class="wrapper">
           <div class="header">
-            <h2>Nova Solicitação de Pré-adoção</h2>
+            <p class="logo-text">Abrigo do Wlad</p>
           </div>
-
+          
           <div class="content">
-            <p>Olá,</p>
-            <p>Uma nova solicitação de pré-adoção foi recebida e está aguardando análise.</p>
+            <h1>Nova Solicitação de Adoção! 🐾</h1>
+            <p>Um novo formulário de pré-adoção acaba de ser enviado e está aguardando a sua análise.</p>
+            
+            <div class="details-card">
+              <div class="detail-item">
+                <strong>Candidato:</strong>
+                <span>${nome}</span>
+              </div>
+              <div class="detail-item">
+                <strong>Animal:</strong>
+                <span>${animal}</span>
+              </div>
+              <div class="detail-item divider">
+                <strong>ID da ficha:</strong>
+                <span>${applicationId}</span>
+              </div>
+            </div>
+
+            <div class="btn-container">
+              <a href="${process.env.ADMIN_PANEL_URL}" class="btn">Analisar Solicitação</a>
+            </div>
           </div>
-
-          <div class="info-box">
-            <p><strong>Candidato:</strong> ${nome}</p>
-            <p><strong>Animal:</strong> ${animal}</p>
-            <p><strong>ID da Solicitação:</strong> ${applicationId}</p>
-          </div>
-
-          <p>Por favor, acesse o painel de administração para revisar os detalhes completos desta solicitação.</p>
-
-          <a href="${process.env.ADMIN_PANEL_URL}" class="cta-button">
-            Acessar Painel de Administração
-          </a>
 
           <div class="footer">
-            <p>Esta é uma mensagem automática. Por favor, não responda a este email.</p>
+            <p>Esta é uma notificação automática do sistema.</p>
+            <p>Por favor, não responda a este email.</p>
           </div>
         </div>
       </body>

@@ -9,16 +9,7 @@ import { verifyRecaptcha } from "./_lib/security";
 import { sendSuccess, sendError } from "./_lib/response";
 import { ADOPTION_EXPIRATION_DAYS, HTTP_STATUS } from "./_lib/constants";
 
-interface AdoptionApplicationData {
-  nome_adotante: string;
-  idade: number;
-  estado_civil: string;
-  email: string;
-  telefone: string;
-  [key: string]: unknown;
-}
-
-const DEBUG_EMAIL_RECIPIENT = "";
+type AdoptionApplicationData = z.infer<typeof fullFormSchema>;
 
 async function sendAdoptionApplicationEmail(
   applicationData: Record<string, unknown>,
@@ -31,9 +22,7 @@ async function sendAdoptionApplicationEmail(
     );
 
     await sendEmail({
-      to:
-        DEBUG_EMAIL_RECIPIENT ||
-        (process.env.ADOPTION_EMAIL_RECIPIENT as string),
+      to: process.env.ADOPTION_EMAIL_RECIPIENT as string,
       subject: `Nova Candidatura de Adoção: ${applicationData.animal_especifico || "Geral"}`,
       html,
       text,
@@ -43,7 +32,6 @@ async function sendAdoptionApplicationEmail(
     // Não lançar erro para não interromper o fluxo
   }
 }
-
 
 export default async function handler(
   req: IncomingMessage,
@@ -66,9 +54,7 @@ export default async function handler(
 
   req.on("end", async () => {
     try {
-      const data = JSON.parse(body) as AdoptionApplicationData & {
-        captchaToken: string;
-      };
+      const data = JSON.parse(body) as AdoptionApplicationData;
 
       // Validar reCAPTCHA
       const captchaValid = await verifyRecaptcha(data.captchaToken);
