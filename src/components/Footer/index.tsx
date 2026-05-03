@@ -38,7 +38,7 @@ export function Footer() {
           </p>
           <div className={styles.footerBadges}>
             <Badge variant="success" leftIcon={<Lucide.MapPin />}>
-              Atuamos em Morumbi, SP
+              São Paulo <span style={{ opacity: 0.5 }}>•</span> Morumbi
             </Badge>
           </div>
         </div>

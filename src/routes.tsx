@@ -22,7 +22,7 @@ export function AppRoutes() {
         <Route path="/sobre" element={<About />} />
         <Route path="/tampinhas" element={<Recycle />} />
         <Route path="/adotar" element={<Adopt />} />
-        {/* redirect para home por enquanto */}
+        {/* redirect pra home por enquanto */}
         <Route path="/formulario" element={<Home />} />
         <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
         <Route path="*" element={<Navigate to="/" />} />
