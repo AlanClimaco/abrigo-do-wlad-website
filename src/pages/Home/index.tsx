@@ -1,4 +1,4 @@
-import { Hero } from "@/components/Hero";
+import { Hero } from "@/pages/Home/components/Hero";
 import { useDailyDog } from "@/hooks/useDailyDog";
 import { ScrollIndicators } from "@/components/ScrollIndicators";
 
