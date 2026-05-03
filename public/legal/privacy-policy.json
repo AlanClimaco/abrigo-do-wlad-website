@@ -2,7 +2,7 @@
   "title": "Política de Privacidade",
   "badge": "Transparência",
   "description": "Como protegemos seus dados e informações pessoais.",
-  "lastUpdate": "2 de maio de 2026",
+  "lastUpdate": "3 de maio de 2026",
   "sections": [
     {
       "id": "base-legal",
@@ -44,6 +44,11 @@
       "id": "compartilhamento",
       "title": "Compartilhamento de Dados",
       "content": "Seus dados pessoais não são vendidos ou comercializados. Eles podem ser processados por provedores de infraestrutura em nuvem e serviços de hospedagem de software estritamente técnicos (nossos Operadores de Dados), que atuam apenas sob nossas diretrizes para armazenar os dados e manter o sistema operando de forma segura, incluindo rotinas automatizadas de manutenção da base de dados. Estas ferramentas de terceiros processam dados em conformidade com as exigências da LGPD apenas para fins de segurança, funcionamento estrutural da plataforma e limpeza periódica."
+    },
+    {
+      "id": "metricas",
+      "title": "Métricas e Análises de Uso",
+      "content": "Também podemos coletar informações de navegação e interação de forma agregada ou anonimizada para entender como o site é utilizado e melhorar a experiência das pessoas que o acessam. Isso pode incluir, por exemplo, páginas visitadas, tempo de permanência, rolagem da página, interações com elementos de interface e o uso do componente de feedback. Esses dados são utilizados exclusivamente para análise estatística, aprimoramento do site e tomada de decisões sobre usabilidade, sem a finalidade de identificar pessoalmente o visitante."
     },
     {
       "id": "menores",
@@ -99,9 +104,7 @@
       "content": "Para dúvidas sobre esta política ou seus dados pessoais, entre em contato conosco:",
       "contact": {
         "organization": "Abrigo do Wlad",
-        "email": "abrigodowlad@gmail.com",
-        "instagram": "@abrigodowlad",
-        "instagramUrl": "https://instagram.com/abrigodowlad"
+        "email": "abrigodowlad.dev@gmail.com"
       }
     }
   ]

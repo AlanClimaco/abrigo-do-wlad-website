@@ -26,6 +26,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/Tooltip";
+import { PageFeedback } from "@/components/PageFeedback";
 
 interface GroupedPoints {
   zone: string;
@@ -294,6 +295,7 @@ export default function Recycle() {
               </Accordion>
             )}
           </div>
+          <PageFeedback pageId="tampinhas" />
         </section>
       </div>
 
