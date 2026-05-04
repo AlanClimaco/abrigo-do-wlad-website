@@ -4,6 +4,7 @@ import * as Lucide from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Skeleton } from "@/components/ui/Skeleton";
+import { analytics } from "@/utils/analytics";
 
 import type { Dog } from "@/types/dogs";
 import { getOptimizedImageUrl, getThumbnaillUrl } from "@/utils/cdn";
@@ -44,11 +45,11 @@ export function Hero({ dog }: HeroProps) {
         </p>
 
         <div className={styles.btnGroup}>
-          <Link to="/adotar" className="btn-primary">
+          <Link to="/caes" className="btn-primary" onClick={() => analytics.trackButtonClick("hero_dogs_list")}>
             <Button size="lg">Conheça Nossos Cães</Button>
           </Link>
 
-          <a href="#historia" className="btn-secondary">
+          <a href="#historia" className="btn-secondary" onClick={() => analytics.trackButtonClick("hero_our_story")}>
             <Button size="lg" variant="text">
               Nossa História
               <Lucide.ChevronRight size={25} />

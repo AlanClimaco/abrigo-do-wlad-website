@@ -1,6 +1,7 @@
 import { Link, NavLink } from "react-router";
 import * as Lucide from "lucide-react";
 import styles from "./Footer.module.css";
+import { analytics } from "@/utils/analytics";
 
 import logo from "@/assets/images/logo.png";
 import logoDark from "@/assets/images/logo-dark-mode.png";
@@ -49,7 +50,7 @@ export function Footer() {
           <NavLink to="/" className={styles.linkItem}>
             Início
           </NavLink>
-          <NavLink to="/adotar" className={styles.linkItem}>
+          <NavLink to="/dogs" className={styles.linkItem}>
             Nossos Cães
           </NavLink>
           <NavLink to="/sobre" className={styles.linkItem}>
@@ -58,7 +59,7 @@ export function Footer() {
           <NavLink to="/tampinhas" className={styles.linkItem}>
             Projeto Tampinhas
           </NavLink>
-          <NavLink to="/formulario" className={styles.linkItem}>
+          <NavLink to="/formulario" className={styles.linkItem} onClick={() => analytics.trackConversionIntent("adopt_form")}>
             Formulário de Interesse
           </NavLink>
         </div>
@@ -82,6 +83,7 @@ export function Footer() {
           <a
             href="mailto:abrigodowlad@gmail.com"
             className={styles.contactItem}
+            onClick={() => analytics.trackConversionIntent("contact", { method: "email" })}
           >
             <div className={styles.iconBox}>
               <Lucide.Mail size={20} />

@@ -4,6 +4,7 @@ import { useCopyToClipboard } from "@uidotdev/usehooks";
 
 import * as Dialog from "@/components//ui/Dialog";
 import { Button } from "@/components/ui/Button";
+import { analytics } from "@/utils/analytics";
 
 import qrCodePix from "@/assets/images/pix-qr-code.png";
 import styles from "./PixModal.module.css";
@@ -16,6 +17,7 @@ export default function PixModal() {
   const handleCopyClick = () => {
     copyToClipboard(pixKey);
     setIsCopied(true);
+    analytics.trackConversionIntent("donation", { method: "pix_key_copy" });
     setTimeout(() => {
       setIsCopied(false);
     }, 2000);
