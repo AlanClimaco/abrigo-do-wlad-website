@@ -62,7 +62,7 @@
   --carousel-bg: rgba(0, 0, 0, 0.4);
   --glass: rgba(176, 176, 176, 0.16);
   --glass-secondary: rgba(110, 110, 110, 0.16);
-  --header-bg-scrolled: rgba(252, 234, 227, 0.95);
+  --header-bg-scrolled: rgba(252, 234, 227, 0.834);
 
   /* Hero Gradient */
   --hero-gradient-start: rgba(25, 77, 116, 0.707);

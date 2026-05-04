@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/Accordion";
 
 import { getThirdPartyImage } from "@/utils/common";
+import { analytics } from "@/utils/analytics";
 import * as Lucide from "lucide-react";
 
 // Adicionamos as importações do Firebase e do Tipo
@@ -89,6 +90,13 @@ export default function Recycle() {
 
     fetchPoints();
   }, []);
+
+  // Track when no results are found
+  useEffect(() => {
+    if (!loading && collectionPoints.length === 0) {
+      analytics.trackNoResults("recycle_page");
+    }
+  }, [loading, collectionPoints.length]);
 
   return (
     <>

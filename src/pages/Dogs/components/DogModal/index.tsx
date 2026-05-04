@@ -16,6 +16,7 @@ import { useCopyToClipboard } from "@uidotdev/usehooks";
 import * as CardComponent from "@/components/ui/Card";
 import { Carousel, type CarouselAPI } from "@/components/ui/Carousel";
 import { useIsDesktop } from "@/hooks/useIsDesktop";
+import { analytics } from "@/utils/analytics";
 
 interface ModalProps {
   dog: Dog | null;
@@ -240,6 +241,9 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
                     leftIcon={<Lucide.Heart />}
                     size={`${isDesktop ? "md" : "lg"}`}
                     variant="primary"
+                    onClick={() =>
+                      analytics.trackConversionIntent("adopt_form")
+                    }
                   >
                     Tenho Interesse
                   </Button>

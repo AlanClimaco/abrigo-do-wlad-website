@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-
-const STORAGE_KEY = "wlad:hide-scroll-indicators";
+import { STORAGE_KEYS } from "@/lib/storage";
 
 export function useIndicatorStorage() {
   const [isVisible, setIsVisible] = useState(() => {
-    const isHidden = localStorage.getItem(STORAGE_KEY) === "true";
+    const isHidden = localStorage.getItem(STORAGE_KEYS.UI.INDICATORS_VISIBLE) === "false";
     return !isHidden;
   });
   const [isFadingOut, setIsFadingOut] = useState(false);
@@ -17,12 +16,12 @@ export function useIndicatorStorage() {
     setTimeout(() => {
       setIsVisible(false);
       setIsFadingOut(false);
-      localStorage.setItem(STORAGE_KEY, "true");
+      localStorage.setItem(STORAGE_KEYS.UI.INDICATORS_VISIBLE, "false");
     }, 400);
   };
 
   const showIndicator = () => {
-    localStorage.removeItem(STORAGE_KEY);
+    localStorage.setItem(STORAGE_KEYS.UI.INDICATORS_VISIBLE, "true");
     setIsVisible(true);
     setIsFadingOut(false);
   };

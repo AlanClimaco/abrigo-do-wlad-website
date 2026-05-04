@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { getOptimizedImageUrl } from "@/utils/cdn";
+import { analytics } from "@/utils/analytics";
 import { type Dog } from "@/types/dogs";
 import styles from "./DogCard.module.css";
 
@@ -30,11 +31,16 @@ export function DogCard({ data, onClick, isLoading }: DogCardProps) {
     gravity: "auto",
   });
 
+  const handleClick = () => {
+    analytics.trackDogView(data.id, data.nome, data.idade, data.sexo);
+    onClick();
+  };
+
   return (
     <Card
       imageSrc={dogImageUrl}
       // disable click if loading
-      onClick={isLoading ? undefined : onClick}
+      onClick={isLoading ? undefined : handleClick}
       style={{
         cursor: isLoading ? "wait" : "pointer",
         position: "relative",

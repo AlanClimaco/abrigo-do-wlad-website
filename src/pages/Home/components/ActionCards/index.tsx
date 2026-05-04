@@ -2,6 +2,7 @@ import * as React from "react"
 import * as Lucide from "lucide-react";
 import styles from "./ActionCards.module.css";
 import { Link } from "react-router";
+import { analytics } from "@/utils/analytics";
 
 import * as Card from "@/components/ui/Card";
 import * as Dialog from "@/components/ui/Dialog";
@@ -85,7 +86,7 @@ export function ActionCards() {
         <Card.CardFooter>
           <Dialog.Dialog>
             <Dialog.DialogTrigger asChild>
-              <Card.CardButton>
+              <Card.CardButton onClick={() => analytics.trackConversionIntent("donation")}>
                 Doação via PIX
                 <Lucide.ChevronUp size={20} />
               </Card.CardButton>

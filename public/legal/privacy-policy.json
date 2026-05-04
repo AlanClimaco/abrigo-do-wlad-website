@@ -2,7 +2,7 @@
   "title": "Política de Privacidade",
   "badge": "Transparência",
   "description": "Como protegemos seus dados e informações pessoais.",
-  "lastUpdate": "3 de maio de 2026",
+  "lastUpdate": "4 de maio de 2026",
   "sections": [
     {
       "id": "base-legal",
@@ -43,12 +43,12 @@
     {
       "id": "compartilhamento",
       "title": "Compartilhamento de Dados",
-      "content": "Seus dados pessoais não são vendidos ou comercializados. Eles podem ser processados por provedores de infraestrutura em nuvem e serviços de hospedagem de software estritamente técnicos (nossos Operadores de Dados), que atuam apenas sob nossas diretrizes para armazenar os dados e manter o sistema operando de forma segura, incluindo rotinas automatizadas de manutenção da base de dados. Estas ferramentas de terceiros processam dados em conformidade com as exigências da LGPD apenas para fins de segurança, funcionamento estrutural da plataforma e limpeza periódica."
+      "content": "Seus dados pessoais não são vendidos ou comercializados. Eles podem ser processados por provedores de infraestrutura em nuvem e serviços de hospedagem estritamente técnicos (nossos Operadores de Dados), que atuam apenas sob nossas diretrizes para armazenar os dados e manter o sistema operando de forma segura. Estas ferramentas processam dados em conformidade com as exigências da LGPD. Alguns dados podem ser transferidos e armazenados em infraestrutura localizada fora do Brasil e na União Europeia, possuindo garantias de proteção equivalentes às exigidas pela legislação brasileira."
     },
     {
       "id": "metricas",
       "title": "Métricas e Análises de Uso",
-      "content": "Também podemos coletar informações de navegação e interação de forma agregada ou anonimizada para entender como o site é utilizado e melhorar a experiência das pessoas que o acessam. Isso pode incluir, por exemplo, páginas visitadas, tempo de permanência, rolagem da página, interações com elementos de interface e o uso do componente de feedback. Esses dados são utilizados exclusivamente para análise estatística, aprimoramento do site e tomada de decisões sobre usabilidade, sem a finalidade de identificar pessoalmente o visitante."
+      "content": "Também coletamos informações de navegação e interação de forma agregada e anonimizada para entender como o site é utilizado e melhorar a experiência dos usuários. Isso inclui páginas visitadas, tempo de permanência, interações com elementos de interface e uso do componente de feedback. Utilizamos uma ferramenta de análise focada em privacidade que não utiliza cookies ou outras tecnologias de rastreamento invasivas. Os dados coletados são armazenados de forma segura e utilizados exclusivamente para análise estatística, não sendo possível identificar pessoalmente o visitante."
     },
     {
       "id": "menores",
