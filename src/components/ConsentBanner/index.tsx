@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router";
 import * as Lucide from "lucide-react";
 import { Button } from "@/components/ui/Button";
@@ -11,19 +11,39 @@ function getInitialVisibility() {
   return !hasConsented;
 }
 
+function loadUmamiScript() {
+  if (typeof window === "undefined") return;
+  if (document.querySelector('script[src*="umami"]')) return;
+  
+  const script = document.createElement("script");
+  script.defer = true;
+  script.src = "https://cloud.umami.is/script.js";
+  script.setAttribute("data-website-id", "40988ad1-8134-4273-b18b-8d126fec7706");
+  
+  script.onload = () => {
+    console.debug("[Analytics] Script do Umami ativado com sucesso!");
+  };
+
+  script.onerror = () => {
+    console.debug("[Analytics] Script bloqueado pelo client (adblock ou falha na rede).");
+  };
+
+  document.body.appendChild(script);
+}
+
 export function ConsentBanner() {
   const [isVisible, setIsVisible] = useState(getInitialVisibility);
 
+  useEffect(() => {
+    const hasConsented = localStorage.getItem(STORAGE_KEYS.CONSENT.ANALYTICS);
+    if (hasConsented === "true") {
+      loadUmamiScript();
+    }
+  }, []);
+
   const handleAccept = () => {
     localStorage.setItem(STORAGE_KEYS.CONSENT.ANALYTICS, "true");
-    
-    // Enable Umami script
-    const script = document.createElement("script");
-    script.defer = true;
-    script.src = "https://cloud.umami.is/script.js";
-    script.setAttribute("data-website-id", "40988ad1-8134-4273-b18b-8d126fec7706");
-    document.body.appendChild(script);
-    
+    loadUmamiScript();
     setIsVisible(false);
   };
 

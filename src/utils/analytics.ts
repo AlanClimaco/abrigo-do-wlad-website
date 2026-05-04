@@ -15,13 +15,14 @@ export type PageVote = "positive" | "meh" | "negative";
  * Umami Analytics wrapper
  */
 class UmamiAnalytics {
-  private isAvailable: boolean;
   private isDevelopment: boolean;
 
   constructor() {
     this.isDevelopment = !import.meta.env.PROD;
-    this.isAvailable =
-      typeof window !== "undefined" && window.umami !== undefined;
+  }
+
+  get isAvailable(): boolean {
+    return typeof window !== "undefined" && window.umami !== undefined;
   }
 
   track(
