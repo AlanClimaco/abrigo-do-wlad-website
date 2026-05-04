@@ -100,7 +100,7 @@ export function Footer() {
               &copy; {new Date().getFullYear()} Abrigo do Wlad
             </p>
             {isDesktop && <span style={{ opacity: 0.5 }}>•</span>}
-            <p>Todos os Direitos Reservados</p>
+            <p style={{ opacity: 0.8 }}>Todos os Direitos Reservados</p>
           </div>
         </div>
         <div className={styles.footerBottomGroup}>

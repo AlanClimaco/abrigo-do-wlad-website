@@ -76,8 +76,7 @@ export function FaqSection() {
           <AccordionContent>
             <div className={styles.faqContainer}>
               <p>Sim! As visitas devem ser agendadas com antecedência.</p>
-
-              <CardComponent.Card size="sm" color="secondary">
+              <CardComponent.Card className={styles.faqCard} size="sm" color="secondary">
                 <CardComponent.CardBody>
                   <CardComponent.CardHeader>
                     <CardComponent.CardIcon>
