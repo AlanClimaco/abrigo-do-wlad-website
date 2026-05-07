@@ -2,7 +2,7 @@ import { kv } from "@vercel/kv";
 import type { IncomingMessage, ServerResponse } from "http";
 
 export default async function handler(
-  req: IncomingMessage,
+  _req: IncomingMessage,
   res: ServerResponse,
 ) {
   try {
