@@ -1,6 +1,7 @@
 import type { IncomingMessage, ServerResponse } from "http";
+import CryptoJS from "crypto-js";
 import { db } from "./_lib/firebase";
-import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { collection, addDoc, Timestamp, doc, getDoc } from "firebase/firestore";
 import { sendEmail, generateAdoptionApplicationEmail } from "./_lib/email";
 import { fullFormSchema } from "../src/pages/BetaForm/components/WizardForm/schema";
 import { z } from "zod";
@@ -78,13 +79,29 @@ export default async function handler(
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { captchaToken, ...applicationData } = validationResult.data;
 
+      // Buscar chave de criptografia
+      const keyDocSnap = await getDoc(doc(db, "system", "keys"));
+      if (!keyDocSnap.exists()) {
+        throw new Error("Chaves de criptografia não encontradas no banco de dados.");
+      }
+      
+      const { active_key_id, keys } = keyDocSnap.data();
+      const currentKey = keys[active_key_id];
+
+      // Criptografar os dados da aplicação
+      const encryptedData = CryptoJS.AES.encrypt(
+        JSON.stringify(applicationData),
+        currentKey
+      ).toString();
+
       // Calcular data de expiração (30 dias)
       const expiresAt = new Date();
       expiresAt.setDate(expiresAt.getDate() + ADOPTION_EXPIRATION_DAYS);
 
       // Adicionar timestamp e dados de submissão
       const documentData = {
-        ...applicationData,
+        data: encryptedData,
+        keyVersion: active_key_id,
         submittedAt: Timestamp.now(),
         expiresAt: Timestamp.fromDate(expiresAt),
         status: "pending",
