@@ -2,21 +2,48 @@ import { getDocs, getDocsFromCache, Query, QuerySnapshot } from 'firebase/firest
 import type { DocumentData } from 'firebase/firestore';
 import { STORAGE_KEYS } from './storage';
 
-const DEFAULT_TTL_MS = 15 * 60 * 1000; // 15 minutos
+const DEFAULT_TTL_MS = 3 * 60 * 60 * 1000; // 3 horas
 
 type CacheKey = string;
+
+function clearExpiredCacheKeys(ttlThreshold: number = DEFAULT_TTL_MS) {
+  try {
+    const now = Date.now();
+    const prefix = STORAGE_KEYS.CACHE.TTL('');
+    const keysToRemove: string[] = [];
+
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key?.startsWith(prefix)) {
+        const timestampStr = localStorage.getItem(key);
+        const timestamp = timestampStr ? parseInt(timestampStr, 10) : 0;
+        
+        if (now - timestamp > ttlThreshold) {
+          keysToRemove.push(key);
+        }
+      }
+    }
+
+    keysToRemove.forEach(key => localStorage.removeItem(key));
+  } catch (e) {
+    console.warn('Falha ao limpar chaves do cache no localStorage:', e);
+  }
+}
 
 export async function fetchWithCache<T = DocumentData>(
   query: Query<T, DocumentData>,
   cacheKey: CacheKey,
   ttlMs: number = DEFAULT_TTL_MS
 ): Promise<QuerySnapshot<T, DocumentData>> {
+  setTimeout(() => clearExpiredCacheKeys(ttlMs), 0);
+
   const now = Date.now();
   const storageKey = STORAGE_KEYS.CACHE.TTL(cacheKey);
   const lastFetchStr = localStorage.getItem(storageKey);
   const lastFetch = lastFetchStr ? parseInt(lastFetchStr, 10) : 0;
 
-  const isCacheValid = (now - lastFetch) < ttlMs;
+  const isDevelopment = import.meta.env.DEV;
+  const isCacheValid = !isDevelopment && (now - lastFetch) < ttlMs;
 
   if (isCacheValid) {
     try {
