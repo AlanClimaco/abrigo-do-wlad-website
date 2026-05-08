@@ -10,4 +10,7 @@ export const STORAGE_KEYS = {
     THEME: "app:v1:ui:theme",
     INDICATORS_VISIBLE: "app:v1:ui:indicators_visible",
   },
+  CACHE: {
+    TTL: (key: string) => `app:v1:cache:ttl:${key}`,
+  },
 } as const;
