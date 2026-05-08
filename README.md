@@ -2,7 +2,14 @@
 
 Repositório oficial do site do Abrigo do Wlad. Plataforma digital para divulgação de animais para adoção, campanhas de arrecadação e transparência das atividades da organização.
 
-Projeto construído com foco em performance e componentização, facilitando a escalabilidade.
+Este projeto foi criado para suprir uma necessidade crítica da ONG: a listagem e divulgação de animais. Anteriormente, o abrigo utilizava arquivos em PDF para lidar com as adoções, um processo que se mostrava ineficiente e insustentável. Com a plataforma web, a ONG agora possui um catálogo dinâmico, acessível e de fácil manutenção.
+
+## Funcionalidades
+
+- 🐶 **Vitrine de Adoção:** Catálogo digital completo e filtrável dos animais disponíveis, aposentando as antigas listagens em PDF.
+- 📝 **Solicitação de Adoção:** Formulário multi-etapas (_Wizard_) intuitivo para avaliação de possíveis tutores, garantindo a segurança e privacidade através da criptografia *client-side* de dados sensíveis antes do envio para a base de dados.
+- ♻️ **Reciclagem Solidária:** Relação dos pontos de coleta parceiros para auxiliar nas arrecadações do abrigo.
+- 🌓 **Acessibilidade e Usabilidade:** Suporte a tema claro/escuro nativo, animações fluidas e design responsivo.
 
 ## Tecnologias
 
@@ -18,40 +25,34 @@ Projeto construído com foco em performance e componentização, facilitando a e
 
 Abaixo está listada a estrutura atual do projeto:
 
-```
-api/
-├── get-hero-dog.ts          # Retorna o animal em destaque armazenado no cache
-├── update-hero-dog.ts       # Seleciona um animal aleatório da db e atualiza o cache
-└── _lib/
-    └── firebase.ts
+```text
+api/                     # Serverless functions (Vercel)
+├── create-adoption-application.ts # Processa e valida o envio de formulários
+├── get-hero-dog.ts      # Retorna o animal em destaque armazenado no cache
+├── update-hero-dog.ts   # Seleciona um animal aleatório da db e atualiza o cache
+└── _lib/                # Lógica interna da API
 src/
-├── components/              # Componentes globais reutilizáveis
-│   ├── Footer/              # Rodapé com navegação e contato
-│   ├── Header/              # Barra de navegação fixa
-│   ├── Hero/                # Banner principal da Home
-│   ├── HeroSmall/           # Banner reduzido para páginas internas
-│   ├── ScrollToTop/         # Reseta a rolagem ao trocar de rota
-│   └── ThemeToggle/         # Alternância de tema (dark/light)
-├── pages/                   # Páginas da aplicação
-│   ├── Home/                # Página inicial
-│   │   └── components/
-│   │       ├── ActionCards/  # Cards de ação (Adoção, Doação e Reciclagem)
-│   │       ├── HistorySection/ # Seção narrativa do abrigo
-│   │       └── FaqSection/  # Perguntas frequentes
-│   ├── Adopt/               # Listagem de animais com filtros
-│   │   └── components/
-│   │       ├── DogCard/     # Card resumido do animal
-│   │       └── DogModal/    # Modal com detalhes e carrossel
-│   ├── Form/                # Formulário de pré-adoção
-│   ├── About/               # História e informações sobre o abrigo
-│   └── Recycle/             # Pontos de coleta para reciclagem
-├── assets/
-│   └── images/              # Imagens estáticas
-├── services/                # Comunicação com serviços externos
-│   └── dogService.ts        # Consultas e filtros dos animais no Firestore
-├── routes.tsx               # Configuração de rotas (inclui redirecionamento 404)
-├── main.tsx                 # Ponto de entrada da aplicação
-└── index.css                # Variáveis CSS globais, reset e utilitários
+├── assets/              # Arquivos estáticos e metadados JSON
+├── components/          # Componentes globais e reutilizáveis
+│   ├── common/          # Componentes genéricos
+│   ├── ui/              # Componentes de interface base (Radix UI, botões, inputs, etc)
+│   ├── Header/          # Barra de navegação fixa
+│   └── Footer/          # Rodapé com informações e links
+├── hooks/               # Custom hooks
+├── lib/                 # Utilitários e configurações atrelados a libs externas
+├── pages/               # Páginas e rotas da aplicação
+│   ├── About/           # História e equipe do abrigo
+│   ├── Adopt/           # Vitrine com os animais disponíveis
+│   ├── BetaForm/        # Formulário multi-etapas preenchido por candidatos (Wizard)
+│   ├── Home/            # Landing page principal
+│   ├── Legal/           # Política de Privacidade e Termos de Uso
+│   └── Recycle/         # Mapa e listagem de postos de arrecadação
+├── services/            # Camada de comunicação de dados (Firebase, APIs externas)
+├── types/               # Declarações de tipagem global estrita (TypeScript)
+├── utils/               # Funções auxiliares (formatação, cdn, etc)
+├── routes.tsx           # Configuração central de roteamento da aplicação
+├── main.tsx             # Ponto de entrada raiz (Root provider)
+└── index.css            # Regras e estilos globais css-modules base
 ```
 
 ## Instalação e Execução
@@ -63,14 +64,38 @@ Para rodar o projeto localmente:
     ```bash
     npm install
     ```
-3.  Inicie o servidor local:
+3.  Configure as variáveis de ambiente baseando-se no arquivo `.env.example`. Crie um arquivo `.env` na raiz do projeto:
+
+    ```env
+    NODE_ENV=development
+
+    # Firebase
+    VITE_FIREBASE_API_KEY=
+    VITE_FIREBASE_AUTH_DOMAIN=
+    VITE_FIREBASE_PROJECT_ID=
+    VITE_FIREBASE_STORAGE_BUCKET=
+    VITE_FIREBASE_MESSAGING_SENDER_ID=
+    VITE_FIREBASE_APP_ID=
+
+    # Segurança e Integrações Externas
+    ALLOWED_ORIGIN=
+    RECAPTCHA_PUBLIC_KEY=
+    RECAPTCHA_SECRET_KEY=
+
+    # Configurações de E-mail / Painel Admin
+    GMAIL_USER=
+    GMAIL_USER_PASSWORD=
+    ADMIN_PANEL_URL=
+    ```
+
+4.  Inicie o servidor local:
     ```bash
     npm run dev
     ```
 
 ## Autores
 
-Desenvolvido por **Alan** e **Luis**.
+Desenvolvido e mantido por **[Alan](https://github.com/AlanClimaco)** e **[Luis](https://github.com/spantalho)**.
 
 ## Licença
 

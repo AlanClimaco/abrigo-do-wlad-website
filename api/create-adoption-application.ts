@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from "http";
-import CryptoJS from "crypto-js";
+import crypto from "crypto";
 import { db } from "./_lib/firebase";
 import { collection, addDoc, Timestamp, doc, getDoc } from "firebase/firestore";
 import { sendEmail, generateAdoptionApplicationEmail } from "./_lib/email";
@@ -88,11 +88,17 @@ export default async function handler(
       const { active_key_id, keys } = keyDocSnap.data();
       const currentKey = keys[active_key_id];
 
-      // Criptografar os dados da aplicação
-      const encryptedData = CryptoJS.AES.encrypt(
-        JSON.stringify(applicationData),
-        currentKey
-      ).toString();
+      const algorithm = "aes-256-gcm";
+      const iv = crypto.randomBytes(16);
+      // Garante que a chave tenha o tamanho correto (32 bytes para aes-256)
+      const cipherKey = crypto.createHash("sha256").update(String(currentKey)).digest();
+      const cipher = crypto.createCipheriv(algorithm, cipherKey, iv);
+      
+      let encrypted = cipher.update(JSON.stringify(applicationData), "utf8", "hex");
+      encrypted += cipher.final("hex");
+      const authTag = cipher.getAuthTag().toString("hex");
+      
+      const encryptedData = `${iv.toString("hex")}:${authTag}:${encrypted}`;
 
       // Calcular data de expiração (30 dias)
       const expiresAt = new Date();
