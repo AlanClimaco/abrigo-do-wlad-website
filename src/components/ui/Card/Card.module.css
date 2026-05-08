@@ -100,8 +100,13 @@
 }
 
 /* sizes */
+.sm.card {
+  border-radius: var(--radius-lg);
+}
+
 .sm .cardBody {
   padding: 1.5rem;
+  border-radius: var(--radius-lg);
 }
 
 .sm .cardHeader {
@@ -114,6 +119,44 @@
 
 .sm .cardContent {
   font-size: 1rem;
+}
+
+.quote.sm .cardBody {
+  padding: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.quote.sm .cardIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius);
+  background-color: var(--white);
+  color: var(--text-primary);
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.quote.sm .cardTitle {
+  font-size: 0.75rem !important;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--text-secondary) !important;
+}
+
+.quote.sm .cardContent {
+  font-size: 0.95rem;
+  color: var(--text-primary) !important;
+  line-height: 1.4;
+}
+
+.quote.sm .cardContent p {
+  margin: 0;
 }
 
 .lg .cardBody {
@@ -243,6 +286,10 @@
   }
 
   .quote .cardHeader {
+    flex-direction: column;
+  }
+
+  .quote.sm .cardBody {
     flex-direction: column;
   }
 }
