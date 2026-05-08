@@ -14,6 +14,7 @@ import * as TooltipComponent from "../../components/ui/Tooltip";
 import { Badge } from "../../components/ui/Badge";
 
 import { useMediaQuery } from "@uidotdev/usehooks";
+import { PageFeedback } from "@/components/PageFeedback";
 
 import heroImage from "@/assets/images/wlad.jpg"
 
@@ -130,6 +131,8 @@ export default function About() {
                 </CardComponent.CardFooter>
               </CardComponent.Card>
             </div>
+
+            <PageFeedback pageId="sobre_nos" />
           </div>
 
           <div className={styles.historyImageContainer}>

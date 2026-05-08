@@ -4,15 +4,11 @@ import * as Lucide from "lucide-react";
 import { DogModal } from "./components/DogModal";
 import { DogCard } from "./components/DogCard";
 
-import {
-  CORES_MAP,
-  TAGS_MAP,
-  type Dog,
-  type DogFilters,
-} from "@/types/dogs";
+import { CORES_MAP, TAGS_MAP, type Dog, type DogFilters } from "@/types/dogs";
 import { useDogSearch } from "@/hooks/useDogSearch";
 import { getOptimizedImageUrl } from "@/utils/cdn";
 import { getThirdPartyImage, preloadDogImages } from "@/utils/common";
+import { analytics } from "@/utils/analytics";
 
 import HeroSmall from "@/components/HeroSmall";
 import { Badge } from "@/components/ui/Badge";
@@ -22,7 +18,7 @@ import { Button } from "@/components/ui/Button";
 import * as TooltipComponent from "@/components/ui/Tooltip";
 import * as SelectComponent from "@/components/ui/Select";
 
-import styles from "./Adopt.module.css";
+import styles from "./Dogs.module.css";
 
 interface DogFiltersProps {
   filters: DogFilters;
@@ -169,10 +165,11 @@ function DogFiltersComponent({
   );
 }
 
-export default function Adopt() {
+export default function Dogs() {
   const {
     dogs,
     loading,
+    error,
     totalItems,
     currentPage,
     totalPages,
@@ -184,8 +181,14 @@ export default function Adopt() {
 
   const [selectedDog, setSelectedDog] = React.useState<Dog | null>(null);
   const [loadingDogId, setLoadingDogId] = React.useState<string | null>(null);
+  const trackedFiltersRef = React.useRef<string>("");
 
-  const heroImage = getThirdPartyImage("adopt", { w: 1920, h: 800, q: 80, crop: "top" })?.url;
+  const heroImage = getThirdPartyImage("dogs", {
+    w: 1920,
+    h: 800,
+    q: 80,
+    crop: "top",
+  })?.url;
 
   // Pré-carregamento de imagens da página atual
   React.useEffect(() => {
@@ -206,12 +209,26 @@ export default function Adopt() {
     }
   }, [dogs]);
 
-  // Scroll para o topo da grid ao mudar de página
   React.useEffect(() => {
     if (!loading) {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }, [currentPage, loading]);
+
+  React.useEffect(() => {
+    if (!loading && dogs.length === 0) {
+      const filterKey = `${filters.tags}|${filters.cateIdade}|${filters.cor}`;
+      
+      if (trackedFiltersRef.current !== filterKey) {
+        analytics.trackNoResults("dogs_page", {
+          filters_tags: filters.tags || "all",
+          filters_age: filters.cateIdade || "all",
+          filters_color: filters.cor || "all",
+        });
+        trackedFiltersRef.current = filterKey;
+      }
+    }
+  }, [loading, dogs.length, filters]);
 
   const handleDogClick = async (dog: Dog) => {
     setLoadingDogId(dog.id);
@@ -253,6 +270,14 @@ export default function Adopt() {
             {Array.from({ length: ITEMS_PER_PAGE }).map((_, index) => (
               <DogCardSkeleton key={index} />
             ))}
+          </div>
+        ) : error ? (
+          <div className={styles.emptyState}>
+            <Lucide.ServerCrash size={48} />
+            <p>
+              Muitos acessos no momento! Nossos doguinhos estão famosos.<br />
+              Estamos passando por uma instabilidade temporária. Tente acessar novamente em alguns instantes.
+            </p>
           </div>
         ) : (
           <>

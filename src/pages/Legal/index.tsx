@@ -1,17 +1,17 @@
-import { useEffect, useState, useRef } from 'react';
-import * as Lucide from 'lucide-react';
-import * as CardComponent from '../../components/ui/Card';
-import HeroSmall from '../../components/HeroSmall';
-import { ScrollIndicators } from '@/components/ScrollIndicators';
+import { useEffect, useState, useRef } from "react";
+import * as Lucide from "lucide-react";
+import * as CardComponent from "../../components/ui/Card";
+import HeroSmall from "../../components/HeroSmall";
+import { ScrollIndicators } from "@/components/ScrollIndicators";
 
-import styles from './Legal.module.css';
-import { getThirdPartyImage } from '@/utils/common';
+import styles from "./Legal.module.css";
+import { getThirdPartyImage } from "@/utils/common";
 
 interface PrivacySection {
   id: string;
   title: string;
   content: string;
-  type?: 'card' | 'default';
+  type?: "card" | "default";
   items?: string[];
   contact?: {
     organization: string;
@@ -31,30 +31,31 @@ interface PrivacyData {
 
 export default function PrivacyPolicy() {
   const heroImage = getThirdPartyImage("privacy_policy")?.url;
-  
+
   const [data, setData] = useState<PrivacyData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState<string>("");
   const containerRef = useRef<HTMLDivElement>(null!);
 
   useEffect(() => {
-    fetch('/legal/privacy-policy.json')
-      .then(res => {
-        if (!res.ok) throw new Error('Falha ao carregar documento');
+    fetch("/legal/privacy-policy.json")
+      .then((res) => {
+        if (!res.ok) throw new Error("Falha ao carregar documento");
         return res.json();
       })
-      .then(json => {
+      .then((json) => {
         setData(json);
         setLoading(false);
       })
-      .catch(err => {
+      .catch((err) => {
         setError(err.message);
         setLoading(false);
       });
   }, []);
 
   if (loading) return <div className={styles.loading}>Carregando...</div>;
-  if (error) return <div className={styles.error}>Erro ao carregar: {error}</div>;
+  if (error)
+    return <div className={styles.error}>Erro ao carregar: {error}</div>;
   if (!data) return null;
 
   return (
@@ -73,7 +74,7 @@ export default function PrivacyPolicy() {
       <div className="container">
         <div className={styles.privacyContainer}>
           <div className={styles.privacyText}>
-            <p style={{ opacity: 0.8, fontSize: '0.875rem' }}>
+            <p style={{ opacity: 0.8, fontSize: "0.875rem" }}>
               Última atualização: {data.lastUpdate}
             </p>
 
@@ -81,63 +82,57 @@ export default function PrivacyPolicy() {
               {data.sections.map((section) => (
                 <div key={section.id}>
                   <h2 className="section-title">{section.title}</h2>
-                
-                {section.type === 'card' ? (
-                  <CardComponent.Card color="green" variant="quote">
-                    <CardComponent.CardBody>
-                      <CardComponent.CardHeader>
-                        <CardComponent.CardIcon>
-                          <Lucide.Shield size={30} strokeWidth={1.5} />
-                        </CardComponent.CardIcon>
-                        <CardComponent.CardTitle>{section.title}</CardComponent.CardTitle>
-                      </CardComponent.CardHeader>
-                      <CardComponent.CardContent>
-                        <p>{section.content}</p>
-                      </CardComponent.CardContent>
-                    </CardComponent.CardBody>
-                  </CardComponent.Card>
-                ) : (
-                  <>
-                    <p>{section.content}</p>
 
-                    {section.items && (
-                      <ul className={styles.list}>
-                        {section.items.map((item, idx) => (
-                          <li key={idx}>{item}</li>
-                        ))}
-                      </ul>
-                    )}
+                  {section.type === "card" ? (
+                    <CardComponent.Card color="green" variant="quote">
+                      <CardComponent.CardBody>
+                        <CardComponent.CardHeader>
+                          <CardComponent.CardIcon>
+                            <Lucide.Shield size={30} strokeWidth={1.5} />
+                          </CardComponent.CardIcon>
+                          <CardComponent.CardTitle>
+                            {section.title}
+                          </CardComponent.CardTitle>
+                        </CardComponent.CardHeader>
+                        <CardComponent.CardContent>
+                          <p>{section.content}</p>
+                        </CardComponent.CardContent>
+                      </CardComponent.CardBody>
+                    </CardComponent.Card>
+                  ) : (
+                    <>
+                      <p>{section.content}</p>
 
-                    {section.contact && (
-                      <div className={styles.contactInfo}>
-                        <p className={styles.contactOrganization}>
-                          <strong>{section.contact.organization}</strong>
-                        </p>
-                        <div className={styles.contactLinks}>
-                          <a href={`mailto:${section.contact.email}`} className={styles.contactItem}>
-                            <div className={styles.iconBox}>
-                              <Lucide.Mail size={20} />
-                            </div>
-                            <span>{section.contact.email}</span>
-                          </a>
-                          <a
-                            href={section.contact.instagramUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={styles.contactItem}
-                          >
-                            <div className={styles.iconBox}>
-                              <Lucide.Instagram size={20} />
-                            </div>
-                            <span>{section.contact.instagram}</span>
-                          </a>
+                      {section.items && (
+                        <ul className={styles.list}>
+                          {section.items.map((item, idx) => (
+                            <li key={idx}>{item}</li>
+                          ))}
+                        </ul>
+                      )}
+
+                      {section.contact && (
+                        <div className={styles.contactInfo}>
+                          <p className={styles.contactOrganization}>
+                            <strong>{section.contact.organization}</strong>
+                          </p>
+                          <div className={styles.contactLinks}>
+                            <a
+                              href={`mailto:${section.contact.email}`}
+                              className={styles.contactItem}
+                            >
+                              <div className={styles.iconBox}>
+                                <Lucide.Mail size={20} />
+                              </div>
+                              <span>{section.contact.email}</span>
+                            </a>
+                          </div>
                         </div>
-                      </div>
-                    )}
-                  </>
-                )}
-              </div>
-            ))}
+                      )}
+                    </>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         </div>

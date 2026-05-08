@@ -5,7 +5,7 @@ import { sendError, sendSuccess } from "./_lib/response";
 import { HTTP_STATUS } from "./_lib/constants";
 
 export default async function handler(
-  req: IncomingMessage,
+  _req: IncomingMessage,
   res: ServerResponse,
 ) {
   const isValid = await validateRequest(req, res, {
