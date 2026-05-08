@@ -12,14 +12,12 @@ const ALLOWED_SOCIAL_DOMAINS = [
   "t.me", // telegram
   "wa.me", // whatsapp
   "whatsapp.com",
-  "discord.gg",
   "pinterest.com",
   "reddit.com",
   "medium.com",
   "blogspot.com",
   "behance.net",
   "flickr.com",
-  "snapchat.com",
 ];
 
 export const step1Schema = z.object({
