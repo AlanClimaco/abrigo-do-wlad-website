@@ -169,6 +169,7 @@ export default function Dogs() {
   const {
     dogs,
     loading,
+    error,
     totalItems,
     currentPage,
     totalPages,
@@ -269,6 +270,14 @@ export default function Dogs() {
             {Array.from({ length: ITEMS_PER_PAGE }).map((_, index) => (
               <DogCardSkeleton key={index} />
             ))}
+          </div>
+        ) : error ? (
+          <div className={styles.emptyState}>
+            <Lucide.ServerCrash size={48} />
+            <p>
+              Muitos acessos no momento! Nossos doguinhos estão famosos.<br />
+              Estamos passando por uma instabilidade temporária. Tente acessar novamente em alguns instantes.
+            </p>
           </div>
         ) : (
           <>

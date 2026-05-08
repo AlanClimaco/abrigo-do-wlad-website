@@ -58,10 +58,20 @@ export async function fetchWithCache<T = DocumentData>(
   }
 
   // Failed to read the cache, or it has expired/is empty. Searching the network.
-  const snapshot = await getDocs(query);
-  
-  // Updates the time of the last refresh
-  localStorage.setItem(storageKey, now.toString());
-  
-  return snapshot;
+  try {
+    const snapshot = await getDocs(query);
+    localStorage.setItem(storageKey, now.toString());
+    return snapshot;
+  } catch (error: unknown) {
+    console.warn(`[Cache] Fallback ativado para ${cacheKey} devido a erro na rede.`, error);
+    try {
+      const staleSnapshot = await getDocsFromCache(query);
+      if (!staleSnapshot.empty) {
+        return staleSnapshot;
+      }
+    } catch (cacheError) {
+      console.warn(`[Cache] Falha ao recuperar fallback do cache para ${cacheKey}`, cacheError);
+    }
+    throw error;
+  }
 }
