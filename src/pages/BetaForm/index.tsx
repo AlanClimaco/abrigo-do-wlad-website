@@ -16,6 +16,8 @@ import {
 import { getThirdPartyImage } from "@/utils/common";
 import { WizardForm } from "./components/WizardForm";
 import { ExternalLink } from "@/components/common/ExternalLink";
+import { useSystemSettings } from "@/hooks/useSystemSettings";
+import { Skeleton } from "@/components/ui/Skeleton";
 
 import styles from "./Form.module.css";
 
@@ -27,6 +29,7 @@ export default function BetaForm() {
   const [successId, setSuccessId] = useState<string>("");
   const heroImage = getThirdPartyImage("form")?.url;
   const navigate = useNavigate();
+  const { settings, loading: loadingSettings } = useSystemSettings();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -105,12 +108,36 @@ export default function BetaForm() {
         description="Por favor, responda com sinceridade. Adoção é um ato de amor e responsabilidade."
       />
       <div className="container">
-        <WizardForm
-          onSubmitSuccess={(applicationId) => {
-            setSuccessId(applicationId);
-            setShowSuccessDialog(true);
-          }}
-        />
+        {loadingSettings ? (
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginTop: "2rem" }}>
+            <Skeleton width="100%" height="150px" />
+            <Skeleton width="100%" height="400px" />
+          </div>
+        ) : settings?.acceptingApplications === false ? (
+          <div className={styles.notAcceptingContainer}>
+            <Lucide.Info size={48} color="var(--primary)" />
+            <h2>Solicitações Temporariamente Pausadas</h2>
+            <p>
+              No momento não estamos recebendo novas solicitações de adoção.
+              Por favor, acompanhe nossas redes sociais para saber quando 
+              voltaremos a receber candidaturas!
+            </p>
+            <div style={{ marginTop: "1rem" }}>
+              <ExternalLink href="https://www.instagram.com/abrigodowlad/">
+                <Button variant="secondary" leftIcon={<Lucide.Instagram />}>
+                  Acompanhar no Instagram
+                </Button>
+              </ExternalLink>
+            </div>
+          </div>
+        ) : (
+          <WizardForm
+            onSubmitSuccess={(applicationId) => {
+              setSuccessId(applicationId);
+              setShowSuccessDialog(true);
+            }}
+          />
+        )}
       </div>
       <div className={styles.betaDisclaimer}>
         <div>
