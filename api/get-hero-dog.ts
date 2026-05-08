@@ -8,7 +8,7 @@ export default async function handler(
   _req: IncomingMessage,
   res: ServerResponse,
 ) {
-  const isValid = await validateRequest(req, res, {
+  const isValid = await validateRequest(_req, res, {
     expectedMethod: "GET",
     validateOrigin: false,
     validateContentType: false,

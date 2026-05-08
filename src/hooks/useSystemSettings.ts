@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getSystemSettings, SystemSettings } from "@/services/systemService";
+import { getSystemSettings, type SystemSettings } from "@/services/systemService";
 
 export function useSystemSettings() {
   const [settings, setSettings] = useState<SystemSettings | null>(null);

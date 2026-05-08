@@ -110,8 +110,8 @@ export default function BetaForm() {
       <div className="container">
         {loadingSettings ? (
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem", marginTop: "2rem" }}>
-            <Skeleton width="100%" height="150px" />
-            <Skeleton width="100%" height="400px" />
+            <Skeleton style={{ width: "100%", height: "150px" }} />
+            <Skeleton style={{ width: "100%", height: "400px" }} />
           </div>
         ) : settings?.acceptingApplications === false ? (
           <div className={styles.notAcceptingContainer}>

@@ -4,7 +4,7 @@ import { sendSuccess, sendError } from "../_lib/response";
 import { HTTP_STATUS } from "../_lib/constants";
 
 export default async function handler(
-  req: IncomingMessage,
+  _req: IncomingMessage,
   res: ServerResponse,
 ) {
   if (process.env.NODE_ENV && process.env.NODE_ENV === "production") {

@@ -40,16 +40,6 @@
   color: var(--white)
 }
 
-.success {
-  background-color: var(--btn-success);
-  color: var(--success)
-}
-
-.success:hover:not(:disabled) {
-  background-color: var(--btn-success-hover);
-  color: var(--white);
-}
-
 .secondary {
   background-color: var(--btn-secondary);
   color: var(--secondary);
