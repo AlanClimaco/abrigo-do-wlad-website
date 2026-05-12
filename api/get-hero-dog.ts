@@ -1,4 +1,4 @@
-import { kv } from "@vercel/kv";
+import { kv } from "./_lib/kv";
 import type { IncomingMessage, ServerResponse } from "http";
 import { validateRequest } from "./_lib/validation";
 import { sendError, sendSuccess } from "./_lib/response";
