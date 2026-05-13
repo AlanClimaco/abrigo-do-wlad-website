@@ -1,28 +1,17 @@
 import * as React from "react";
-import * as Lucide from "lucide-react";
-
 import { useSearchParams } from "react-router";
-import {
-  Card,
-  CardBody,
-  CardContent,
-  CardHeader,
-  CardIcon,
-  CardTitle,
-} from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
 
 import * as Step from "./steps";
 import { STEP_TITLES, useWizardForm } from "./useWizardForm";
 import type { FormData } from "./schema";
 
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/Tooltip";
+import { Button } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/Badge";
+import * as CardComponent from "@/components/ui/Card";
+import * as TooltipComponent from "@/components/ui/Tooltip";
+import * as DialogComponent from "@/components/ui/Dialog";
+import * as Lucide from "lucide-react";
+
 import { ExternalLink } from "@/components/common/ExternalLink";
 import { useIsDesktop } from "@/hooks/useIsDesktop";
 
@@ -49,13 +38,20 @@ export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
     }
   });
 
-  React.useEffect(() => {
-    try {
-      sessionStorage.setItem("wizardShowWarning", String(showWarning));
-    } catch {
-      /* sem suporte a sessionStorage */
-    }
-  }, [showWarning]);
+  const [showResumeDialog, setShowResumeDialog] = React.useState<boolean>(
+    () => {
+      try {
+        const savedData = sessionStorage.getItem("wizardFormData");
+        return (
+          !!savedData &&
+          savedData !== "{}" &&
+          !sessionStorage.getItem("wizardDialogShown")
+        );
+      } catch {
+        return false;
+      }
+    },
+  );
 
   const {
     currentStep,
@@ -71,7 +67,35 @@ export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
     goToStep,
     validateCurrentStep,
     highestCompletedStep,
+    resetForm,
   } = useWizardForm();
+
+  const handleResume = () => {
+    setShowResumeDialog(false);
+    try {
+      sessionStorage.setItem("wizardDialogShown", "true");
+    } catch {
+      /* sem suporte a sessionStorage */
+    }
+  };
+
+  const handleRestart = () => {
+    resetForm();
+    setShowResumeDialog(false);
+    try {
+      sessionStorage.setItem("wizardDialogShown", "true");
+    } catch {
+      /* sem suporte a sessionStorage */
+    }
+  };
+
+  React.useEffect(() => {
+    try {
+      sessionStorage.setItem("wizardShowWarning", String(showWarning));
+    } catch {
+      /* sem suporte a sessionStorage */
+    }
+  }, [showWarning]);
 
   const { label, icon: Icon } = STEP_TITLES[currentStep];
 
@@ -179,15 +203,17 @@ export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
   if (showWarning) {
     return (
       <div className={styles.wizardContainer}>
-        <Card variant="quote" size="lg">
-          <CardBody>
-            <CardHeader>
-              <CardIcon>
+        <CardComponent.Card variant="quote" size="lg">
+          <CardComponent.CardBody>
+            <CardComponent.CardHeader>
+              <CardComponent.CardIcon>
                 <Lucide.AlertTriangle size={35} />
-              </CardIcon>
-              <CardTitle>LEIA ANTES DE INICIAR</CardTitle>
-            </CardHeader>
-            <CardContent>
+              </CardComponent.CardIcon>
+              <CardComponent.CardTitle>
+                LEIA ANTES DE INICIAR
+              </CardComponent.CardTitle>
+            </CardComponent.CardHeader>
+            <CardComponent.CardContent>
               <p>
                 O preenchimento deste documento <strong>não garante</strong> a
                 adoção. Caso aprovada, as respostas serão anexadas ao Termo de
@@ -207,9 +233,9 @@ export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
                 sujeira e precisam de veterinário.{" "}
                 <strong>Abandonar é crime!</strong>
               </p>
-            </CardContent>
-          </CardBody>
-        </Card>
+            </CardComponent.CardContent>
+          </CardComponent.CardBody>
+        </CardComponent.Card>
 
         <div className={styles.warningActions}>
           <Button
@@ -260,9 +286,9 @@ export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
         {/* Step Indicators */}
         <div className={styles.stepIndicators}>
           {STEP_TITLES.map((step, index) => (
-            <TooltipProvider key={index}>
-              <Tooltip>
-                <TooltipTrigger asChild>
+            <TooltipComponent.TooltipProvider key={index}>
+              <TooltipComponent.Tooltip>
+                <TooltipComponent.TooltipTrigger asChild>
                   <Button
                     type="button"
                     size="icon"
@@ -285,12 +311,12 @@ export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
                       <span>{index + 1}</span>
                     )}
                   </Button>
-                </TooltipTrigger>
-                <TooltipContent side="bottom">
+                </TooltipComponent.TooltipTrigger>
+                <TooltipComponent.TooltipContent side="bottom">
                   <p>{step.label}</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+                </TooltipComponent.TooltipContent>
+              </TooltipComponent.Tooltip>
+            </TooltipComponent.TooltipProvider>
           ))}
         </div>
       </div>
@@ -344,6 +370,30 @@ export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
           )}
         </div>
       </form>
+
+      <DialogComponent.Dialog
+        open={showResumeDialog}
+        onOpenChange={setShowResumeDialog}
+      >
+        <DialogComponent.DialogContent>
+          <DialogComponent.DialogHeader>
+            <DialogComponent.DialogTitle>
+              <Lucide.CircleQuestionMark size={25} color="var(--primary)" />
+              Continuar preenchimento?
+            </DialogComponent.DialogTitle>
+            <DialogComponent.DialogDescription>
+              Encontramos dados salvos de um preenchimento anterior. Deseja
+              continuar de onde parou ou começar um novo formulário?
+            </DialogComponent.DialogDescription>
+          </DialogComponent.DialogHeader>
+          <DialogComponent.DialogFooter className={styles.dialogFooter}>
+            <Button variant="outline" onClick={handleRestart}>
+              Começar um novo
+            </Button>
+            <Button onClick={handleResume}>Continuar preenchimento</Button>
+          </DialogComponent.DialogFooter>
+        </DialogComponent.DialogContent>
+      </DialogComponent.Dialog>
     </div>
   );
 }

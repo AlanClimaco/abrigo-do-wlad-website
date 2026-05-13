@@ -302,3 +302,11 @@
     justify-content: center;
   }
 }
+
+/* ========== Dialog ========== */
+.dialogFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}

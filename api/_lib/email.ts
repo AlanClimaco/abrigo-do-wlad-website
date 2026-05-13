@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD,
+    pass: process.env.GMAIL_PASS,
   },
 });
 
@@ -24,6 +24,11 @@ export async function sendEmail(options: EmailOptions): Promise<void> {
       text: options.text,
       html: options.html,
     });
+
+    if (process.env.NODE_ENV && process.env.NODE_ENV === "development") {
+      console.log("[DEBUG] to:", options.to);
+      console.log("[DEBUG] from:", process.env.GMAIL_USER);
+    }
 
     console.log(`Email enviado para ${options.to}`);
   } catch (error) {

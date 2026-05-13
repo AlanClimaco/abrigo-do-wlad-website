@@ -30,7 +30,6 @@ async function sendAdoptionApplicationEmail(
     });
   } catch (err) {
     console.error("Error sending adoption application email:", err);
-    // Não lançar erro para não interromper o fluxo
   }
 }
 

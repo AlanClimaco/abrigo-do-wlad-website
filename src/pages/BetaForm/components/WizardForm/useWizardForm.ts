@@ -153,6 +153,15 @@ export function useWizardForm() {
     [highestCompletedStep, totalSteps, navigate],
   );
 
+  const resetForm = React.useCallback(() => {
+    sessionStorage.removeItem("wizardFormData");
+    sessionStorage.removeItem("wizardHighestStep");
+    setFormData({});
+    setErrors({});
+    setHighestCompletedStep(0);
+    navigate(`/beta/formulario/step/1`, { replace: true });
+  }, [navigate]);
+
   return {
     currentStep,
     totalSteps,
@@ -168,5 +177,6 @@ export function useWizardForm() {
     validateCurrentStep,
     setErrors,
     highestCompletedStep,
+    resetForm,
   };
 }

@@ -3,9 +3,9 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 import type { IncomingMessage, ServerResponse } from "http";
 
-const vercelApiMockPlugin = () => ({
+const apiMockPlugin = () => ({
   name: "vercel-api-mock",
-  apply: "serve" as const, // GARANTE QUE O PLUGIN SÓ RODE NO MODO DE DESENVOLVIMENTO
+  apply: "serve" as const,
   configureServer(server: any) {
     server.middlewares.use(async (req: IncomingMessage, res: ServerResponse, next: () => void) => {
       if (req.url?.startsWith("/api/")) {
@@ -32,7 +32,7 @@ const vercelApiMockPlugin = () => ({
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), vercelApiMockPlugin()],
+  plugins: [react(), apiMockPlugin()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
