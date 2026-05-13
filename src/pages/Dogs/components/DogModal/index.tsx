@@ -24,11 +24,21 @@ interface ModalProps {
   onClose: () => void;
 }
 
-export function DogModal({ dog, isOpen, onClose }: ModalProps) {
+export function DogModal({ dog: parentDog, isOpen, onClose }: ModalProps) {
   const isDesktop = useIsDesktop();
 
   const [, copyToClipboard] = useCopyToClipboard();
   const [isCopied, setIsCopied] = useState(false);
+
+  const [prevParentDog, setPrevParentDog] = useState<Dog | null>(parentDog);
+  const [displayedDog, setDisplayedDog] = useState<Dog | null>(parentDog);
+
+  if (parentDog && parentDog !== prevParentDog) {
+    setPrevParentDog(parentDog);
+    setDisplayedDog(parentDog);
+  }
+
+  const dog = displayedDog;
 
   if (!dog) return null;
 
@@ -137,23 +147,16 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
           {/* --- DETALHES DO DOG --- */}
           <div className={styles.details}>
             <div className={styles.detailsHeader}>
-              {isDesktop && (
-                <div className={styles.closeButton}>
-                  <Button variant="ghost" onClick={handleClose} size="icon">
-                    <Lucide.X size={22} />
-                  </Button>
-                </div>
-              )}
-              <div>
-                <Badge>{CORES_MAP[dog.cor] || dog.cor}</Badge>
+              <div className={styles.titleWrapper}>
+                <h2 className={styles.title}>{dog.nome}</h2>
+                {isDesktop && (
+                  <div className={styles.closeButton}>
+                    <Button variant="ghost" onClick={handleClose} size="icon">
+                      <Lucide.X size={22} />
+                    </Button>
+                  </div>
+                )}
               </div>
-
-              <h2 className={styles.title}>{dog.nome}</h2>
-
-              <p className={styles.description}>
-                {dog.descricaoCompleta ||
-                  `O ${dog.nome} é um cãozinho incrível que está esperando por um lar. ${dog.temperamento}.`}
-              </p>
 
               <div className={styles.badges}>
                 <Badge
@@ -178,45 +181,61 @@ export function DogModal({ dog, isOpen, onClose }: ModalProps) {
 
                 <Badge
                   variant="secondary"
+                  leftIcon={<Lucide.Palette size={14} />}
+                >
+                  {CORES_MAP[dog.cor] || dog.cor}
+                </Badge>
+
+                <Badge
+                  variant="secondary"
                   leftIcon={<Lucide.BriefcaseMedical size={14} />}
                 >
                   {dog.status}
                 </Badge>
-
-                {dog.instaLink && (
-                  <ExternalLink href={dog.instaLink as string}>
-                    <Badge
-                      className={styles.badgeInstagram}
-                      variant="secondary"
-                      leftIcon={<Lucide.Instagram size={14} />}
-                      rightIcon={<Lucide.ArrowRight size={14} />}
-                    >
-                      Ver Vídeo
-                    </Badge>
-                  </ExternalLink>
-                )}
               </div>
+
+              {dog.instaLink && (
+                <ExternalLink
+                  href={dog.instaLink as string}
+                  style={{ textDecoration: "none" }}
+                >
+                  <div className={styles.instagramPill}>
+                    <Lucide.Instagram size={18} />
+                    <span>Conhecer no Instagram</span>
+                  </div>
+                </ExternalLink>
+              )}
+
+              <p className={styles.description}>
+                {dog.descricaoCompleta ||
+                  `O ${dog.nome} é um cãozinho incrível que está esperando por um lar.`}
+              </p>
             </div>
 
             <div>
               <CardComponent.Card size="sm" color="secondary" variant="quote">
                 <CardComponent.CardBody>
-                  <CardComponent.CardHeader>
-                    <CardComponent.CardIcon>
-                      <Lucide.PawPrint size={22} />
-                    </CardComponent.CardIcon>
+                  <CardComponent.CardIcon>
+                    <Lucide.PawPrint size={24} />
+                  </CardComponent.CardIcon>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "0.2rem",
+                    }}
+                  >
                     <CardComponent.CardTitle>
                       Temperamento
                     </CardComponent.CardTitle>
-                  </CardComponent.CardHeader>
-                  <CardComponent.CardContent>
-                    <p>
-                      {dog.nome} tem um temperamento{" "}
-                      <strong>{dog.temperamento?.toLowerCase()}</strong>. Para
-                      uma convivência harmoniosa, é ideal que o tutor tenha um
-                      estilo de vida compatível com essa energia.
-                    </p>
-                  </CardComponent.CardContent>
+                    <CardComponent.CardContent>
+                      <p>
+                        Perfil{" "}
+                        <strong>{dog.temperamento?.toLowerCase()}</strong>.
+                        Ideal para lares com o mesmo ritmo.
+                      </p>
+                    </CardComponent.CardContent>
+                  </div>
                 </CardComponent.CardBody>
               </CardComponent.Card>
             </div>
