@@ -1,13 +1,5 @@
 import { kv } from "./_lib/kv";
-import {
-  collection,
-  doc,
-  getCountFromServer,
-  getDocs,
-  limit,
-  query,
-  where,
-} from "firebase/firestore";
+import { FieldPath } from "firebase-admin/firestore";
 import { IncomingMessage, ServerResponse } from "http";
 
 import { db } from "./_lib/firebase.js";
@@ -19,25 +11,25 @@ import { HTTP_STATUS } from "./_lib/constants";
 const DOGS_COLLECTION = "dogs";
 
 async function getRandomDogFromServer() {
-  const docRef = collection(db, DOGS_COLLECTION);
+  const docRef = db.collection(DOGS_COLLECTION);
 
-  const countSnapshot = await getCountFromServer(docRef);
+  const countSnapshot = await docRef.count().get();
   const count = countSnapshot.data().count;
 
   if (count === 0) {
     return null;
   }
 
-  const randomKey = doc(docRef).id;
+  const randomKey = docRef.doc().id;
 
-  let q = query(docRef, where("__name__", ">=", randomKey), limit(1));
-
-  let snapshot = await getDocs(q);
+  let snapshot = await docRef
+    .where(FieldPath.documentId(), ">=", randomKey)
+    .limit(1)
+    .get();
 
   // fallback if the query returns nothing (e.g., randomKey is past the last doc)
   if (snapshot.empty) {
-    q = query(docRef, where("__name__", ">=", randomKey), limit(1));
-    snapshot = await getDocs(q);
+    snapshot = await docRef.orderBy(FieldPath.documentId()).limit(1).get();
   }
 
   if (snapshot.empty) {
