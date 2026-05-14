@@ -1,7 +1,7 @@
 import type { IncomingMessage, ServerResponse } from "http";
-import crypto from "crypto";
 import { db } from "./_lib/firebase";
-import { collection, addDoc, Timestamp, doc, getDoc } from "firebase/firestore";
+import { encryptData } from "./_lib/encryption";
+import { Timestamp, FieldValue } from "firebase-admin/firestore";
 import { sendEmail, generateAdoptionApplicationEmail } from "./_lib/email";
 import { fullFormSchema } from "../src/pages/BetaForm/components/WizardForm/schema";
 import { z } from "zod";
@@ -78,26 +78,7 @@ export default async function handler(
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { captchaToken, ...applicationData } = validationResult.data;
 
-      // Buscar chave de criptografia
-      const keyDocSnap = await getDoc(doc(db, "system", "keys"));
-      if (!keyDocSnap.exists()) {
-        throw new Error("Chaves de criptografia não encontradas no banco de dados.");
-      }
-      
-      const { active_key_id, keys } = keyDocSnap.data();
-      const currentKey = keys[active_key_id];
-
-      const algorithm = "aes-256-gcm";
-      const iv = crypto.randomBytes(16);
-      // Garante que a chave tenha o tamanho correto (32 bytes para aes-256)
-      const cipherKey = crypto.createHash("sha256").update(String(currentKey)).digest();
-      const cipher = crypto.createCipheriv(algorithm, cipherKey, iv);
-      
-      let encrypted = cipher.update(JSON.stringify(applicationData), "utf8", "hex");
-      encrypted += cipher.final("hex");
-      const authTag = cipher.getAuthTag().toString("hex");
-      
-      const encryptedData = `${iv.toString("hex")}:${authTag}:${encrypted}`;
+      const { encryptedData, keyVersion } = await encryptData(applicationData);
 
       // Calcular data de expiração (30 dias)
       const expiresAt = new Date();
@@ -106,17 +87,14 @@ export default async function handler(
       // Adicionar timestamp e dados de submissão
       const documentData = {
         data: encryptedData,
-        keyVersion: active_key_id,
-        submittedAt: Timestamp.now(),
+        keyVersion,
+        submittedAt: FieldValue.serverTimestamp(),
         expiresAt: Timestamp.fromDate(expiresAt),
         status: "pending",
       };
 
       // Salvar na collection adoption_application
-      const docRef = await addDoc(
-        collection(db, "adoption_application"),
-        documentData,
-      );
+      const docRef = await db.collection("adoption_application").add(documentData);
 
       // Enviar email de notificação
       await sendAdoptionApplicationEmail(applicationData, docRef.id);

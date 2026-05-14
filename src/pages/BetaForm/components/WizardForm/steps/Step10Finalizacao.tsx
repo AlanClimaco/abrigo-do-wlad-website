@@ -1,4 +1,3 @@
-import ReCAPTCHA from "react-google-recaptcha";
 import { FieldWrapper } from "../FieldWrapper";
 import type { FormData } from "../schema";
 import type { FieldError } from "../useWizardForm";
@@ -9,24 +8,21 @@ import {
   Card,
   CardBody,
   CardContent,
-  CardHeader,
+  CardIcon,
   CardTitle,
 } from "@/components/ui/Card";
+import { CircleAlert } from "lucide-react";
 
 interface StepProps {
   formData: Partial<FormData>;
   errors: FieldError;
   updateField: (field: keyof FormData, value: string | number) => void;
-  onCaptchaChange: (token: string | null) => void;
-  captchaToken: string;
 }
 
 export function Step10Finalizacao({
   formData,
   errors,
   updateField,
-  onCaptchaChange,
-  captchaToken,
 }: StepProps) {
   return (
     <div className={styles.stepContent}>
@@ -58,11 +54,12 @@ export function Step10Finalizacao({
         />
       </FieldWrapper>
 
-      <Card style={{ margin: "1.5rem 0" }} variant="quote" size="sm">
+      <Card color="red" variant="quote" size="sm">
         <CardBody>
-          <CardHeader>
-            <CardTitle>IMPORTANTE!</CardTitle>
-          </CardHeader>
+          <CardIcon>
+            <CircleAlert />
+          </CardIcon>
+          <CardTitle>IMPORTANTE!</CardTitle>
           <CardContent>
             <p>
               Você não poderá doar a outra pessoa o animal adotado sem antes
@@ -112,18 +109,6 @@ export function Step10Finalizacao({
           rows={3}
         />
       </FieldWrapper>
-
-      <div className={styles.captchaContainer}>
-        <ReCAPTCHA
-          sitekey="6LeHu0ksAAAAAMrICH8bmO4MD0r2wdnJ9AZVpWlF"
-          onChange={onCaptchaChange}
-        />
-        {!captchaToken && (
-          <span className={styles.errorMessage}>
-            Complete o captcha para enviar
-          </span>
-        )}
-      </div>
     </div>
   );
 }

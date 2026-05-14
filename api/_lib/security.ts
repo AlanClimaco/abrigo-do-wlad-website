@@ -62,7 +62,10 @@ export function validateAuthHeader(
 }
 
 export async function verifyRecaptcha(token: string): Promise<boolean> {
-  if (!token || typeof token !== "string" || token.length > 1000) {
+  if (!token || typeof token !== "string" || token.length > 5000) {
+    console.error(
+      "reCAPTCHA validation failed: Invalid token format or length.",
+    );
     return false;
   }
 
@@ -81,7 +84,12 @@ export async function verifyRecaptcha(token: string): Promise<boolean> {
     const data = (await response.json()) as {
       success: boolean;
       score?: number;
+      "error-codes"?: string[];
     };
+
+    if (process.env.NODE_ENV === "development") {
+      console.log("reCAPTCHA Google Response:", data);
+    }
 
     if (data.score !== undefined) {
       return data.success && data.score > 0.5; // v3

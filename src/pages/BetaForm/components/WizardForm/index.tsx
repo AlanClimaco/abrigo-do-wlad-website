@@ -26,7 +26,6 @@ export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
   const petName = searchParams.get("pet") || "";
   const isDesktop = useIsDesktop();
 
-  const [captchaToken, setCaptchaToken] = React.useState<string>("");
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [, setSubmitError] = React.useState<string | null>(null);
   const [showWarning, setShowWarning] = React.useState<boolean>(() => {
@@ -69,6 +68,18 @@ export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
     highestCompletedStep,
     resetForm,
   } = useWizardForm();
+
+  React.useEffect(() => {
+    const scriptId = "recaptcha-v3-script";
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement("script");
+      script.id = scriptId;
+
+      const siteKey = import.meta.env.VITE_RECAPTCHA_PUBLIC_KEY as string;
+      script.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}`;
+      document.body.appendChild(script);
+    }
+  }, []);
 
   const handleResume = () => {
     setShowResumeDialog(false);
@@ -113,20 +124,35 @@ export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
     }
   }, [petName, formData.animal_especifico, updateField]);
 
-  const handleCaptchaChange = (token: string | null) => {
-    setCaptchaToken(token || "");
-  };
-
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!validateCurrentStep()) return;
-    if (!captchaToken) return;
 
     setIsSubmitting(true);
     setSubmitError(null);
 
     try {
+      const siteKey = import.meta.env.VITE_RECAPTCHA_PUBLIC_KEY;
+
+      // Captura do token do reCAPTCHA v3
+      const token = await new Promise<string>((resolve, reject) => {
+        // @ts-expect-error - grecaptcha não está tipado no global
+        if (!window.grecaptcha) {
+          reject(new Error("reCAPTCHA não carregou corretamente."));
+          return;
+        }
+
+        // @ts-expect-error - grecaptcha não está tipado no global
+        grecaptcha.ready(() => {
+          // @ts-expect-error - grecaptcha não está tipado no global
+          grecaptcha
+            .execute(siteKey, { action: "submit_adoption" })
+            .then((token: string) => resolve(token))
+            .catch(reject);
+        });
+      });
+
       const response = await fetch("/api/create-adoption-application", {
         method: "POST",
         headers: {
@@ -134,7 +160,7 @@ export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
         },
         body: JSON.stringify({
           ...formData,
-          captchaToken,
+          captchaToken: token,
         }),
       });
 
@@ -187,13 +213,7 @@ export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
       case 8:
         return <Step.Step9Situacoes {...stepProps} />;
       case 9:
-        return (
-          <Step.Step10Finalizacao
-            captchaToken={captchaToken}
-            onCaptchaChange={handleCaptchaChange}
-            {...stepProps}
-          />
-        );
+        return <Step.Step10Finalizacao {...stepProps} />;
 
       default:
         return null;
@@ -362,7 +382,7 @@ export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
             <Button
               type="submit"
               size={isDesktop ? "lg" : "md"}
-              disabled={isSubmitting || !captchaToken}
+              disabled={isSubmitting}
               rightIcon={<Lucide.Send size={22} />}
             >
               {isSubmitting ? "Enviando..." : "Enviar Respostas"}

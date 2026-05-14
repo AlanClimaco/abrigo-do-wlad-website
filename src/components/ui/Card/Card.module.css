@@ -123,12 +123,15 @@
 
 .quote.sm .cardBody {
   padding: 1.2rem;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr;
   align-items: center;
-  gap: 1.2rem;
+  column-gap: 1.2rem;
+  row-gap: 0.2rem;
 }
 
 .quote.sm .cardIcon {
+  grid-row: span 2;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -147,12 +150,14 @@
   font-weight: 700;
   letter-spacing: 1px;
   color: var(--text-secondary) !important;
+  align-self: end;
 }
 
 .quote.sm .cardContent {
   font-size: 0.95rem;
   color: var(--text-primary) !important;
   line-height: 1.4;
+  align-self: start;
 }
 
 .quote.sm .cardContent p {
@@ -290,6 +295,12 @@
   }
 
   .quote.sm .cardBody {
+    display: flex;
     flex-direction: column;
+    text-align: center;
+  }
+
+  .quote.sm .cardIcon {
+    grid-row: auto;
   }
 }
