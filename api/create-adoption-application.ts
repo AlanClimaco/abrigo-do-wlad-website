@@ -33,6 +33,18 @@ async function sendAdoptionApplicationEmail(
   }
 }
 
+const SENSITIVE_FIELDS = [
+  "nome_adotante",
+  "telefone",
+  "email",
+  "endereco",
+  "redes_sociais",
+  "renda_mensal",
+  "empresa",
+  "profissao",
+  "idade",
+];
+
 export default async function handler(
   req: IncomingMessage,
   res: ServerResponse,
@@ -78,7 +90,18 @@ export default async function handler(
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { captchaToken, ...applicationData } = validationResult.data;
 
-      const { encryptedData, keyVersion } = await encryptData(applicationData);
+      const sensitiveData: Record<string, unknown> = {};
+      const publicData: Record<string, unknown> = {};
+
+      for (const [key, value] of Object.entries(applicationData)) {
+        if (SENSITIVE_FIELDS.includes(key)) {
+          sensitiveData[key] = value;
+        } else {
+          publicData[key] = value;
+        }
+      }
+
+      const { encryptedData, keyVersion } = await encryptData(sensitiveData);
 
       // Calcular data de expiração (30 dias)
       const expiresAt = new Date();
@@ -86,7 +109,8 @@ export default async function handler(
 
       // Adicionar timestamp e dados de submissão
       const documentData = {
-        data: encryptedData,
+        ...publicData,
+        sensitive: encryptedData,
         keyVersion,
         submittedAt: FieldValue.serverTimestamp(),
         expiresAt: Timestamp.fromDate(expiresAt),

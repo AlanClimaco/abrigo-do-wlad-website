@@ -1,6 +1,31 @@
 import crypto from "crypto";
 import { db } from "./firebase";
 
+function decryptSystemKey(encryptedKeyString: string): string {
+  const masterKey = process.env.MASTER_KEY;
+  if (!masterKey) {
+    throw new Error("MASTER_KEY is not defined in environment variables.");
+  }
+  
+  const parts = encryptedKeyString.split(":");
+  if (parts.length !== 3) {
+    throw new Error("Invalid encrypted key format. Expected iv:authTag:encrypted");
+  }
+
+  const [ivHex, authTagHex, encryptedHex] = parts;
+  const iv = Buffer.from(ivHex, "hex");
+  const authTag = Buffer.from(authTagHex, "hex");
+  
+  const masterCipherKey = crypto.createHash("sha256").update(masterKey).digest();
+  const decipher = crypto.createDecipheriv("aes-256-gcm", masterCipherKey, iv);
+  decipher.setAuthTag(authTag);
+  
+  let decryptedKey = decipher.update(encryptedHex, "hex", "utf8");
+  decryptedKey += decipher.final("utf8");
+  
+  return decryptedKey;
+}
+
 export async function encryptData(
   data: Record<string, unknown>,
 ): Promise<{ encryptedData: string; keyVersion: string }> {
@@ -16,11 +41,14 @@ export async function encryptData(
     active_key_id: string;
     keys: Record<string, { id: string; key: string; version: string; createdAt: string }>;
   };
-  const currentKey = keys[active_key_id]?.key;
+  
+  const encryptedCurrentKey = keys[active_key_id]?.key;
 
-  if (!currentKey) {
+  if (!encryptedCurrentKey) {
     throw new Error("Chave de criptografia ativa inválida ou não encontrada.");
   }
+
+  const currentKey = decryptSystemKey(encryptedCurrentKey);
 
   const algorithm = "aes-256-gcm";
   const iv = crypto.randomBytes(16);
