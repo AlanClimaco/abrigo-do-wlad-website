@@ -1,4 +1,5 @@
 import crypto from "crypto";
+import net from "net";
 import type { IncomingMessage } from "http";
 import { kv } from "@vercel/kv";
 import {
@@ -9,11 +10,50 @@ import {
 } from "./constants";
 
 export function getClientIp(req: IncomingMessage): string {
-  return (
+  const clientIp = (
     (req.headers["x-forwarded-for"] as string)?.split(",")[0].trim() ||
     req.socket.remoteAddress ||
     "unknown"
   );
+
+  if (clientIp === "unknown") return clientIp;
+
+  return truncateIp(clientIp);
+}
+
+function normalizeIpv6(ip: string): string[] | null {
+  const [head, tail] = ip.split("::");
+  const headParts = head ? head.split(":").filter(Boolean) : [];
+  const tailParts = tail ? tail.split(":").filter(Boolean) : [];
+  const missing = 8 - (headParts.length + tailParts.length);
+
+  if (missing < 0) return null;
+
+  const parts = [
+    ...headParts,
+    ...Array.from({ length: missing }, () => "0"),
+    ...tailParts,
+  ];
+
+  return parts.length === 8 ? parts : null;
+}
+
+function truncateIp(ip: string): string {
+  const ipType = net.isIP(ip);
+
+  if (ipType === 4) {
+    const parts = ip.split(".");
+    if (parts.length !== 4) return ip;
+    return `${parts[0]}.${parts[1]}.${parts[2]}.0`;
+  }
+
+  if (ipType === 6) {
+    const parts = normalizeIpv6(ip);
+    if (!parts) return ip;
+    return `${parts.slice(0, 4).join(":")}::`;
+  }
+
+  return ip;
 }
 
 export async function checkRateLimit(clientIp: string): Promise<boolean> {
