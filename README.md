@@ -27,10 +27,12 @@ Abaixo está listada a estrutura atual do projeto:
 
 ```text
 api/                     # Serverless functions (Vercel)
-├── create-adoption-application.ts # Processa e valida o envio de formulários
-├── get-hero-dog.ts      # Retorna o animal em destaque armazenado no cache
-├── update-hero-dog.ts   # Seleciona um animal aleatório da db e atualiza o cache
-└── _lib/                # Lógica interna da API
+├── adoption/
+│   └── create.ts         # Processa e valida o envio de formulários
+├── hero-dog/
+│   ├── get.ts            # Retorna o animal em destaque armazenado no cache
+│   └── update.ts         # Seleciona um animal aleatório da db e atualiza o cache
+└── _lib/                 # Lógica interna da API
 src/
 ├── assets/              # Arquivos estáticos e metadados JSON
 ├── components/          # Componentes globais e reutilizáveis

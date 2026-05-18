@@ -7,7 +7,7 @@ export function useDailyDog() {
   React.useEffect(() => {
     async function fetchDailyDog() {
       try {
-        const response = await fetch("/api/get-hero-dog");
+        const response = await fetch("/api/hero-dog/get");
         if (response.ok) {
           const payload = (await response.json()) as {
             data?: Dog;

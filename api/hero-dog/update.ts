@@ -1,12 +1,12 @@
-import { kv } from "./_lib/kv";
+import { kv } from "../_lib/kv";
 import { FieldPath } from "firebase-admin/firestore";
 import { IncomingMessage, ServerResponse } from "http";
 
-import { db } from "./_lib/firebase.js";
-import { validateRequest } from "./_lib/validation";
-import { validateAuthHeader } from "./_lib/security";
-import { sendError, sendSuccess } from "./_lib/response";
-import { HTTP_STATUS } from "./_lib/constants";
+import { db } from "../_lib/firebase.js";
+import { validateRequest } from "../_lib/validation";
+import { validateAuthHeader } from "../_lib/security";
+import { sendError, sendSuccess } from "../_lib/response";
+import { HTTP_STATUS } from "../_lib/constants";
 
 const DOGS_COLLECTION = "dogs";
 

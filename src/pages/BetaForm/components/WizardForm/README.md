@@ -49,7 +49,7 @@ Componente principal que orquestra todo o fluxo do wizard.
 - Renderiza a **tela de aviso** inicial.
 - Exibe a **barra de progresso** e os **indicadores de step** com tooltips.
 - Controla qual step é exibido via `renderStep()`.
-- Envia os dados para a API (`POST /api/create-adoption-application`).
+- Envia os dados para a API (`POST /api/adoption/create`).
 - Suporta **pré-preenchimento** do nome do pet via query param `?pet=Nome`.
 - Integra reCAPTCHA para evitar spam.
 
@@ -297,7 +297,7 @@ Animação de transição entre steps:
 | `zod`          | Validação de schemas por step                   |
 | `react-router` | Leitura de query params (`?pet=`)               |
 | `lucide-react` | Ícones (setas, check, alert, send)              |
-| `fetch API`    | Envio de dados para API (`/api/create-adoption-application`) |
+| `fetch API`    | Envio de dados para API (`/api/adoption/create`) |
 
 ---
 

@@ -1,18 +1,18 @@
 import type { IncomingMessage, ServerResponse } from "http";
-import { db } from "./_lib/firebase";
-import { encryptData } from "./_lib/encryption";
+import { db } from "../_lib/firebase";
+import { encryptData } from "../_lib/encryption";
 import { Timestamp, FieldValue } from "firebase-admin/firestore";
-import { sendEmail, generateAdoptionApplicationEmail } from "./_lib/email";
-import { fullFormSchema } from "../src/pages/BetaForm/components/WizardForm/schema";
+import { sendEmail, generateAdoptionApplicationEmail } from "../_lib/email";
+import { fullFormSchema } from "../../src/pages/BetaForm/components/WizardForm/schema";
 import { z } from "zod";
-import { validateRequest } from "./_lib/validation";
-import { sanitizeFormFields, verifyRecaptcha } from "./_lib/security";
-import { sendSuccess, sendError } from "./_lib/response";
+import { validateRequest } from "../_lib/validation";
+import { sanitizeFormFields, verifyRecaptcha } from "../_lib/security";
+import { sendSuccess, sendError } from "../_lib/response";
 import {
   ADOPTION_EXPIRATION_DAYS,
   HTTP_STATUS,
   MAX_REQUEST_SIZE,
-} from "./_lib/constants";
+} from "../_lib/constants";
 
 type AdoptionApplicationData = z.infer<typeof fullFormSchema>;
 

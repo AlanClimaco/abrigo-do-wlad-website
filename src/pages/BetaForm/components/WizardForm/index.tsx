@@ -153,7 +153,7 @@ export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
         });
       });
 
-      const response = await fetch("/api/create-adoption-application", {
+      const response = await fetch("/api/adoption/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
