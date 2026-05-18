@@ -1,3 +1,4 @@
+import crypto from "crypto";
 import type { IncomingMessage } from "http";
 import { kv } from "@vercel/kv";
 import {
@@ -58,7 +59,17 @@ export function validateAuthHeader(
   authHeader: string | undefined,
   expectedToken: string,
 ): boolean {
-  return authHeader === `Bearer ${expectedToken}`;
+  if (!authHeader || !expectedToken.trim()) {
+    return false;
+  }
+
+  const expected = `Bearer ${expectedToken}`;
+
+  if (authHeader.length !== expected.length) {
+    return false;
+  }
+
+  return crypto.timingSafeEqual(Buffer.from(authHeader), Buffer.from(expected));
 }
 
 export async function verifyRecaptcha(token: string): Promise<boolean> {
@@ -69,7 +80,18 @@ export async function verifyRecaptcha(token: string): Promise<boolean> {
     return false;
   }
 
+  const secret = process.env.RECAPTCHA_SECRET_KEY;
+  if (!secret) {
+    console.error("reCAPTCHA validation failed: Missing secret key.");
+    return false;
+  }
+
   try {
+    const params = new URLSearchParams({
+      secret,
+      response: token,
+    });
+
     const response = await fetch(
       "https://www.google.com/recaptcha/api/siteverify",
       {
@@ -77,9 +99,14 @@ export async function verifyRecaptcha(token: string): Promise<boolean> {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: `secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`,
+        body: params.toString(),
       },
     );
+
+    if (!response.ok) {
+      console.error("reCAPTCHA validation failed: Unexpected response status.");
+      return false;
+    }
 
     const data = (await response.json()) as {
       success: boolean;
@@ -100,4 +127,42 @@ export async function verifyRecaptcha(token: string): Promise<boolean> {
     console.error("Error verifying reCAPTCHA:", err);
     return false;
   }
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function stripScriptTags(value: string): string {
+  return value.replace(/<\s*\/\s*script[^>]*>/gi, "");
+}
+
+function sanitizeValue(value: unknown): unknown {
+  if (typeof value === "string") {
+    const stripped = stripScriptTags(value);
+    return escapeHtml(stripped);
+  }
+
+  if (Array.isArray(value)) {
+    return value.map((item) => sanitizeValue(item));
+  }
+
+  if (value && typeof value === "object") {
+    const sanitized: Record<string, unknown> = {};
+    for (const [key, nested] of Object.entries(value)) {
+      sanitized[key] = sanitizeValue(nested);
+    }
+    return sanitized;
+  }
+
+  return value;
+}
+
+export function sanitizeFormFields<T>(data: T): T {
+  return sanitizeValue(data) as T;
 }

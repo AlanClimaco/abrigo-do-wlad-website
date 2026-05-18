@@ -6,9 +6,13 @@ import { sendEmail, generateAdoptionApplicationEmail } from "./_lib/email";
 import { fullFormSchema } from "../src/pages/BetaForm/components/WizardForm/schema";
 import { z } from "zod";
 import { validateRequest } from "./_lib/validation";
-import { verifyRecaptcha } from "./_lib/security";
+import { sanitizeFormFields, verifyRecaptcha } from "./_lib/security";
 import { sendSuccess, sendError } from "./_lib/response";
-import { ADOPTION_EXPIRATION_DAYS, HTTP_STATUS } from "./_lib/constants";
+import {
+  ADOPTION_EXPIRATION_DAYS,
+  HTTP_STATUS,
+  MAX_REQUEST_SIZE,
+} from "./_lib/constants";
 
 type AdoptionApplicationData = z.infer<typeof fullFormSchema>;
 
@@ -59,12 +63,29 @@ export default async function handler(
   }
 
   let body = "";
+  let receivedBytes = 0;
+  let bodyTooLarge = false;
 
   req.on("data", (chunk) => {
+    if (bodyTooLarge) return;
+
+    receivedBytes += chunk.length;
+
+    if (receivedBytes > MAX_REQUEST_SIZE) {
+      bodyTooLarge = true;
+      sendError(res, HTTP_STATUS.PAYLOAD_TOO_LARGE, "Request entity too large");
+      req.destroy();
+      return;
+    }
+
     body += chunk.toString();
   });
 
   req.on("end", async () => {
+    if (bodyTooLarge) {
+      return;
+    }
+
     try {
       const data = JSON.parse(body) as AdoptionApplicationData;
 
@@ -88,8 +109,9 @@ export default async function handler(
       }
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { captchaToken, ...applicationData } = validationResult.data;
+      const { captchaToken, ...rawApplicationData } = validationResult.data;
 
+      const applicationData = sanitizeFormFields(rawApplicationData);
       const sensitiveData: Record<string, unknown> = {};
       const publicData: Record<string, unknown> = {};
 
@@ -103,7 +125,7 @@ export default async function handler(
 
       const { encryptedData, keyVersion } = await encryptData(sensitiveData);
 
-      // Calcular data de expiração (30 dias)
+      // Calcular data de expiração
       const expiresAt = new Date();
       expiresAt.setDate(expiresAt.getDate() + ADOPTION_EXPIRATION_DAYS);
 
@@ -117,10 +139,11 @@ export default async function handler(
         status: "pending",
       };
 
-      // Salvar na collection adoption_application
-      const docRef = await db.collection("adoption_application").add(documentData);
+      const docRef = await db
+        .collection("adoption_application")
+        .add(documentData);
 
-      // Enviar email de notificação
+      // email trigger
       await sendAdoptionApplicationEmail(applicationData, docRef.id);
 
       sendSuccess(
