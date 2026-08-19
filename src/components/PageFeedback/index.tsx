@@ -59,7 +59,7 @@ function FeedbackButton({
     <Button
       onClick={onClick}
       variant="ghost"
-      size="icon-sm"
+      size="sm"
       className={`${styles.feedbackBtn} ${isActive ? styles.active : ""}`}
       disabled={isDisabled}
       aria-label={option.ariaLabel}

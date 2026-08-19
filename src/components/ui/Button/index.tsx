@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 type ButtonProps = {
   children: ReactNode;
-  variant?: "primary" | "secondary" | "outline" | "text" | "ghost";
+  variant?: "primary" | "secondary" | "success" | "outline" | "text" | "ghost";
   size?: "sm" | "md" | "lg" | "icon" | "icon-sm";
   blur?: boolean;
   leftIcon?: ReactNode;

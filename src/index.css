@@ -25,6 +25,8 @@
   --btn-primary-hover: #ff6c37;
   --btn-secondary: #cce4f3;
   --btn-secondary-hover: #0060aa;
+  --btn-success: #d4f8d3;
+  --btn-success-hover: #5c9e3f;
 
   --btn-ghost-bg: rgba(255, 255, 255, 0.15);
   --btn-outline-bg: rgba(255, 255, 255, 0.7);
@@ -65,7 +67,7 @@
   --header-bg-scrolled: rgba(252, 234, 227, 0.834);
 
   /* Hero Gradient */
-  --hero-gradient-start: rgba(25, 77, 116, 0.707);
+  --hero-gradient-start: rgba(25, 77, 116, 0.583);
   --hero-gradient-end: rgba(0, 0, 0, 0.6);
 
   /* UI Elements */
@@ -112,6 +114,8 @@ body.dark-mode {
   --btn-primary-hover: #ff8c5f;
   --btn-secondary: #1a3a52;
   --btn-secondary-hover: #3d9ce8;
+  --btn-success: #1f3d2f;
+  --btn-success-hover: #7cb85d;
 
   /* Badges */
   --badge-primary: #ff8c5f;
@@ -153,7 +157,7 @@ body.dark-mode {
   --card-gradient-blue-hover: rgba(61, 156, 232, 0.08);
 
   /* Hero Gradient */
-  --hero-gradient-start: rgba(36, 19, 14, 0.8);
+  --hero-gradient-start: rgba(36, 19, 14, 0.712);
   --hero-gradient-end: rgba(0, 0, 0, 0.7);
 
   /* Shadow Effects */

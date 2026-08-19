@@ -37,7 +37,7 @@
 
 .primary:hover:not(:disabled) {
   background-color: var(--btn-primary-hover);
-  color: var(--white)
+  color: var(--white);
 }
 
 .secondary {
@@ -47,6 +47,16 @@
 
 .secondary:hover:not(:disabled) {
   background-color: var(--btn-secondary-hover);
+  color: var(--white);
+}
+
+.success {
+  background-color: var(--btn-success);
+  color: var(--success);
+}
+
+.success:hover:not(:disabled) {
+  background-color: var(--btn-success-hover);
   color: var(--white);
 }
 
