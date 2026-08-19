@@ -50,7 +50,7 @@ export function Footer() {
           <NavLink to="/" className={styles.linkItem}>
             Início
           </NavLink>
-          <NavLink to="/dogs" className={styles.linkItem}>
+          <NavLink to="/caes" className={styles.linkItem}>
             Nossos Cães
           </NavLink>
           <NavLink to="/sobre" className={styles.linkItem}>
