@@ -7,6 +7,7 @@ import {
   validateRequestSize,
 } from "./security";
 import { sendError } from "./response";
+import type { CloudflareEnv } from "./env";
 
 export async function validateRequest(
   req: Request,
@@ -18,7 +19,7 @@ export async function validateRequest(
     validateContentType?: boolean;
     validateRequestSize?: boolean;
   },
-  env?: Record<string, string | undefined>,
+  env?: CloudflareEnv,
 ): Promise<Response | null> {
   const method = options?.expectedMethod || "POST";
   const shouldValidateBody = ["POST", "PUT", "PATCH"].includes(method);

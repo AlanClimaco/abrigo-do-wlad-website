@@ -10,7 +10,7 @@
     "build:app": "tsc -b && vite build",
     "build:cron": "wrangler deploy --dry-run --config workers/cron/wrangler.jsonc --outdir .wrangler/cron-check",
     "check:cron": "npm run build:cron",
-    "test": "node --import tsx --test workers/app/*.test.ts workers/shared/api/_lib/*.test.ts",
+    "test": "node --import tsx --test src/pages/BetaForm/components/WizardForm/*.test.ts workers/app/*.test.ts workers/shared/api/_lib/*.test.ts workers/shared/api/adoption/*.test.ts",
     "lint": "eslint .",
     "preview": "npm run build && vite preview",
     "deploy": "npm run build:app && wrangler deploy",

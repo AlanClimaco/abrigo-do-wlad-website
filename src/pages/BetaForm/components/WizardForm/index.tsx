@@ -14,11 +14,16 @@ import * as Lucide from "lucide-react";
 
 import { ExternalLink } from "@/components/common/ExternalLink";
 import { useIsDesktop } from "@/hooks/useIsDesktop";
+import {
+  getAdoptionApplicationId,
+  type AdoptionSubmissionResult,
+} from "./submission";
+import { ADOPTION_RECAPTCHA_ACTION } from "./recaptcha";
 
 import styles from "./WizardForm.module.css";
 
 interface WizardFormProps {
-  onSubmitSuccess?: (applicationId: string) => void;
+  onSubmitSuccess?: (result: AdoptionSubmissionResult) => void;
 }
 
 export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
@@ -27,7 +32,7 @@ export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
   const isDesktop = useIsDesktop();
 
   const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const [, setSubmitError] = React.useState<string | null>(null);
+  const [submitError, setSubmitError] = React.useState<string | null>(null);
   const [showWarning, setShowWarning] = React.useState<boolean>(() => {
     try {
       const saved = sessionStorage.getItem("wizardShowWarning");
@@ -147,7 +152,7 @@ export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
         grecaptcha.ready(() => {
           // @ts-expect-error - grecaptcha não está tipado no global
           grecaptcha
-            .execute(siteKey, { action: "submit_adoption" })
+            .execute(siteKey, { action: ADOPTION_RECAPTCHA_ACTION })
             .then((token: string) => resolve(token))
             .catch(reject);
         });
@@ -164,15 +169,10 @@ export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
         }),
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Erro ao enviar formulário");
-      }
-
-      const result = await response.json();
+      const submissionResult = await getAdoptionApplicationId(response);
 
       if (onSubmitSuccess) {
-        onSubmitSuccess(result.id);
+        onSubmitSuccess(submissionResult);
       }
     } catch (error) {
       const message =
@@ -350,6 +350,17 @@ export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
           <div className={styles.errorSummary}>
             <Lucide.AlertTriangle size={18} />
             <span>Preencha todos os campos obrigatórios antes de avançar.</span>
+          </div>
+        )}
+
+        {submitError && (
+          <div
+            className={styles.submitError}
+            role="alert"
+            aria-live="assertive"
+          >
+            <Lucide.CircleAlert size={18} />
+            <span>{submitError}</span>
           </div>
         )}
 

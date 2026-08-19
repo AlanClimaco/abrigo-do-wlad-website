@@ -7,13 +7,14 @@ import { sanitizeFormFields, verifyRecaptcha } from "../_lib/security";
 import {
   ADOPTION_EXPIRATION_DAYS,
   HTTP_STATUS,
-  MAX_REQUEST_SIZE,
 } from "../_lib/constants";
 import {
   jsonResponse,
   getEnvValue,
   type CloudflareEnv,
 } from "../_lib/env";
+import { validateRequest } from "../_lib/validation";
+import { ADOPTION_RECAPTCHA_ACTION } from "../../../../src/pages/BetaForm/components/WizardForm/recaptcha";
 
 type AdoptionApplicationData = z.infer<typeof fullFormSchema>;
 
@@ -21,7 +22,7 @@ async function sendAdoptionApplicationEmail(
   applicationData: Record<string, unknown>,
   applicationId: string,
   env: CloudflareEnv,
-): Promise<void> {
+): Promise<boolean> {
   try {
     const { html, text } = generateAdoptionApplicationEmail(
       applicationData,
@@ -40,8 +41,10 @@ async function sendAdoptionApplicationEmail(
       },
       env,
     );
+    return true;
   } catch (err) {
     console.error("Error sending adoption application email:", err);
+    return false;
   }
 }
 
@@ -64,24 +67,13 @@ export async function onRequest({
   request: Request;
   env: CloudflareEnv;
 }) {
-  if (request.method !== "POST") {
-    return jsonResponse(HTTP_STATUS.METHOD_NOT_ALLOWED, {
-      message: "Method not allowed",
-    });
-  }
-
-  const contentLength = request.headers.get("content-length");
-  if (contentLength && Number(contentLength) > MAX_REQUEST_SIZE) {
-    return jsonResponse(HTTP_STATUS.PAYLOAD_TOO_LARGE, {
-      message: "Request entity too large",
-    });
-  }
-
-  const contentType = request.headers.get("content-type") || "";
-  if (!contentType.includes("application/json")) {
-    return jsonResponse(HTTP_STATUS.BAD_REQUEST, {
-      message: "Invalid Content-Type",
-    });
+  const validationError = await validateRequest(
+    request,
+    { expectedMethod: "POST" },
+    env,
+  );
+  if (validationError) {
+    return validationError;
   }
 
   try {
@@ -94,7 +86,10 @@ export async function onRequest({
       });
     }
 
-    const captchaValid = await verifyRecaptcha(data.captchaToken, env);
+    const captchaValid = await verifyRecaptcha(data.captchaToken, env, {
+      expectedAction: ADOPTION_RECAPTCHA_ACTION,
+      expectedHostname: new URL(request.url).hostname,
+    });
     if (!captchaValid) {
       return jsonResponse(HTTP_STATUS.BAD_REQUEST, {
         message: "reCAPTCHA validation failed",
@@ -147,11 +142,21 @@ export async function onRequest({
       { serverTimestampFields: ["submittedAt"] },
     );
 
-    await sendAdoptionApplicationEmail(applicationData, applicationId, env);
+    const notificationEmailSent = await sendAdoptionApplicationEmail(
+      applicationData,
+      applicationId,
+      env,
+    );
 
     return jsonResponse(HTTP_STATUS.CREATED, {
       message: "Application submitted successfully",
-      data: { id: applicationId },
+      data: { id: applicationId, notificationEmailSent },
+      ...(!notificationEmailSent
+        ? {
+            warning:
+              "A candidatura foi salva, mas a notificação automática falhou. Guarde o ID e entre em contato com o abrigo.",
+          }
+        : {}),
     });
   } catch (err) {
     console.error("Error creating adoption application:", err);

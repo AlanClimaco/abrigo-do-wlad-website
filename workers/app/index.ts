@@ -14,7 +14,7 @@ export type AppEnv = CloudflareEnv & {
 async function handleApiRequest(request: Request, env: AppEnv): Promise<Response> {
   const pathname = new URL(request.url).pathname;
 
-  if (pathname === "/api/hero-dog/get") {
+  if (pathname === "/api/hero-dog") {
     return getHeroDog({ request, env });
   }
 

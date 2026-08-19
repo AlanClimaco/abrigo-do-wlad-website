@@ -27,6 +27,7 @@ const FALLBACK_FORM =
 export default function BetaForm() {
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
   const [successId, setSuccessId] = useState<string>("");
+  const [successWarning, setSuccessWarning] = useState<string | null>(null);
   const heroImage = getThirdPartyImage("form")?.url;
   const navigate = useNavigate();
   const { settings, loading: loadingSettings } = useSystemSettings();
@@ -58,6 +59,11 @@ export default function BetaForm() {
                   }}
                 >
                   ID da sua candidatura: {successId}
+                </span>
+              )}
+              {successWarning && (
+                <span className={styles.submissionWarning} role="status">
+                  {successWarning}
                 </span>
               )}
             </DialogDescription>
@@ -132,8 +138,9 @@ export default function BetaForm() {
           </div>
         ) : (
           <WizardForm
-            onSubmitSuccess={(applicationId) => {
+            onSubmitSuccess={({ applicationId, warning }) => {
               setSuccessId(applicationId);
+              setSuccessWarning(warning ?? null);
               setShowSuccessDialog(true);
             }}
           />

@@ -137,6 +137,12 @@ export function validateAuthHeader(
 export async function verifyRecaptcha(
   token: string,
   env?: CloudflareEnv,
+  options?: {
+    expectedAction?: string;
+    expectedHostname?: string;
+    minimumScore?: number;
+    fetcher?: typeof fetch;
+  },
 ): Promise<boolean> {
   if (!token || typeof token !== "string" || token.length > 5000) {
     console.error(
@@ -152,12 +158,13 @@ export async function verifyRecaptcha(
   }
 
   try {
+    const fetcher = options?.fetcher ?? fetch;
     const params = new URLSearchParams({
       secret,
       response: token,
     });
 
-    const response = await fetch(
+    const response = await fetcher(
       "https://www.google.com/recaptcha/api/siteverify",
       {
         method: "POST",
@@ -176,6 +183,8 @@ export async function verifyRecaptcha(
     const data = (await response.json()) as {
       success: boolean;
       score?: number;
+      action?: string;
+      hostname?: string;
       "error-codes"?: string[];
     };
 
@@ -183,11 +192,16 @@ export async function verifyRecaptcha(
       console.log("reCAPTCHA Google Response:", data);
     }
 
-    if (data.score !== undefined) {
-      return data.success && data.score > 0.5; // v3
-    }
+    const minimumScore = options?.minimumScore ?? 0.5;
+    const expectedHostname = options?.expectedHostname?.toLowerCase();
 
-    return data.success; // v2
+    return (
+      data.success &&
+      typeof data.score === "number" &&
+      data.score >= minimumScore &&
+      (!options?.expectedAction || data.action === options.expectedAction) &&
+      (!expectedHostname || data.hostname?.toLowerCase() === expectedHostname)
+    );
   } catch (err) {
     console.error("Error verifying reCAPTCHA:", err);
     return false;

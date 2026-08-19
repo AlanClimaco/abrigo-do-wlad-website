@@ -134,7 +134,7 @@ Os dois Workers compartilham o mesmo namespace KV. Apenas o Worker de cron possu
 
 ### Estrutura de rotas
 
-- `GET /api/hero-dog/get` — retorna o cachorro em destaque
+- `GET /api/hero-dog` — retorna o cachorro em destaque
 - `POST /api/adoption/create` — cria a submissão da adoção
 - `GET /api/tests/email` — rota disponível somente com `NODE_ENV=development`
 
