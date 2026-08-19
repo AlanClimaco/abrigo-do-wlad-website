@@ -1,6 +1,9 @@
 import { getKvStore } from "../_lib/kv";
-import { FieldPath } from "firebase-admin/firestore";
-import { getDb } from "../_lib/firebase";
+import {
+  createFirestoreClient,
+  createFirestoreDocumentId,
+  type FirestoreRestClient,
+} from "../_lib/firestore";
 import { HTTP_STATUS } from "../_lib/constants";
 import type { CloudflareEnv } from "../_lib/env";
 
@@ -12,47 +15,28 @@ type HeroDog = {
 };
 
 async function getRandomDogFromServer(
-  env?: CloudflareEnv,
+  firestore: FirestoreRestClient,
 ): Promise<HeroDog | null> {
-  const db = getDb(env);
-  const docRef = db.collection(DOGS_COLLECTION);
+  const randomKey = createFirestoreDocumentId();
+  const randomDocument =
+    (await firestore.findFirstDocument<HeroDog>(DOGS_COLLECTION, randomKey)) ??
+    (await firestore.findFirstDocument<HeroDog>(DOGS_COLLECTION));
 
-  const countSnapshot = await docRef.count().get();
-  const count = countSnapshot.data().count;
-
-  if (count === 0) {
-    return null;
-  }
-
-  const randomKey = docRef.doc().id;
-
-  let snapshot = await docRef
-    .where(FieldPath.documentId(), ">=", randomKey)
-    .limit(1)
-    .get();
-
-  if (snapshot.empty) {
-    snapshot = await docRef.orderBy(FieldPath.documentId()).limit(1).get();
-  }
-
-  if (snapshot.empty) {
-    return null;
-  }
-
-  const randomDoc = snapshot.docs[0];
-
-  return { id: randomDoc.id, ...randomDoc.data() };
+  return randomDocument
+    ? { ...randomDocument.data, id: randomDocument.id }
+    : null;
 }
 
 export async function updateHeroDog(env?: CloudflareEnv) {
   try {
     const kvStore = getKvStore(env);
+    const firestore = createFirestoreClient(env);
     const currentDog = await kvStore.get<HeroDog | null>("hero-dog");
     let newDog: HeroDog | null = null;
     let attempts = 0;
 
     do {
-      newDog = await getRandomDogFromServer(env);
+      newDog = await getRandomDogFromServer(firestore);
       attempts++;
     } while (newDog && currentDog && newDog.id === currentDog.id && attempts < 3);
 

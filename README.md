@@ -33,10 +33,10 @@ workers/
 │   └── index.ts               # Worker HTTP e roteador da API
 ├── cron/
 │   ├── index.ts               # Worker exclusivo do Cron Trigger
-│   └── wrangler.jsonc         # Configuração do abrigo-do-wlad-cron
+│   └── wrangler.jsonc         # Configuração do abrigo-do-wlad-worker
 └── shared/
     └── api/                    # Serviços compartilhados pelos dois Workers
-        ├── _lib/               # Firebase Admin, KV, segurança e e-mail
+        ├── _lib/               # Firestore REST, KV, segurança e e-mail
         ├── adoption/           # Submissão de candidatura
         ├── hero-dog/           # Leitura e atualização do destaque
         └── tests/              # Endpoint de debug local
@@ -96,7 +96,7 @@ Para rodar o projeto localmente:
     RECAPTCHA_SECRET_KEY=
     MASTER_KEY=
 
-    # Firebase Admin (app e cron)
+    # Firestore REST via service account (app e cron)
     FIREBASE_PROJECT_ID=
     FIREBASE_CLIENT_EMAIL=
     FIREBASE_PRIVATE_KEY=
@@ -128,7 +128,7 @@ Para rodar o projeto localmente:
 O projeto possui dois Workers independentes:
 
 1. `abrigo-do-wlad`: serve a SPA por Static Assets e executa as rotas `/api/*` em [workers/app/index.ts](workers/app/index.ts).
-2. `abrigo-do-wlad-cron`: executa somente a atualização diária do cachorro em destaque, definida em [workers/cron/index.ts](workers/cron/index.ts).
+2. `abrigo-do-wlad-worker`: executa somente a atualização diária do cachorro em destaque, definida em [workers/cron/index.ts](workers/cron/index.ts).
 
 Os dois Workers compartilham o mesmo namespace KV. Apenas o Worker de cron possui `triggers.crons`; o Worker do app não exporta um handler `scheduled`.
 
@@ -146,16 +146,18 @@ Todos os módulos internos da API devem ler variáveis a partir do ambiente do r
 const value = env?.MY_KEY ?? process.env.MY_KEY;
 ```
 
-As variáveis `VITE_*` existem somente durante o build e são incorporadas ao frontend. Credenciais do Firebase Admin, reCAPTCHA, criptografia e e-mail são variáveis ou secrets de runtime configurados separadamente em cada Worker.
+As variáveis `VITE_*` existem somente durante o build e são incorporadas ao frontend. Os Workers acessam o Firestore pela API REST, autenticada por OAuth 2.0 com uma service account. Credenciais do Firestore, reCAPTCHA, criptografia e e-mail são variáveis ou secrets de runtime configurados separadamente em cada Worker.
 
 | Destino                                               | Configuração necessária                                                                                                  |
 | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
 | Build do `abrigo-do-wlad` (`npm run build:app`)       | Todas as variáveis `VITE_*` do `.env.example`                                                                            |
-| Runtime do `abrigo-do-wlad`                           | `NODE_ENV`, `ALLOWED_ORIGIN`, `RECAPTCHA_SECRET_KEY`, `MASTER_KEY`, credenciais Firebase Admin e configurações de e-mail |
-| Build do `abrigo-do-wlad-cron` (`npm run build:cron`) | Nenhuma variável `VITE_*`; o Wrangler empacota somente o código do cron                                                  |
-| Runtime do `abrigo-do-wlad-cron`                      | Credenciais Firebase Admin; o binding `KV` já está no Wrangler                                                           |
+| Runtime do `abrigo-do-wlad`                           | `NODE_ENV`, `ALLOWED_ORIGIN`, `RECAPTCHA_SECRET_KEY`, `MASTER_KEY`, credenciais Firestore REST e configurações de e-mail |
+| Build do `abrigo-do-wlad-worker` (`npm run build:cron`) | Nenhuma variável `VITE_*`; o Wrangler empacota somente o código do cron                                                |
+| Runtime do `abrigo-do-wlad-worker`                    | `FIREBASE_PROJECT_ID`, `FIREBASE_CLIENT_EMAIL` e `FIREBASE_PRIVATE_KEY`; o binding `KV` já está no Wrangler               |
 
 Os dois arquivos Wrangler usam `keep_vars: true` para preservar as variáveis configuradas pelo painel durante novos deploys. Valores sensíveis não devem ser adicionados aos arquivos Wrangler.
+
+O código de runtime não utiliza `firebase-admin`. O cliente compartilhado em `workers/shared/api/_lib/firestore.ts` assina um JWT com Web Crypto, troca-o por um access token de curta duração e chama `firestore.googleapis.com` via `fetch`. O token é reutilizado enquanto estiver válido. `FIREBASE_PRIVATE_KEY` deve ser configurada como secret, nunca como variável de build ou valor versionado.
 
 ## Deploy
 
@@ -176,7 +178,7 @@ No Workers Builds, configure cada Worker com comandos independentes:
 | Worker                | Build command        | Deploy command                                             |
 | --------------------- | -------------------- | ---------------------------------------------------------- |
 | `abrigo-do-wlad`      | `npm run build:app`  | `npx wrangler deploy`                                      |
-| `abrigo-do-wlad-cron` | `npm run build:cron` | `npx wrangler deploy --config workers/cron/wrangler.jsonc` |
+| `abrigo-do-wlad-worker` | `npm run build:cron` | `npx wrangler deploy --config workers/cron/wrangler.jsonc` |
 
 O build do cron executa apenas um empacotamento de validação do Wrangler e, por isso, não carrega o Vite nem exige variáveis `VITE_*`. Não use comandos `wrangler pages` neste repositório.
 

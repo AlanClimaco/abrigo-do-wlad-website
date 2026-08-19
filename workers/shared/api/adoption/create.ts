@@ -1,6 +1,5 @@
-import { getDb } from "../_lib/firebase";
+import { createFirestoreClient } from "../_lib/firestore";
 import { encryptData } from "../_lib/encryption";
-import { Timestamp, FieldValue } from "firebase-admin/firestore";
 import { sendEmail, generateAdoptionApplicationEmail } from "../_lib/email";
 import { fullFormSchema } from "../../../../src/pages/BetaForm/components/WizardForm/schema";
 import { z } from "zod";
@@ -137,19 +136,22 @@ export async function onRequest({
       ...publicData,
       sensitive: encryptedData,
       keyVersion,
-      submittedAt: FieldValue.serverTimestamp(),
-      expiresAt: Timestamp.fromDate(expiresAt),
+      expiresAt,
       status: "pending",
     };
 
-    const db = getDb(env);
-    const docRef = await db.collection("adoption_application").add(documentData);
+    const firestore = createFirestoreClient(env);
+    const { id: applicationId } = await firestore.createDocument(
+      "adoption_application",
+      documentData,
+      { serverTimestampFields: ["submittedAt"] },
+    );
 
-    await sendAdoptionApplicationEmail(applicationData, docRef.id, env);
+    await sendAdoptionApplicationEmail(applicationData, applicationId, env);
 
     return jsonResponse(HTTP_STATUS.CREATED, {
       message: "Application submitted successfully",
-      data: { id: docRef.id },
+      data: { id: applicationId },
     });
   } catch (err) {
     console.error("Error creating adoption application:", err);

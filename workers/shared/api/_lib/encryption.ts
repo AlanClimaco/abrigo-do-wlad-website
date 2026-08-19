@@ -1,5 +1,5 @@
 import crypto from "crypto";
-import { getDb } from "./firebase";
+import { createFirestoreClient } from "./firestore";
 import { getEnvValue, type CloudflareEnv } from "./env";
 
 function decryptSystemKey(encryptedKeyString: string, env?: CloudflareEnv): string {
@@ -31,19 +31,22 @@ export async function encryptData(
   data: Record<string, unknown>,
   env?: CloudflareEnv,
 ): Promise<{ encryptedData: string; keyVersion: string }> {
-  const db = getDb(env);
+  const firestore = createFirestoreClient(env);
+  const keyDocument = await firestore.getDocument<{
+    active_key_id: string;
+    keys: Record<
+      string,
+      { id: string; key: string; version: string; createdAt: string }
+    >;
+  }>("system/keys");
 
-  const keyDocSnap = await db.collection("system").doc("keys").get();
-  if (!keyDocSnap.exists) {
+  if (!keyDocument) {
     throw new Error(
       "Chaves de criptografia não encontradas no banco de dados.",
     );
   }
 
-  const { active_key_id, keys } = keyDocSnap.data() as {
-    active_key_id: string;
-    keys: Record<string, { id: string; key: string; version: string; createdAt: string }>;
-  };
+  const { active_key_id, keys } = keyDocument.data;
   
   const encryptedCurrentKey = keys[active_key_id]?.key;
 
