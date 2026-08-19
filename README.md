@@ -77,7 +77,7 @@ Para rodar o projeto localmente:
     ```bash
     npm install
     ```
-3.  Configure as variáveis de ambiente. Para desenvolvimento local, use um arquivo `.env` na raiz. Para *deploy*, configure as mesmas chaves no painel do projeto.
+3.  Configure as variáveis de ambiente. Para desenvolvimento local, use um arquivo `.env` na raiz. Para _deploy_, configure as mesmas chaves no painel do projeto.
 
     ```env
     NODE_ENV=development
@@ -110,11 +110,13 @@ Para rodar o projeto localmente:
     ```
 
 4.  Inicie o servidor local:
+
     ```bash
     npm run dev
     ```
 
 5.  Para build de produção, use:
+
     ```bash
     npm run build
     ```
@@ -146,11 +148,12 @@ const value = env?.MY_KEY ?? process.env.MY_KEY;
 
 As variáveis `VITE_*` existem somente durante o build e são incorporadas ao frontend. Credenciais do Firebase Admin, reCAPTCHA, criptografia e e-mail são variáveis ou secrets de runtime configurados separadamente em cada Worker.
 
-| Destino | Configuração necessária |
-| --- | --- |
-| Build do `abrigo-do-wlad` | Todas as variáveis `VITE_*` do `.env.example` |
-| Runtime do `abrigo-do-wlad` | `NODE_ENV`, `ALLOWED_ORIGIN`, `RECAPTCHA_SECRET_KEY`, `MASTER_KEY`, credenciais Firebase Admin e configurações de e-mail |
-| Runtime do `abrigo-do-wlad-cron` | Credenciais Firebase Admin; o binding `KV` já está no Wrangler |
+| Destino                                               | Configuração necessária                                                                                                  |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Build do `abrigo-do-wlad` (`npm run build:app`)       | Todas as variáveis `VITE_*` do `.env.example`                                                                            |
+| Runtime do `abrigo-do-wlad`                           | `NODE_ENV`, `ALLOWED_ORIGIN`, `RECAPTCHA_SECRET_KEY`, `MASTER_KEY`, credenciais Firebase Admin e configurações de e-mail |
+| Build do `abrigo-do-wlad-cron` (`npm run build:cron`) | Nenhuma variável `VITE_*`; o Wrangler empacota somente o código do cron                                                  |
+| Runtime do `abrigo-do-wlad-cron`                      | Credenciais Firebase Admin; o binding `KV` já está no Wrangler                                                           |
 
 Os dois arquivos Wrangler usam `keep_vars: true` para preservar as variáveis configuradas pelo painel durante novos deploys. Valores sensíveis não devem ser adicionados aos arquivos Wrangler.
 
@@ -168,7 +171,14 @@ O Worker de cron possui deploy separado:
 npm run deploy:cron
 ```
 
-No Workers Builds, mantenha `npm run build` como Build command e `npx wrangler deploy` como Deploy command do Worker `abrigo-do-wlad`. O Worker `abrigo-do-wlad-cron` deve ser publicado separadamente com seu próprio comando/configuração; não use comandos `wrangler pages` neste repositório.
+No Workers Builds, configure cada Worker com comandos independentes:
+
+| Worker                | Build command        | Deploy command                                             |
+| --------------------- | -------------------- | ---------------------------------------------------------- |
+| `abrigo-do-wlad`      | `npm run build:app`  | `npx wrangler deploy`                                      |
+| `abrigo-do-wlad-cron` | `npm run build:cron` | `npx wrangler deploy --config workers/cron/wrangler.jsonc` |
+
+O build do cron executa apenas um empacotamento de validação do Wrangler e, por isso, não carrega o Vite nem exige variáveis `VITE_*`. Não use comandos `wrangler pages` neste repositório.
 
 ## Autores
 
