@@ -57,7 +57,7 @@ export function ActionCards() {
           </Card.CardContent>
         </Card.CardBody>
         <Card.CardFooter>
-          <Link to="/adotar">
+          <Link to="/caes">
             <Card.CardButton>
               Conheça Nossos Cães <Lucide.ChevronRight size={20} />
             </Card.CardButton>

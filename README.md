@@ -1,8 +1,10 @@
 # Abrigo do Wlad - Plataforma Web
 
-Repositório oficial do site do Abrigo do Wlad. Plataforma digital para divulgação de animais para adoção, campanhas de arrecadação e transparência das atividades da organização.
+Repositório oficial do site do Abrigo do Wlad. Plataforma digital para divulgação de animais para adoção, campanhas de arrecadação e transparência das atividades do projeto social independente.
 
-Este projeto foi criado para suprir uma necessidade crítica da ONG: a listagem e divulgação de animais. Anteriormente, o abrigo utilizava arquivos em PDF para lidar com as adoções, um processo que se mostrava ineficiente e insustentável. Com a plataforma web, a ONG agora possui um catálogo dinâmico, acessível e de fácil manutenção.
+Este projeto foi criado para suprir uma necessidade crítica do projeto social independente: a listagem e divulgação de animais. Anteriormente, o abrigo utilizava arquivos em PDF para lidar com as adoções, um processo que se mostrava ineficiente e insustentável. Com a plataforma web, a iniciativa agora possui um catálogo dinâmico, acessível e de fácil manutenção.
+
+Este projeto foi inicialmente desenvolvido como projeto acadêmico de extensão pela UNINTER, com foco em criar uma solução digital para ampliar a visibilidade, a organização e a eficiência das ações sociais do abrigo.
 
 ## Funcionalidades
 
@@ -148,12 +150,12 @@ const value = env?.MY_KEY ?? process.env.MY_KEY;
 
 As variáveis `VITE_*` existem somente durante o build e são incorporadas ao frontend. Os Workers acessam o Firestore pela API REST, autenticada por OAuth 2.0 com uma service account. Credenciais do Firestore, reCAPTCHA, criptografia e e-mail são variáveis ou secrets de runtime configurados separadamente em cada Worker.
 
-| Destino                                               | Configuração necessária                                                                                                  |
-| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| Build do `abrigo-do-wlad` (`npm run build:app`)       | Todas as variáveis `VITE_*` do `.env.example`                                                                            |
-| Runtime do `abrigo-do-wlad`                           | `NODE_ENV`, `ALLOWED_ORIGIN`, `RECAPTCHA_SECRET_KEY`, `MASTER_KEY`, credenciais Firestore REST e configurações de e-mail |
-| Build do `abrigo-do-wlad-worker` (`npm run build:cron`) | Nenhuma variável `VITE_*`; o Wrangler empacota somente o código do cron                                                |
-| Runtime do `abrigo-do-wlad-worker`                    | `FIREBASE_PROJECT_ID`, `FIREBASE_CLIENT_EMAIL` e `FIREBASE_PRIVATE_KEY`; o binding `KV` já está no Wrangler               |
+| Destino                                                 | Configuração necessária                                                                                                  |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Build do `abrigo-do-wlad` (`npm run build:app`)         | Todas as variáveis `VITE_*` do `.env.example`                                                                            |
+| Runtime do `abrigo-do-wlad`                             | `NODE_ENV`, `ALLOWED_ORIGIN`, `RECAPTCHA_SECRET_KEY`, `MASTER_KEY`, credenciais Firestore REST e configurações de e-mail |
+| Build do `abrigo-do-wlad-worker` (`npm run build:cron`) | Nenhuma variável `VITE_*`; o Wrangler empacota somente o código do cron                                                  |
+| Runtime do `abrigo-do-wlad-worker`                      | `FIREBASE_PROJECT_ID`, `FIREBASE_CLIENT_EMAIL` e `FIREBASE_PRIVATE_KEY`; o binding `KV` já está no Wrangler              |
 
 Os dois arquivos Wrangler usam `keep_vars: true` para preservar as variáveis configuradas pelo painel durante novos deploys. Valores sensíveis não devem ser adicionados aos arquivos Wrangler.
 
@@ -175,9 +177,9 @@ npm run deploy:cron
 
 No Workers Builds, configure cada Worker com comandos independentes:
 
-| Worker                | Build command        | Deploy command                                             |
-| --------------------- | -------------------- | ---------------------------------------------------------- |
-| `abrigo-do-wlad`      | `npm run build:app`  | `npx wrangler deploy`                                      |
+| Worker                  | Build command        | Deploy command                                             |
+| ----------------------- | -------------------- | ---------------------------------------------------------- |
+| `abrigo-do-wlad`        | `npm run build:app`  | `npx wrangler deploy`                                      |
 | `abrigo-do-wlad-worker` | `npm run build:cron` | `npx wrangler deploy --config workers/cron/wrangler.jsonc` |
 
 O build do cron executa apenas um empacotamento de validação do Wrangler e, por isso, não carrega o Vite nem exige variáveis `VITE_*`. Não use comandos `wrangler pages` neste repositório.
