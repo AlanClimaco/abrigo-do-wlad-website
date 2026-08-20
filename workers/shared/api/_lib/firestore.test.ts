@@ -59,6 +59,29 @@ test("FirestoreRestClient authenticates with a service account JWT", async () =>
   );
 });
 
+test("FirestoreRestClient does not rebind the fetch receiver", async () => {
+  let calls = 0;
+  const fetcher = async function (this: unknown): Promise<Response> {
+    if (this !== undefined) {
+      throw new TypeError("fetch was called with an incorrect this reference");
+    }
+
+    calls += 1;
+    return Response.json({
+      name: "projects/test-project/databases/(default)/documents/system/keys",
+      fields: {},
+    });
+  } as typeof fetch;
+  const client = new FirestoreRestClient("test-project", {
+    fetcher,
+    tokenProvider: async () => "test-token",
+  });
+
+  await client.getDocument("system/keys");
+
+  assert.equal(calls, 1);
+});
+
 test("getDocument decodes Firestore REST values", async () => {
   const fetcher = mockFetch((url, init) => {
     assert.equal(

@@ -372,7 +372,8 @@ export class FirestoreRestClient {
   ) {
     this.databaseRoot = `projects/${projectId}/databases/(default)`;
     this.documentsRoot = `${this.databaseRoot}/documents`;
-    this.fetcher = options.fetcher ?? fetch;
+    const fetcher = options.fetcher ?? fetch;
+    this.fetcher = (input, init) => fetcher(input, init);
     this.tokenProvider =
       options.tokenProvider ?? (() => requestGoogleAccessToken(env, this.fetcher));
     this.documentIdGenerator =
