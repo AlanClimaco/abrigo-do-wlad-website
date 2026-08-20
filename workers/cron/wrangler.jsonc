@@ -8,10 +8,25 @@
   "kv_namespaces": [
     {
       "binding": "KV",
-      "id": "8b61d3ad6ba44973a54a94eb5590da5f"
-    }
+      "id": "8b61d3ad6ba44973a54a94eb5590da5f",
+    },
   ],
   "triggers": {
-    "crons": ["0 3 * * *"]
-  }
+    "crons": ["0 3 * * *"],
+  },
+  "observability": {
+    "enabled": false,
+    "head_sampling_rate": 1,
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "persist": true,
+      "invocation_logs": true,
+    },
+    "traces": {
+      "enabled": false,
+      "persist": true,
+      "head_sampling_rate": 1,
+    },
+  },
 }
