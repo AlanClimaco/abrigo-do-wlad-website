@@ -12,10 +12,10 @@
     },
   ],
   "triggers": {
-    "crons": ["0 3 * * *"],
+    "crons": ["0 3 * * *", "41 18 * * *"],
   },
   "observability": {
-    "enabled": false,
+    "enabled": true,
     "head_sampling_rate": 1,
     "logs": {
       "enabled": true,
