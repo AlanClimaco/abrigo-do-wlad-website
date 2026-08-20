@@ -127,6 +127,11 @@ Para rodar o projeto localmente:
 
 ## Arquitetura da API
 
+![Diagrama da arquitetura do Abrigo do Wlad](docs/architecture.svg)
+
+> O diagrama é gerado a partir do fonte PlantUML em
+[`docs/architecture.puml`](docs/architecture.puml).
+
 O projeto possui dois Workers independentes:
 
 1. `abrigo-do-wlad`: serve a SPA por Static Assets e executa as rotas `/api/*` em [workers/app/index.ts](workers/app/index.ts).
@@ -137,7 +142,9 @@ Os dois Workers compartilham o mesmo namespace KV. Apenas o Worker de cron possu
 ### Estrutura de rotas
 
 - `GET /api/hero-dog` — retorna o cachorro em destaque
-- `POST /api/adoption/create` — cria a submissão da adoção
+- `POST /api/adoption/create` — cria a submissão da adoção; exige um
+  `Idempotency-Key` UUID v4 para que tentativas repetidas retornem a candidatura
+  já criada sem duplicar o documento ou a notificação
 - `GET /api/tests/email` — rota disponível somente com `NODE_ENV=development`
 
 ### Convenção de ambiente

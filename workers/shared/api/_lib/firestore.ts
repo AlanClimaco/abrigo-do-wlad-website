@@ -57,6 +57,7 @@ export interface FirestoreDocument<T extends Record<string, unknown>> {
 
 export interface CreateDocumentOptions {
   serverTimestampFields?: string[];
+  documentId?: string;
 }
 
 export interface FirestoreRestClientOptions {
@@ -489,7 +490,12 @@ export class FirestoreRestClient {
     data: Record<string, unknown>,
     options: CreateDocumentOptions = {},
   ): Promise<{ id: string; commitTime?: string }> {
-    const id = this.documentIdGenerator();
+    const id = options.documentId ?? this.documentIdGenerator();
+
+    if (!/^[A-Za-z0-9_-]{1,128}$/.test(id)) {
+      throw new TypeError("Firestore document ID contains invalid characters.");
+    }
+
     const name = `${this.documentsRoot}/${collectionId}/${id}`;
     const updateTransforms = (options.serverTimestampFields ?? []).map(
       (fieldPath) => ({

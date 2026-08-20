@@ -7,6 +7,39 @@ interface AdoptionSubmissionPayload {
   };
 }
 
+export const ADOPTION_IDEMPOTENCY_STORAGE_KEY =
+  "adoptionSubmissionIdempotencyKey";
+
+export function getOrCreateIdempotencyKey(storage: Storage): string {
+  try {
+    const saved = storage.getItem(ADOPTION_IDEMPOTENCY_STORAGE_KEY)?.trim();
+
+    if (saved) {
+      return saved;
+    }
+  } catch {
+    // The in-memory key held by the form still protects retries in this tab.
+  }
+
+  const key = crypto.randomUUID();
+
+  try {
+    storage.setItem(ADOPTION_IDEMPOTENCY_STORAGE_KEY, key);
+  } catch {
+    // Some privacy modes disable sessionStorage.
+  }
+
+  return key;
+}
+
+export function clearIdempotencyKey(storage: Storage): void {
+  try {
+    storage.removeItem(ADOPTION_IDEMPOTENCY_STORAGE_KEY);
+  } catch {
+    // Nothing to clear when sessionStorage is unavailable.
+  }
+}
+
 export interface AdoptionSubmissionResult {
   applicationId: string;
   warning?: string;

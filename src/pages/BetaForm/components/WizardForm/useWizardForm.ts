@@ -4,6 +4,7 @@ import { stepSchemas, type FormData } from "./schema";
 import { useNavigate, useParams } from "react-router";
 
 import * as Lucide from "lucide-react";
+import { ADOPTION_IDEMPOTENCY_STORAGE_KEY } from "./submission";
 
 export interface FieldError {
   [key: string]: string;
@@ -156,6 +157,7 @@ export function useWizardForm() {
   const resetForm = React.useCallback(() => {
     sessionStorage.removeItem("wizardFormData");
     sessionStorage.removeItem("wizardHighestStep");
+    sessionStorage.removeItem(ADOPTION_IDEMPOTENCY_STORAGE_KEY);
     setFormData({});
     setErrors({});
     setHighestCompletedStep(0);

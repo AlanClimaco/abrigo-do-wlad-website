@@ -15,7 +15,9 @@ import * as Lucide from "lucide-react";
 import { ExternalLink } from "@/components/common/ExternalLink";
 import { useIsDesktop } from "@/hooks/useIsDesktop";
 import {
+  clearIdempotencyKey,
   getAdoptionApplicationId,
+  getOrCreateIdempotencyKey,
   type AdoptionSubmissionResult,
 } from "./submission";
 import { ADOPTION_RECAPTCHA_ACTION } from "./recaptcha";
@@ -30,6 +32,7 @@ export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
   const [searchParams] = useSearchParams();
   const petName = searchParams.get("pet") || "";
   const isDesktop = useIsDesktop();
+  const submissionKeyRef = React.useRef<string | null>(null);
 
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [submitError, setSubmitError] = React.useState<string | null>(null);
@@ -97,6 +100,7 @@ export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
 
   const handleRestart = () => {
     resetForm();
+    submissionKeyRef.current = null;
     setShowResumeDialog(false);
     try {
       sessionStorage.setItem("wizardDialogShown", "true");
@@ -158,10 +162,15 @@ export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
         });
       });
 
+      const idempotencyKey =
+        submissionKeyRef.current ?? getOrCreateIdempotencyKey(sessionStorage);
+      submissionKeyRef.current = idempotencyKey;
+
       const response = await fetch("/api/adoption/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Idempotency-Key": idempotencyKey,
         },
         body: JSON.stringify({
           ...formData,
@@ -170,6 +179,8 @@ export function WizardForm({ onSubmitSuccess }: WizardFormProps) {
       });
 
       const submissionResult = await getAdoptionApplicationId(response);
+      clearIdempotencyKey(sessionStorage);
+      submissionKeyRef.current = null;
 
       if (onSubmitSuccess) {
         onSubmitSuccess(submissionResult);

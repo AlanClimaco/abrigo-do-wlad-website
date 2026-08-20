@@ -220,6 +220,38 @@ test("createDocument encodes data and applies a server timestamp", async () => {
   });
 });
 
+test("createDocument uses an explicit idempotency document ID", async () => {
+  let requestBody: Record<string, unknown> | undefined;
+  const client = new FirestoreRestClient("test-project", {
+    fetcher: mockFetch((_url, init) => {
+      requestBody = JSON.parse(String(init?.body)) as Record<string, unknown>;
+      return Response.json({ commitTime: "2026-08-20T12:00:00Z" });
+    }),
+    tokenProvider: async () => "test-token",
+    documentIdGenerator: () => "must-not-be-used",
+  });
+  const documentId = "123e4567-e89b-42d3-a456-426614174000";
+
+  const result = await client.createDocument(
+    "adoption_application",
+    { status: "pending" },
+    { documentId },
+  );
+
+  assert.equal(result.id, documentId);
+  assert.deepEqual(requestBody, {
+    writes: [
+      {
+        update: {
+          name: `projects/test-project/databases/(default)/documents/adoption_application/${documentId}`,
+          fields: { status: { stringValue: "pending" } },
+        },
+        currentDocument: { exists: false },
+      },
+    ],
+  });
+});
+
 test("getDocument maps a not found response to null", async () => {
   const client = new FirestoreRestClient("test-project", {
     fetcher: mockFetch(() =>

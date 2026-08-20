@@ -1,4 +1,7 @@
-import { createFirestoreClient } from "../_lib/firestore";
+import {
+  createFirestoreClient,
+  FirestoreRestError,
+} from "../_lib/firestore";
 import { encryptData } from "../_lib/encryption";
 import { sendEmail, generateAdoptionApplicationEmail } from "../_lib/email";
 import { fullFormSchema } from "../../../../src/pages/BetaForm/components/WizardForm/schema";
@@ -17,6 +20,19 @@ import { validateRequest } from "../_lib/validation";
 import { ADOPTION_RECAPTCHA_ACTION } from "../../../../src/pages/BetaForm/components/WizardForm/recaptcha";
 
 type AdoptionApplicationData = z.infer<typeof fullFormSchema>;
+
+const IDEMPOTENCY_KEY_HEADER = "Idempotency-Key";
+const UUID_V4_PATTERN =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+export function getIdempotencyKey(request: Request): string | undefined {
+  const value = request.headers.get(IDEMPOTENCY_KEY_HEADER)?.trim();
+  return value || undefined;
+}
+
+export function isValidIdempotencyKey(value: string): boolean {
+  return UUID_V4_PATTERN.test(value);
+}
 
 async function sendAdoptionApplicationEmail(
   applicationData: Record<string, unknown>,
@@ -78,6 +94,13 @@ export async function onRequest({
 
   try {
     const data = (await request.json()) as AdoptionApplicationData;
+    const idempotencyKey = getIdempotencyKey(request);
+
+    if (!idempotencyKey || !isValidIdempotencyKey(idempotencyKey)) {
+      return jsonResponse(HTTP_STATUS.BAD_REQUEST, {
+        message: "Missing or invalid idempotency key",
+      });
+    }
 
     const recaptchaSecret = getEnvValue(env, "RECAPTCHA_SECRET_KEY");
     if (!recaptchaSecret) {
@@ -136,11 +159,33 @@ export async function onRequest({
     };
 
     const firestore = createFirestoreClient(env);
-    const { id: applicationId } = await firestore.createDocument(
-      "adoption_application",
-      documentData,
-      { serverTimestampFields: ["submittedAt"] },
-    );
+    let applicationId: string;
+
+    try {
+      ({ id: applicationId } = await firestore.createDocument(
+        "adoption_application",
+        documentData,
+        {
+          serverTimestampFields: ["submittedAt"],
+          documentId: idempotencyKey,
+        },
+      ));
+    } catch (error) {
+      if (
+        error instanceof FirestoreRestError &&
+        error.status === 409
+      ) {
+        return jsonResponse(HTTP_STATUS.OK, {
+          message: "Application already submitted",
+          data: {
+            id: idempotencyKey,
+            duplicate: true,
+          },
+        });
+      }
+
+      throw error;
+    }
 
     const notificationEmailSent = await sendAdoptionApplicationEmail(
       applicationData,
